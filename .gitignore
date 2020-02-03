@@ -1,0 +1,12 @@
+
+*.bin
+*.lock
+*.properties
+*.xml
+.idea/.name
+*.jar
+gradlew
+*.bat
+*.class
+settings.gradle
+out/production/resources/TextFieldsPage.fxml
