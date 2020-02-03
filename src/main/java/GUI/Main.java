@@ -4,12 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
 
@@ -17,19 +12,13 @@ public class Main extends Application {
         launch(args);
     }
 
+
     @Override
-    public void start(Stage stage) {
-        stage.setTitle("TheBackrowers");
-//        Parent textFieldsPage = null;
-//        try {
-//            textFieldsPage = FXMLLoader.load(getClass().getResource("TextFieldsPage.fxml"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        assert textFieldsPage != null;
-//        Scene scene = new Scene(textFieldsPage,1000,700);
-        Scene scene = new Scene(new Pane(),1000,700);
-        stage.setScene(scene);
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("Output File.fxml"));
+        stage.setTitle("Hello WORRRLD");
+        stage.setScene(new Scene(root, 300, 275));
         stage.show();
+
     }
 }
