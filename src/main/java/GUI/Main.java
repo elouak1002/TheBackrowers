@@ -16,16 +16,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("TheBackrowers");
-        Parent inputPage = null;
+        stage.setTitle("Output Preview");
+        Parent outputPage = null;
         try {
-            inputPage = FXMLLoader.load(getClass().getResource("output.fxml"));
+            outputPage = FXMLLoader.load(getClass().getResource("Output.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assert inputPage != null;
-        Scene scene = new Scene(inputPage);
-        //Scene scene = new Scene(new Pane(),1000,700);
+        assert outputPage != null;
+        Scene scene = new Scene(outputPage);
         stage.setScene(scene);
         stage.show();
     }
