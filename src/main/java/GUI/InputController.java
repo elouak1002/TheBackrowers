@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
-public class inputController {
+public class InputController {
     @FXML private Slider rotationAngleSlider;
     @FXML private TextField rotationAngleField;
 
