@@ -48,7 +48,7 @@ public class Parser {
     public List<String> filter(List<String> lines){
         lines.removeIf(line ->
                 line.contains("NODE LISTS")
-                        || line.contains("//")
+                        || line.startsWith("//")
                         || line.contains("addAllNeighbours")
                         || line.startsWith(" ")
                         || line.equals(""));
