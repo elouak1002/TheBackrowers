@@ -61,7 +61,7 @@ public class ParserTest {
     @Test
     public void extractDataTest(){
         String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
-        Pair<Float, Float> expected = new Pair<>(49.312683f, 26.463207f);
+        Pair<Float, Float> expected = new Pair<>(49.31f, 26.46f);
         Pair<Float, Float> data = parser.extractData(line);
         assertEquals(expected, data);
     }
