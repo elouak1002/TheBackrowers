@@ -10,4 +10,5 @@ gradlew
 *.bat
 *.class
 settings.gradle
+.gradle/
 out/production/resources/TextFieldsPage.fxml
