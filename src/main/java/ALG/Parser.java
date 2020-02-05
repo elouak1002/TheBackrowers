@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javafx.util.Pair;
 
+
 /**
  * Parser class is responsible for parsing lines from 
  * an input file and creating a list of Node with the
@@ -83,11 +84,10 @@ public class Parser {
 
         List<String> dataList = new ArrayList<String>(Arrays.asList(dataString.trim().split(" , ")));
 
-        Float xPos = Float.valueOf(dataList.get(0));
-        Float yPos = Float.valueOf(dataList.get(1));
+        Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;
+        Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;
 
-        Pair <Float, Float> coordinates = new Pair<>(xPos, yPos);
-        return coordinates;
+        return new Pair<>(xPos, yPos);
     }
 
     /**
