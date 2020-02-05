@@ -19,7 +19,7 @@ public class ParserTest {
 
     @Before
     public void setup(){
-        parser = new Parser(Paths.get("src/test/java/ALGTest/testData.txt"));
+        parser = new Parser(Paths.get("src/test/resources/testData.txt"));
         filteredData = Arrays.asList("Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
                 "Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
                 "Toilet HenRaph_04_374_347 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );",
