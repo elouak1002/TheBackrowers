@@ -17,8 +17,8 @@ import javafx.util.Pair;
  */
 public class Parser {
 
-    Path path; //Path to the input file
-    HashMap<String,Node> nodeMap; // Main hashMap for storing each Node with its name
+    private Path path; //Path to the input file
+    private HashMap<String,Node> nodeMap; // Main hashMap for storing each Node with its name
 
 
     /**
@@ -31,13 +31,13 @@ public class Parser {
 
     /**
      * @return List of lines that contain data
-     * @throws IOException
+     * @throws IOException if the file was not found
      */
     public List<String> getLines() throws IOException { return filter(getAllLines()); }
 
     /**
      * @return All lines from the input file
-     * @throws IOException
+     * @throws IOException if the file was not found
      */
     public List<String> getAllLines() throws IOException{ return Files.readAllLines(path); }
 
@@ -46,7 +46,7 @@ public class Parser {
      * @param lines List of lines from a file
      * @return List of lines with data
      */
-    public List<String> filter(List<String> lines){
+    private List<String> filter(List<String> lines){
         lines.removeIf(line ->
                 line.contains("NODE LISTS")
                         || line.startsWith("//")
