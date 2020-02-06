@@ -3,10 +3,8 @@ package ALG;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+
 import javafx.util.Pair;
 
 
@@ -18,7 +16,7 @@ import javafx.util.Pair;
 public class Parser {
 
     private Path path; //Path to the input file
-    private HashMap<String,Node> nodeMap; // Main hashMap for storing each Node with its name
+    private TreeMap<String,Node> nodeMap; // Main hashMap for storing each Node with its name
 
 
     /**
@@ -62,8 +60,8 @@ public class Parser {
      * @param filteredLines list of lines which contain data
      * @return a hashMap of Node objects
      */
-    public HashMap<String,Node> createNodes(List<String> filteredLines){
-        nodeMap = new HashMap<>();
+    public TreeMap<String,Node> createNodes(List<String> filteredLines){
+        nodeMap = new TreeMap<>();
         for(String line : filteredLines){
             String name = extractName(line);
             Pair<Float, Float> coordinates = extractData(line);
