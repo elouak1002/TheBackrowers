@@ -1,55 +1,53 @@
 package GUI;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Iterator;
-
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.*;
 
 public class OutputController {
     @FXML private Button saveButton = new Button();
     @FXML private Button clearButton = new Button();
     @FXML private TextArea outputText = new TextArea();
     @FXML private TextField fileSaved = new TextField();
-    private int count = 1;                   //new file created every time
-
+    private FileChooser fileChooser = new FileChooser();
 
     public OutputController () {
     }
-    //This method iterates over the text area and writes the contents into a .txt file
+
+    //This method allows you to choose where in you directory you would like to save your file.
     @FXML
     public void saveFile() {
-        ObservableList<CharSequence> paragraph = outputText.getParagraphs();
-        Iterator<CharSequence> iter = paragraph.iterator();
+        String text = outputText.getText();
+        Window stage = saveButton.getScene().getWindow();
+        fileChooser.setInitialDirectory(new File("C:\\"));
+        fileChooser.setTitle("Save");
+        fileChooser.setInitialFileName("save");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(stage);
 
-        try
-        { //"textFile.txt"
-            BufferedWriter bf = new BufferedWriter(new FileWriter(new File("textFile" + count + ".txt")));
-            count++;
-            while(iter.hasNext())
-            {
-                CharSequence seq = iter.next();
-                bf.append(seq);
-                bf.newLine();
-            }
-            bf.flush();
-            bf.close();
+        if (file != null) {
+            saveTextToFile(text, file);
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        fileIsSaved();
     }
 
+    //Saves the file in local.
+    private void saveTextToFile(String content, File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
     private void clearTextField() {
