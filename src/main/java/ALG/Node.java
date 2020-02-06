@@ -13,10 +13,9 @@ public class Node {
 
     /**
      * Constructor for the Node class
-     * 
-     * @param name
-     * @param xCoord
-     * @param xCoord
+     * @param name of the node
+     * @param xCoord of the node
+     * @param yCoord of the node
      */
     public Node (String name, float xCoord, float yCoord){
         this.name = name;
