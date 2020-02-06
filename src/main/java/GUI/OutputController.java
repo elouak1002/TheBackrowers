@@ -2,8 +2,8 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import java.util.logging.Level;
@@ -14,15 +14,12 @@ public class OutputController {
     @FXML private Button saveButton = new Button();
     @FXML private Button clearButton = new Button();
     @FXML private TextArea outputText = new TextArea();
-    @FXML private TextField fileSaved = new TextField();
+    @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
-
-    public OutputController () {
-    }
 
     //This method allows you to choose where in you directory you would like to save your file.
     @FXML
-    public void saveFile() {
+    private void saveFile() {
         String text = outputText.getText();
         Window stage = saveButton.getScene().getWindow();
         fileChooser.setInitialDirectory(new File("C:\\"));
@@ -44,6 +41,7 @@ public class OutputController {
             writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
+            fileSaved.setText("Text saved as a .txt file!");
         } catch (IOException ex) {
             Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,11 +50,5 @@ public class OutputController {
     @FXML
     private void clearTextField() {
         outputText.clear();
-        fileSaved.clear();
-    }
-
-    @FXML
-    private void fileIsSaved() {
-        fileSaved.setText("Text saved as a .txt file!");
     }
 }
