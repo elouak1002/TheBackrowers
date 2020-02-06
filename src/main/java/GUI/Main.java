@@ -19,7 +19,7 @@ public class Main extends Application {
         stage.setTitle("TheBackrowers");
         Parent inputPage = null;
         try {
-            inputPage = FXMLLoader.load(getClass().getResource("input.fxml"));
+            inputPage = FXMLLoader.load(getClass().getResource("Input.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
