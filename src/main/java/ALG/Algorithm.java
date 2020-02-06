@@ -64,7 +64,6 @@ public class Algorithm{
 
         //First part of the transformation representing rotation and scaling
         double theta = Math.toRadians(rotationAngle);
-            System.out.println(scaleX);
         for(Node index: nodeList){
             setRotation(index, theta);
             setScale(index, scaleX, scaleY);
