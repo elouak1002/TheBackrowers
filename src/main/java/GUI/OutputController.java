@@ -2,12 +2,15 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,11 +59,11 @@ public class OutputController {
     }
 
     @FXML
-    private AnchorPane rootPane;
-
-    @FXML
     private void goBack(javafx.event.ActionEvent actionEvent) throws Exception {
-        BorderPane pane = FXMLLoader.load(getClass().getResource("Input.fxml"));
-        rootPane.getChildren().setAll(pane);
+        Parent parent = FXMLLoader.load(getClass().getResource("Input.fxml"));
+        Scene scene = new Scene(parent);
+        Stage window = (Stage)((javafx.scene.Node)actionEvent.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 }
