@@ -22,7 +22,7 @@ public class Main extends Application {
         stage.setTitle("TheBackrowers");
         Parent inputPage = null;
         try {
-            inputPage = FXMLLoader.load(getClass().getClassLoader().getResource("Input.fxml"));
+            inputPage = FXMLLoader.load(getClass().getClassLoader().getResource("Load.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
