@@ -1,4 +1,8 @@
-build
+build/
+.classpath
+.project
+.settings/
+bin/
 *.DS_Store
 *.bin
 *.lock
@@ -12,3 +16,4 @@ gradlew
 settings.gradle
 .gradle/
 out/production/resources/TextFieldsPage.fxml
+.vscode

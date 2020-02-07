@@ -57,6 +57,25 @@ public class Parser {
         return lines;
     }
 
+	/**
+	 * @return The position of the first data line in the input file,
+     * -1 otherwise.
+	 */
+	public int beginOfDataLines(List<String> fullLines, List<String> filteredLines) { 
+        if (filteredLines.size() > 0) {
+            return fullLines.indexOf((filteredLines.get(0)));
+        }
+        return -1;
+	}
+
+    /**
+	 * @return The position of the last data line in the input file,
+     * -1 otherwise.
+	 */
+	public int endOfDataLines(List<String> fullLines, List<String> filteredLines) { 
+        return fullLines.indexOf(filteredLines.get(filteredLines.size() - 1));   
+	}
+
     /**
      * Method to populate the hashMap with Node objects, mapping each to its name
      * @param filteredLines list of lines which contain data
