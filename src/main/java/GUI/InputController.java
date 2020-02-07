@@ -2,9 +2,12 @@ package GUI;
 
 import ALG.Parser;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -53,5 +56,15 @@ public class InputController {
     @FXML
     private void showNodes() {
         referenceNodeChoiceBox.show();
+    }
+
+
+    @FXML
+    private BorderPane rootPane;
+
+    @FXML
+    private void goNext(javafx.event.ActionEvent actionEvent) throws Exception {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("Output.fxml"));
+        rootPane.getChildren().setAll(pane);
     }
 }

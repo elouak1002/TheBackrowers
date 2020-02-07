@@ -5,10 +5,10 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #CB8978;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OutputController">
+<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #CB8978;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OutputController">
    <children>
       <AnchorPane layoutX="178.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="7.0" layoutY="361.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="54.0" style="-fx-border-color: #393939;" text="Back" />
+      <Button fx:id="backButton" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBack" prefHeight="27.0" prefWidth="54.0" style="-fx-border-color: #393939;" text="Back" />
       <Button fx:id="saveButton" layoutX="222.0" layoutY="327.0" mnemonicParsing="false" onAction="#saveFile" prefHeight="26.0" prefWidth="78.0" style="-fx-border-color: #393939;" text="Save" />
       <TextArea fx:id="outputText" layoutX="6.0" layoutY="6.0" prefHeight="302.0" prefWidth="589.0" style="-fx-border-color: #393939;" />
       <Button fx:id="clearButton" layoutX="307.0" layoutY="327.0" mnemonicParsing="false" onAction="#clearTextField" prefHeight="26.0" prefWidth="78.0" style="-fx-border-color: #393939;" text="Clear" />
