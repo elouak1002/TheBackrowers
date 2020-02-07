@@ -2,21 +2,13 @@ package GUI;
 
 import ALG.Parser;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
-
 
 public class InputController {
     @FXML private Slider rotationAngleSlider;
@@ -26,6 +18,10 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
+    private Parser parser;
+
+    @FXML
+    public void initialize() {}
 
     @FXML
     private void sliderToField() {
@@ -46,10 +42,8 @@ public class InputController {
         if (isNumber) rotationAngleSlider.setValue(value);
     }
 
-    //stand-in method for file chooser to replace
-    @FXML
-    private void setNodes() {
-        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+    void setNodes(String path) {
+        parser = new Parser(Paths.get(path));
         try {
             referenceNodeChoiceBox.getItems().clear();
             referenceNodeChoiceBox.getItems().addAll(parser.createNodes(parser.getLines()).keySet());
@@ -58,9 +52,12 @@ public class InputController {
         }
     }
 
+    void inputToOutput(OutputController outputController) {
+        outputController.setOutputText(parser);
+    }
+
     @FXML
     private void showNodes() {
         referenceNodeChoiceBox.show();
     }
-
 }
