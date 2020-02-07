@@ -32,7 +32,7 @@ public class DataLine {
 
 	/**
 	 * Create a new data line.
-	 * @param DataName
+	 * @param dataName
 	 * @param xCoord
 	 * @param yCoord
 	 * @param otherArguments
@@ -81,7 +81,7 @@ public class DataLine {
 	
 	/**
 	 * Set a new value for the Y coordinate in the data line.
-	 * @param yCoorIn
+	 * @param yCoordIn
 	 */
 	public void setyCoord(Float yCoordIn) {
 		yCoord = String.valueOf(yCoordIn) + "f";
