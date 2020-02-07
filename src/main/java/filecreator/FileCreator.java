@@ -156,8 +156,8 @@ public class FileCreator {
 	/**
 	 * Process the creation of the file.
 	 */
-	public void processOutputFile() throws IOException{
+	public List<String> processOutputFile() {
 		modifyDataLines();
-		createFile(mergeLines(), getDerivedFileName());
+		return dataLines;
 	}
 }
