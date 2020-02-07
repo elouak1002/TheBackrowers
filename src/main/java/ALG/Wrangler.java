@@ -1,12 +1,13 @@
 package ALG;
 
-import java.util.*;
+
+import java.util.HashMap;
 
 /**
  * The Algorithm class represents objects that allow transformations on the list of coordonates
  * given in order to get the desired output
  */
-public class Algorithm{
+public class Wrangler {
 
 
     //Fields:
@@ -14,9 +15,9 @@ public class Algorithm{
 
     /**
      * Constructor for the Node class
-     * @param nodeList: a list of all the nodes we want to change
+     * @param inputNodes: a list of all the nodes we want to change
      */
-    public Algorithm(HashMap<String, Node> inputNodes){
+    public Wrangler(HashMap<String, Node> inputNodes){
         outputNodes = new HashMap<>();
         copyNodes(inputNodes);
     }
@@ -48,7 +49,7 @@ public class Algorithm{
      *  The main concept here is a class that runs through the list and passes individual
      * nodes to other methods to be transformed
      * 
-     * @param theta: the angle we want to rotate the nodes by (in DEGREES)
+     * @param rotationAngle: the angle we want to rotate the nodes by (in DEGREES)
      * @param scaleX: as X scale factor
      * @param scaleY: as Y scale factor
      * @param targetX: the final X position of the pivot node
@@ -131,7 +132,7 @@ public class Algorithm{
     /**
      *  Method for measuring the Y distance from the pivot point to the target
      * @param pivotNode
-     * @param targetX
+     * @param targetY
      * @return
      */
     private float getDeltaY(Node pivotNode, float targetY){
