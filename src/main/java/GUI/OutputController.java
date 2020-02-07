@@ -23,7 +23,7 @@ public class OutputController {
     @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
 
-    //This method allows you to choose where in you directory you would like to save your file.
+    //This method allows you to choose where in you directory you would like to save your file
     @FXML
     private void saveFile() {
         String text = outputText.getText();
@@ -40,7 +40,7 @@ public class OutputController {
         }
     }
 
-    //Saves the file in local.
+    //Saves the file in local
     private void saveTextToFile(String content, File file) {
         try {
             PrintWriter writer;
@@ -53,10 +53,9 @@ public class OutputController {
         }
     }
 
+    //Clear output text
     @FXML
-    private void clearTextField() {
-        outputText.clear();
-    }
+    private void clearTextField() { outputText.clear(); }
 
     //method to go to previous page(Input Page)
     @FXML
