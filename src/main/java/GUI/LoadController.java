@@ -1,54 +1,32 @@
 package GUI;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.*;
 
 /**
-* Cotroller class for the input window, where user chooses file.
+* Controller class for the input window, where user chooses file.
 */
 public class LoadController {
+	@FXML private Button uploadButton;
+	@FXML private Label selectedFileLabel;
+    private String fullPath;
 
-	private static String fullPath;
-
-	@FXML
-	private Button uploadButton;
-
-	@FXML
-	private TextArea dragTarget;
-
-	@FXML
-	private Label selectedFileLabel;
-
-	/*
-    * Alters the initial state of board elements, if required.
-    */
     @FXML
-    private void initialize(){
+    public void initialize() {}
 
-    }
-
-
-
-    public static String getPath() {
+    public String getPath() {
     	return fullPath;
     }
 
     @FXML
     private void chooseFile(){
-
     	Window stage = uploadButton.getScene().getWindow();
 
     	FileChooser fileChooser = new FileChooser();
@@ -62,7 +40,6 @@ public class LoadController {
             setLabelText("Selected File: " + selectedFile.getName());
         }
     }
-
 
     private void setLabelText(String display){
     	selectedFileLabel.setText(display);
@@ -85,11 +62,6 @@ public class LoadController {
             } else {
                 setLabelText("Only .txt files allowed");
             }
-            
         }
     }
-
-
-    
-
 }
