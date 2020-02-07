@@ -33,7 +33,8 @@ public class Algorithm{
      */
     private void copyNodes(ArrayList<Node> nodes){
         for(Node index: nodes){
-            nodeList.add(index);
+            Node copy = new Node(index.getName(), index.getX(), index.getY());
+            nodeList.add(copy);
         }
     }
 
