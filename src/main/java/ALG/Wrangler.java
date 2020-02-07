@@ -98,9 +98,9 @@ public class Wrangler {
 
     /**
      *  Method for scaling the nodes is the list by a given X and Y factor
-     * @param node
-     * @param scaleX
-     * @param scaleY
+     * @param node: the node we want to scale
+     * @param scaleX: the ammount we want to scale X by
+     * @param scaleY: the ammount we want to scale Y by
      */
     private void setScale(Node node, float scaleX, float scaleY){
         node.setX(node.getX() * scaleX);
@@ -109,7 +109,7 @@ public class Wrangler {
 
     /**
      *  Method for moving a node along the X-Y axis   
-     * @param node: 
+     * @param node: the node we want to shift
      * @param deltaX: X distance from the pivot point to the target
      * @param deltaY: Y distance form the pivot point to the target
      */
@@ -120,20 +120,20 @@ public class Wrangler {
 
     /**
      *  Method for measuring the X distance from the pivot point to the target
-     * @param pivotNode
-     * @param targetX
-     * @return
+     * @param pivotNode: the reference node for calculating shifting distance
+     * @param targetX: the location we want the pivotNode to be moved at
+     * @return: the distance from pivotNode to targetX
      */
     private float getDeltaX(Node pivotNode, float targetX){
         float deltaX = targetX - pivotNode.getX();
         return deltaX;
     }
-
+    
     /**
      *  Method for measuring the Y distance from the pivot point to the target
-     * @param pivotNode
-     * @param targetY
-     * @return
+     * @param pivotNode: the reference node for calculating shifting distance
+     * @param targetY: the location we want the pivotNode to be moved at
+     * @return: the distance from pivotNode to targetY
      */
     private float getDeltaY(Node pivotNode, float targetY){
         float deltaY = targetY - pivotNode.getY();
