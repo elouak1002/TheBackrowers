@@ -10,15 +10,15 @@ public class Algorithm{
 
 
     //Fields:
-    private ArrayList<Node> nodeList;
+    private HashMap<String, Node> outputNodes;
 
     /**
      * Constructor for the Node class
      * @param nodeList: a list of all the nodes we want to change
      */
-    public Algorithm(ArrayList<Node> listOfNodes){
-        nodeList = new ArrayList<Node>();
-        copyNodes(listOfNodes);
+    public Algorithm(HashMap<String, Node> inputNodes){
+        outputNodes = new HashMap<>();
+        copyNodes(inputNodes);
     }
 
 //------------------Helper methods for the class------------------------------------
@@ -31,23 +31,18 @@ public class Algorithm{
      * 
      * @param nodes: initial list of nodes
      */
-    private void copyNodes(ArrayList<Node> nodes){
-        for(Node index: nodes){
+    private void copyNodes(HashMap<String, Node> nodes){
+        for(Node index: nodes.values()){
             Node copy = new Node(index.getName(), index.getX(), index.getY());
-            nodeList.add(copy);
+            outputNodes.put(index.getName(), copy);
         }
     }
 
-    /**
-     * @return the transformed node list
-     */
-    public ArrayList<Node> getList(){ return nodeList;}
 
 //---------------------Transformation methods---------------------------------------
 
     /**
      *  This is the main method for the Algorithm class. 
-     *  The method has been set to PUBLIC so it can be accessed from outside the class.
      * Once all the parameters are set the method runs the entire set of transformations 
      * to get to the desired coordonate configuration
      *  The main concept here is a class that runs through the list and passes individual
@@ -59,13 +54,14 @@ public class Algorithm{
      * @param targetX: the final X position of the pivot node
      * @param targetY: the final Y position of the pivot node
      * @param pivotNode: a reference node (can either belong to the list or a completly new one)
+     * @return A HashMap with transformed nodes
      */
-    public void runTransformations(float rotationAngle,float scaleX, float scaleY,
-         float targetX, float targetY, Node pivotNode){
+    public HashMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
+                                                    float targetX, float targetY, Node pivotNode){
 
         //First part of the transformation representing rotation and scaling
         double theta = Math.toRadians(rotationAngle);
-        for(Node index: nodeList){
+        for(Node index: outputNodes.values()){
             setRotation(index, theta);
             setScale(index, scaleX, scaleY);
         }
@@ -75,10 +71,12 @@ public class Algorithm{
         float deltaY = getDeltaY(pivotNode, targetY);
         
         //Last part of the transformation representing shifting and reducing to 2 point decimal
-        for(Node index: nodeList){
+        for(Node index: outputNodes.values()){
             setShift(index, deltaX, deltaY);
             roundAnswer(index);
         }
+
+        return outputNodes;
     }
    
     /**
