@@ -2,10 +2,10 @@ package GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class Main extends Application {
     private int currentPage = 0;
+    private Pane loadPage = null;
+    private Pane inputPage = null;
+    private Pane outputPage = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -22,13 +25,13 @@ public class Main extends Application {
     public void start(Stage stage) {
         stage.setTitle("TheBackrowers");
 
-        Parent loadPage = null;
-        Parent inputPage = null;
-        Parent outputPage = null;
+        FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
+        FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
+        FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
         try {
-            loadPage = FXMLLoader.load(getClass().getResource("Load.fxml"));
-            inputPage = FXMLLoader.load(getClass().getResource("Input.fxml"));
-            outputPage = FXMLLoader.load(getClass().getResource("Output.fxml"));
+            loadPage = loadPageLoader.load();
+            inputPage = inputPageLoader.load();
+            outputPage = outputPageLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +39,11 @@ public class Main extends Application {
         assert inputPage != null;
         assert outputPage != null;
 
-        ArrayList<Parent> pages = new ArrayList<>();
+        LoadController loadController = loadPageLoader.getController();
+        InputController inputController = inputPageLoader.getController();
+        OutputController outputController = outputPageLoader.getController();
+
+        ArrayList<Pane> pages = new ArrayList<>();
         pages.add(loadPage);
         pages.add(inputPage);
         pages.add(outputPage);
@@ -62,6 +69,13 @@ public class Main extends Application {
                 currentPage++;
                 root.setCenter(pages.get(currentPage));
                 previous.setDisable(false);
+                if (loadController.getPath() != null) {
+                    if (pages.get(currentPage) == inputPage) {
+                        inputController.setNodes(loadController.getPath());
+                    } else if (pages.get(currentPage) == outputPage) {
+                        inputController.inputToOutput(outputController);
+                    }
+                }
             }
             if (currentPage == pages.size()-1){
                 next.setDisable(true);
@@ -73,6 +87,7 @@ public class Main extends Application {
 
         root.setBottom(navigation);
         root.setCenter(loadPage);
+        root.setStyle("-fx-background-color: aliceblue;");
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
