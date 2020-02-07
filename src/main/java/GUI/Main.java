@@ -20,15 +20,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("TheBackrowers");
-//        Parent textFieldsPage = null;
-//        try {
-//            textFieldsPage = FXMLLoader.load(getClass().getResource("TextFieldsPage.fxml"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        assert textFieldsPage != null;
-//        Scene scene = new Scene(textFieldsPage,1000,700);
-        Scene scene = new Scene(new Pane(),1000,700);
+        Parent inputPage = null;
+        try {
+            inputPage = FXMLLoader.load(getClass().getClassLoader().getResource("Input.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert inputPage != null;
+        Scene scene = new Scene(inputPage);
         stage.setScene(scene);
         stage.show();
     }
