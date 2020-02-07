@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -53,12 +52,6 @@
    </center>
    <bottom>
       <BorderPane prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <left>
-            <Button fx:id="previous" mnemonicParsing="false" onAction="#setNodes" text="Previous" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Button fx:id="next" mnemonicParsing="false" onAction="#goNext" text="Next" BorderPane.alignment="CENTER" />
-         </right>
          <top>
             <Slider fx:id="rotationAngleSlider" majorTickUnit="20.0" max="180.0" min="-180.0" minorTickCount="9" onMouseDragged="#sliderToField" prefHeight="38.0" prefWidth="600.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" BorderPane.alignment="CENTER" />
          </top>
