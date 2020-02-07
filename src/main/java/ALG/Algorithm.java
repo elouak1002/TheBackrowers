@@ -73,9 +73,7 @@ public class Algorithm{
         //Last part of the transformation representing shifting and reducing to 2 point decimal
         for(Node index: outputNodes.values()){
             setShift(index, deltaX, deltaY);
-            roundAnswer(index);
         }
-
         return outputNodes;
     }
    
@@ -140,19 +138,5 @@ public class Algorithm{
         float deltaY = targetY - pivotNode.getY();
         return deltaY;
     }
-
-    /**
-     *  Method for reducing the coordonates of a node to a 2 point decimal
-     * @param node
-     */
-    private void roundAnswer(Node node){
-        float x = node.getX();
-        float y = node.getY();
-        x = (float) (Math.round(x * 100.0) / 100.0);
-        y = (float) (Math.round(y * 100.0) / 100.0);
-        node.setX(x);
-        node.setY(y);
-    }
    
-
 }
