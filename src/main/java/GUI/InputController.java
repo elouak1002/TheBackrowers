@@ -19,9 +19,6 @@ public class InputController {
 	private String fullPath;
 
 	@FXML
-	private Button nextButton;
-
-	@FXML
 	private Button uploadButton;
 
 	@FXML
@@ -57,11 +54,7 @@ public class InputController {
             setLabelText(selectedFile.getName());
         }
     }
-
-    @FXML
-    private void next(){
-
-    }
+    
 
     private void setLabelText(String fileName){
     	selectedFileLabel.setText("selected File: " + fileName);
