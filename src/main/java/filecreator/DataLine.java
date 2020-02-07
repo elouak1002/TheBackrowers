@@ -92,7 +92,7 @@ public class DataLine {
 	 * with space on the right and the left of each arguments,
 	 * separated by commas.
 	 */
-	public String otherArgumentsToString() {
+	private String otherArgumentsToString() {
 		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.toString().trim());
 		return result.substring(2, result.length());
 	}
