@@ -63,13 +63,4 @@ public class InputController {
         referenceNodeChoiceBox.show();
     }
 
-    //method to go to the next page(Output Page)
-    @FXML
-    private void goNext(javafx.event.ActionEvent actionEvent) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("Output.fxml"));
-        Scene scene = new Scene(parent);
-        Stage window = (Stage)((javafx.scene.Node)actionEvent.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
 }
