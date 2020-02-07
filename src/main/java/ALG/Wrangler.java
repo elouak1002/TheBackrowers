@@ -1,7 +1,7 @@
 package ALG;
 
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * The Algorithm class represents objects that allow transformations on the list of coordonates
@@ -11,14 +11,14 @@ public class Wrangler {
 
 
     //Fields:
-    private HashMap<String, Node> outputNodes;
+    private TreeMap<String, Node> outputNodes;
 
     /**
      * Constructor for the Node class
      * @param inputNodes: a list of all the nodes we want to change
      */
-    public Wrangler(HashMap<String, Node> inputNodes){
-        outputNodes = new HashMap<>();
+    public Wrangler(TreeMap<String, Node> inputNodes){
+        outputNodes = new TreeMap<>();
         copyNodes(inputNodes);
     }
 
@@ -32,7 +32,7 @@ public class Wrangler {
      * 
      * @param nodes: initial list of nodes
      */
-    private void copyNodes(HashMap<String, Node> nodes){
+    private void copyNodes(TreeMap<String, Node> nodes){
         for(Node index: nodes.values()){
             Node copy = new Node(index.getName(), index.getX(), index.getY());
             outputNodes.put(index.getName(), copy);
@@ -55,9 +55,9 @@ public class Wrangler {
      * @param targetX: the final X position of the pivot node
      * @param targetY: the final Y position of the pivot node
      * @param pivotNode: a reference node (can either belong to the list or a completly new one)
-     * @return A HashMap with transformed nodes
+     * @return A TreeMap with transformed nodes
      */
-    public HashMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
+    public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
                                                     float targetX, float targetY, Node pivotNode){
 
         //First part of the transformation representing rotation and scaling
