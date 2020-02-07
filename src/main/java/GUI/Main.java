@@ -8,7 +8,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class InputMain extends Application {
+public class Main extends Application {
+    Parent inputPage;
+    Parent outputPage;
 
     public static void main(String[] args) {
         launch(args);
@@ -17,15 +19,17 @@ public class InputMain extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("TheBackrowers");
-        Parent inputPage = null;
+        inputPage = null;
+        outputPage = null;
         try {
             inputPage = FXMLLoader.load(getClass().getResource("Input.fxml"));
+            outputPage = FXMLLoader.load(getClass().getResource("Output.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         assert inputPage != null;
+        assert outputPage != null;
         Scene scene = new Scene(inputPage);
-        //Scene scene = new Scene(new Pane(),1000,700);
         stage.setScene(scene);
         stage.show();
     }
