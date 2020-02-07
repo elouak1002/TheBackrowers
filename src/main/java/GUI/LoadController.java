@@ -21,7 +21,7 @@ import java.io.*;
 */
 public class LoadController {
 
-	private String fullPath;
+	private static String fullPath;
 
 	@FXML
 	private Button uploadButton;
@@ -37,47 +37,12 @@ public class LoadController {
     */
     @FXML
     private void initialize(){
-        dragTarget.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Dragboard db = dragTarget.startDragAndDrop(TransferMode.ANY);
-            }
-        });
-
-        dragTarget.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                if(event.getGestureSource()!=dragTarget && event.getDragboard().hasFiles()){
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-                event.consume();
-            }
-        });
-
-        dragTarget.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if(db.hasFiles()){
-                    File file = db.getFiles().get(0);
-                    if(file != null){
-                        fullPath = file.getAbsolutePath();
-                        setLabelText(file.getName());
-                        success = true;
-                    }
-                }
-
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });
 
     }
 
 
 
-    public String getPath() {
+    public static String getPath() {
     	return fullPath;
     }
 
@@ -94,13 +59,34 @@ public class LoadController {
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null ){
             fullPath = selectedFile.getAbsolutePath();
-            setLabelText(selectedFile.getName());
+            setLabelText("Selected File: " + selectedFile.getName());
         }
     }
 
 
-    private void setLabelText(String fileName){
-    	selectedFileLabel.setText("selected File: " + fileName);
+    private void setLabelText(String display){
+    	selectedFileLabel.setText(display);
+    }
+
+    @FXML
+    private void handleDragOver(DragEvent event){
+        if(event.getDragboard().hasFiles()){
+            event.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+
+    @FXML
+    private void handleDrop(DragEvent event){
+        File selectedFile = event.getDragboard().getFiles().get(0);
+        if(selectedFile != null ){
+            if(selectedFile.getName().endsWith(".txt")){
+                fullPath = selectedFile.getAbsolutePath();
+                setLabelText("Selected File: " + selectedFile.getName());
+            } else {
+                setLabelText("Only .txt files allowed");
+            }
+            
+        }
     }
 
 
