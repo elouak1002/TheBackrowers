@@ -58,6 +58,7 @@ public class OutputController {
         outputText.clear();
     }
 
+    //method to go to previous page(Input Page)
     @FXML
     private void goBack(javafx.event.ActionEvent actionEvent) throws Exception {
         Parent parent = FXMLLoader.load(getClass().getResource("Input.fxml"));
