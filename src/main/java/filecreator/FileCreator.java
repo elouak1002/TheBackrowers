@@ -7,6 +7,7 @@ import ALG.Node;
 import java.io.IOException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardOpenOption;
@@ -47,33 +48,39 @@ public class FileCreator {
 	// Name of the input file.
 	private String filename;
 
+	// A Parser object
+	private Parser parser;
+
+	// Path to new file
+	private Path destinationPath;
+
 	/**
 	 * Constructor for the FileCreator class.
 	 * @param nodeMap Map of the file nodes. 
-	 * @param parser Use to parse the input file.
+	 * @param originPath Path to the input file
+	 * @param destinationPath Path to save the output file to
+	 * @throws IOException
 	 */
-	public FileCreator(Map<String,Node> nodeMap , Parser parser, String filename) { 
+	public FileCreator(Map<String, Node> nodeMap, Path originPath, Path destinationPath) throws IOException{
+
+		parser = new Parser(originPath);
 		this.nodeMap = nodeMap;
-
-		try {
-			this.dataLines = parser.getLines();
-			this.fileLines = parser.getAllLines();
-		} catch (IOException e) {
-		}
-
+		this.dataLines = parser.getLines();
+		this.fileLines = parser.getAllLines();
 		this.lineParser = new DataLineParser();
-
 		this.beginPosition = parser.beginOfDataLines(fileLines, dataLines);
 		this.endPosition = parser.endOfDataLines(fileLines, dataLines);
+		this.filename = originPath.getFileName().toString();
+		this.destinationPath = destinationPath;
 
-		this.filename = filename;
 	}
 
 	/**
 	 * Modify the X and Y coordinates values from a DataLine using the values
 	 * given by the node map.
-	 * @param dataline a data line
+	 * @param dataLine a data line
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
+	 * @return modified data line
 	 */
 	private static DataLine modifyCoordinatesValues(DataLine dataLine, Map<String, Node> nodeMap) {	
 		// Get the node from the map using its name.
@@ -129,7 +136,7 @@ public class FileCreator {
 	 * @throws IOException
 	 */
 	private void createFile(List<String> fileLines, String fileName) throws IOException {
-		Files.write(Paths.get(fileName), 
+		Files.write(Paths.get(destinationPath.toString(), fileName),
 				fileLines, 
                 StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE);
@@ -149,12 +156,8 @@ public class FileCreator {
 	/**
 	 * Process the creation of the file.
 	 */
-	public void processOutputFile() {
+	public void processOutputFile() throws IOException{
 		modifyDataLines();
-		
-		try {
-			createFile(mergeLines(), getDerivedFileName());
-		} catch (IOException e) {
-		}
+		createFile(mergeLines(), getDerivedFileName());
 	}
 }
