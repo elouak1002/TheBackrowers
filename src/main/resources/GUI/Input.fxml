@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InputController">
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InputController">
    <center>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -57,7 +57,7 @@
             <Button fx:id="previous" mnemonicParsing="false" onAction="#setNodes" text="Previous" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <Button fx:id="next" mnemonicParsing="false" text="Next" BorderPane.alignment="CENTER" />
+            <Button fx:id="next" mnemonicParsing="false" onAction="#goNext" text="Next" BorderPane.alignment="CENTER" />
          </right>
          <top>
             <Slider fx:id="rotationAngleSlider" majorTickUnit="20.0" max="180.0" min="-180.0" minorTickCount="9" onMouseDragged="#sliderToField" prefHeight="38.0" prefWidth="600.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" BorderPane.alignment="CENTER" />
