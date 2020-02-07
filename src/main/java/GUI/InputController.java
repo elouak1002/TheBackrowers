@@ -52,13 +52,19 @@ public class InputController {
         new ExtensionFilter("Text Files", "*.txt"));
 
         File selectedFile = fileChooser.showOpenDialog(stage);
-        fullPath = selectedFile.getAbsolutePath();
-
+        if(selectedFile != null ){
+            fullPath = selectedFile.getAbsolutePath();
+            setLabelText(selectedFile.getName());
+        }
     }
 
     @FXML
     private void next(){
 
+    }
+
+    private void setLabelText(String fileName){
+    	selectedFileLabel.setText("selected File: " + fileName);
     }
 
 
