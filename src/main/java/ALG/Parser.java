@@ -112,7 +112,7 @@ public class Parser {
      * @param line to extract data from
      * @return Node's name
      */
-    public String extractName(String line){ return line.substring(0,line.indexOf("=")-1); }
+    public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }
 
 
 }

@@ -18,7 +18,6 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
-    private Wrangler wrangler;
     private TreeMap<String,Node> nodes;
     private Path path;
 
@@ -51,7 +50,6 @@ public class InputController {
             referenceNodeChoiceBox.getItems().clear();
             nodes = parser.createNodes(parser.getLines());
             referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
-            wrangler = new Wrangler(nodes);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,6 +71,7 @@ public class InputController {
 
     void inputToOutput(OutputController outputController) {
         try {
+            Wrangler wrangler = new Wrangler(nodes);
             FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
                     Float.parseFloat(rotationAngleField.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
@@ -81,7 +80,7 @@ public class InputController {
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue())
             ), path, path);
-            //outputController.setOutputText(fileCreator.processOutputFile());
+            outputController.setOutputText(fileCreator.processOutputFile());
         } catch (IOException e) {
             e.printStackTrace();
         }
