@@ -158,6 +158,6 @@ public class FileCreator {
 	 */
 	public List<String> processOutputFile() {
 		modifyDataLines();
-		return dataLines;
+		return mergeLines();
 	}
 }

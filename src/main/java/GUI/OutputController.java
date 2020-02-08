@@ -26,7 +26,7 @@ public class OutputController {
     private void saveFile() {
         String text = outputText.getText();
         Window stage = saveButton.getScene().getWindow();
-        fileChooser.setInitialDirectory(new File("C:\\"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("save");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
