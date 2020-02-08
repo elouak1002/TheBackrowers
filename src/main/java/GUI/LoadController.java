@@ -9,6 +9,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 import java.io.*;
+import java.nio.file.Path;
 
 /**
 * Controller class for the input window, where user chooses file.
@@ -16,12 +17,12 @@ import java.io.*;
 public class LoadController {
 	@FXML private Button uploadButton;
 	@FXML private Label selectedFileLabel;
-    private String fullPath;
+	private Path fullPath;
 
     @FXML
     public void initialize() {}
 
-    public String getPath() {
+    public Path getPath() {
     	return fullPath;
     }
 
@@ -36,7 +37,7 @@ public class LoadController {
 
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null ){
-            fullPath = selectedFile.getAbsolutePath();
+            fullPath = selectedFile.toPath();
             setLabelText("Selected File: " + selectedFile.getName());
         }
     }
@@ -57,7 +58,7 @@ public class LoadController {
         File selectedFile = event.getDragboard().getFiles().get(0);
         if(selectedFile != null ){
             if(selectedFile.getName().endsWith(".txt")){
-                fullPath = selectedFile.getAbsolutePath();
+                fullPath = selectedFile.toPath();
                 setLabelText("Selected File: " + selectedFile.getName());
             } else {
                 setLabelText("Only .txt files allowed");
