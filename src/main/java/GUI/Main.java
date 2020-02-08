@@ -51,25 +51,23 @@ public class Main extends Application {
         previous.setOnAction(event -> {
             if (currentPage == inputPage) {
                 currentPage = loadPage;
-                root.setCenter(currentPage);
+                root.setCenter(loadPage);
                 previous.setDisable(true);
             } else if (currentPage == outputPage) {
                 currentPage = inputPage;
                 root.setCenter(inputPage);
                 next.setDisable(false);
-                previous.setDisable(false);
             }
         });
         next.setOnAction(event -> {
             if (currentPage == loadPage) {
                 if (loadController.getPath() != null) {
                     currentPage = inputPage;
-                    root.setCenter(currentPage);
+                    root.setCenter(inputPage);
                     previous.setDisable(false);
                     inputController.setNodes(loadController.getPath());
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE);
-                    alert.showAndWait();
+                    new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
                 }
             } else if (currentPage == inputPage) {
                 if (inputController.inputIsValid()) {
@@ -78,8 +76,7 @@ public class Main extends Application {
                     next.setDisable(true);
                     inputController.inputToOutput(outputController);
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE);
-                    alert.showAndWait();
+                    new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
                 }
             }
         });
