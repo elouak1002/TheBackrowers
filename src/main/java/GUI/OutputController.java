@@ -1,6 +1,5 @@
 package GUI;
 
-import ALG.Parser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
@@ -51,15 +51,10 @@ public class OutputController {
         }
     }
 
-    void setOutputText(Parser parser) {
+    void setOutputText(List<String> outputStringList) {
         outputText.clear();
-        outputText.appendText("Testing Output\n\n");
-        try {
-            for (String string : parser.getAllLines()) {
-                outputText.appendText(string + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (String string : outputStringList) {
+            outputText.appendText(string + "\n");
         }
     }
 

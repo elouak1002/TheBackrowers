@@ -1,14 +1,14 @@
 package GUI;
 
-import ALG.Parser;
+import ALG.*;
+import filecreator.FileCreator;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.TreeMap;
 
 public class InputController {
     @FXML private Slider rotationAngleSlider;
@@ -18,7 +18,9 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
-    private Parser parser;
+    private Wrangler wrangler;
+    private TreeMap<String,Node> nodes;
+    private Path path;
 
     @FXML
     public void initialize() {}
@@ -42,18 +44,47 @@ public class InputController {
         if (isNumber) rotationAngleSlider.setValue(value);
     }
 
-    void setNodes(String path) {
-        parser = new Parser(Paths.get(path));
+    void setNodes(Path path) {
+        this.path = path;
+        Parser parser = new Parser(path);
         try {
             referenceNodeChoiceBox.getItems().clear();
-            referenceNodeChoiceBox.getItems().addAll(parser.createNodes(parser.getLines()).keySet());
+            nodes = parser.createNodes(parser.getLines());
+            referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+            wrangler = new Wrangler(nodes);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    boolean inputIsValid() {
+        try {
+            Float.parseFloat(rotationAngleField.getText());
+            Float.parseFloat(scaleFactorX.getText());
+            Float.parseFloat(scaleFactorY.getText());
+            Float.parseFloat(finalPositionX.getText());
+            Float.parseFloat(finalPositionY.getText());
+            nodes.get(referenceNodeChoiceBox.getValue());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     void inputToOutput(OutputController outputController) {
-        outputController.setOutputText(parser);
+        try {
+            FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
+                    Float.parseFloat(rotationAngleField.getText()),
+                    Float.parseFloat(scaleFactorX.getText()),
+                    Float.parseFloat(scaleFactorY.getText()),
+                    Float.parseFloat(finalPositionX.getText()),
+                    Float.parseFloat(finalPositionY.getText()),
+                    nodes.get(referenceNodeChoiceBox.getValue())
+            ), path, path);
+            //outputController.setOutputText(fileCreator.processOutputFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
