@@ -122,22 +122,20 @@ public class Wrangler {
      *  Method for measuring the X distance from the pivot point to the target
      * @param pivotNode: the reference node for calculating shifting distance
      * @param targetX: the location we want the pivotNode to be moved at
-     * @return: the distance from pivotNode to targetX
+     * @return the distance from pivotNode to targetX
      */
     private float getDeltaX(Node pivotNode, float targetX){
-        float deltaX = targetX - pivotNode.getX();
-        return deltaX;
+        return targetX - pivotNode.getX();
     }
     
     /**
      *  Method for measuring the Y distance from the pivot point to the target
      * @param pivotNode: the reference node for calculating shifting distance
      * @param targetY: the location we want the pivotNode to be moved at
-     * @return: the distance from pivotNode to targetY
+     * @return the distance from pivotNode to targetY
      */
     private float getDeltaY(Node pivotNode, float targetY){
-        float deltaY = targetY - pivotNode.getY();
-        return deltaY;
+        return targetY - pivotNode.getY();
     }
    
 }

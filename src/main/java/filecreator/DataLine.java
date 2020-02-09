@@ -32,13 +32,13 @@ public class DataLine {
 
 	/**
 	 * Create a new data line.
-	 * @param dataName
-	 * @param xCoord
-	 * @param yCoord
-	 * @param otherArguments
-	 * @param staticType
-	 * @param dynamicType
-	 * @param endLine
+	 * @param dataName dataName
+	 * @param xCoord xCoord
+	 * @param yCoord yCoord
+	 * @param otherArguments otherArguments
+	 * @param staticType staticType
+	 * @param dynamicType dynamicType
+	 * @param endLine endLine
 	 */
 	public DataLine(String dataName, String xCoord, String yCoord, List<String> otherArguments, String staticType, String dynamicType, String endLine) {
 		this.dataName =  dataName;
@@ -58,33 +58,19 @@ public class DataLine {
 	}
 
 	/**
-	 * @return The X coordinate of the node in the data line.
-	 */
-	public String getxCoord() {
-		return xCoord;
-	}
-	
-	/**
-	 * @return The Y coordinate of the node in the data line.
-	 */
-	public String getyCoord() {
-		return yCoord;
-	}
-
-	/**
 	 * Set a new value for the X coordinate in the data line.
-	 * @param xCoordIn
+	 * @param xCoordIn xCoordIn
 	 */
 	public void setxCoord(Float xCoordIn) {
-		xCoord = String.valueOf(xCoordIn) + "f";
+		xCoord = xCoordIn + "f";
 	}
 	
 	/**
 	 * Set a new value for the Y coordinate in the data line.
-	 * @param yCoordIn
+	 * @param yCoordIn yCoordIn
 	 */
 	public void setyCoord(Float yCoordIn) {
-		yCoord = String.valueOf(yCoordIn) + "f";
+		yCoord = yCoordIn + "f";
 	}
 
 	/**
@@ -93,8 +79,8 @@ public class DataLine {
 	 * separated by commas.
 	 */
 	private String otherArgumentsToString() {
-		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.toString().trim());
-		return result.substring(2, result.length());
+		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.trim());
+		return result.substring(2);
 	}
 
 	/**
