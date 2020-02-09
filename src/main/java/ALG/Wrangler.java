@@ -4,7 +4,7 @@ package ALG;
 import java.util.TreeMap;
 
 /**
- * The Algorithm class represents objects that allow transformations on the list of coordonates
+ * The Wrangler class represents objects that allow transformations on the list of coordonates
  * given in order to get the desired output
  */
 public class Wrangler {
@@ -43,7 +43,7 @@ public class Wrangler {
 //---------------------Transformation methods---------------------------------------
 
     /**
-     *  This is the main method for the Algorithm class. 
+     *  This is the main method for the Wrangler class.
      * Once all the parameters are set the method runs the entire set of transformations 
      * to get to the desired coordonate configuration
      *  The main concept here is a class that runs through the list and passes individual
@@ -122,22 +122,20 @@ public class Wrangler {
      *  Method for measuring the X distance from the pivot point to the target
      * @param pivotNode: the reference node for calculating shifting distance
      * @param targetX: the location we want the pivotNode to be moved at
-     * @return: the distance from pivotNode to targetX
+     * @return the distance from pivotNode to targetX
      */
     private float getDeltaX(Node pivotNode, float targetX){
-        float deltaX = targetX - pivotNode.getX();
-        return deltaX;
+        return targetX - pivotNode.getX();
     }
     
     /**
      *  Method for measuring the Y distance from the pivot point to the target
      * @param pivotNode: the reference node for calculating shifting distance
      * @param targetY: the location we want the pivotNode to be moved at
-     * @return: the distance from pivotNode to targetY
+     * @return the distance from pivotNode to targetY
      */
     private float getDeltaY(Node pivotNode, float targetY){
-        float deltaY = targetY - pivotNode.getY();
-        return deltaY;
+        return targetY - pivotNode.getY();
     }
    
 }
