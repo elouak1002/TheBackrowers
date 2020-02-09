@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.TreeMap;
 
 public class InputController {
@@ -69,7 +70,7 @@ public class InputController {
         }
     }
 
-    void inputToOutput(OutputController outputController) {
+    List<String> getOutput() {
         try {
             Wrangler wrangler = new Wrangler(nodes);
             FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
@@ -80,9 +81,10 @@ public class InputController {
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue())
             ), path);
-            outputController.setOutputText(fileCreator.processOutputFile());
+            return fileCreator.processOutputFile();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
