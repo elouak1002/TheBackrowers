@@ -79,7 +79,7 @@ public class InputController {
                     Float.parseFloat(finalPositionX.getText()),
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue())
-            ), path, path);
+            ), path);
             outputController.setOutputText(fileCreator.processOutputFile());
         } catch (IOException e) {
             e.printStackTrace();

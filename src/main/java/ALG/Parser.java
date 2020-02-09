@@ -16,7 +16,6 @@ import javafx.util.Pair;
 public class Parser {
 
     private Path path; //Path to the input file
-    private TreeMap<String,Node> nodeMap; // Main hashMap for storing each Node with its name
 
 
     /**
@@ -80,7 +79,8 @@ public class Parser {
      * @return a hashMap of Node objects
      */
     public TreeMap<String,Node> createNodes(List<String> filteredLines){
-        nodeMap = new TreeMap<>();
+        // Main hashMap for storing each Node with its name
+        TreeMap<String, Node> nodeMap = new TreeMap<>();
         for(String line : filteredLines){
             String name = extractName(line);
             Pair<Float, Float> coordinates = extractData(line);
@@ -99,7 +99,7 @@ public class Parser {
     public Pair<Float, Float> extractData(String line) {
         String dataString = line.substring(line.indexOf('(')+1, line.indexOf(')'));
 
-        List<String> dataList = new ArrayList<String>(Arrays.asList(dataString.trim().split(" , ")));
+        List<String> dataList = new ArrayList<>(Arrays.asList(dataString.trim().split(" , ")));
 
         Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;
         Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;
