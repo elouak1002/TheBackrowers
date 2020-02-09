@@ -17,9 +17,14 @@ public class OutputController {
     @FXML private TextArea outputText = new TextArea();
     @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
+    private String inputFileName;
 
     @FXML
     public void initialize() {}
+
+    void setInputFileName(String name) {
+        inputFileName = name;
+    }
 
     //This method allows you to choose where in you directory you would like to save your file
     @FXML
@@ -28,7 +33,7 @@ public class OutputController {
         Window stage = saveButton.getScene().getWindow();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
-        fileChooser.setInitialFileName("save");
+        fileChooser.setInitialFileName("global_" + inputFileName);
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
