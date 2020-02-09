@@ -4,7 +4,7 @@ package ALG;
 import java.util.TreeMap;
 
 /**
- * The Algorithm class represents objects that allow transformations on the list of coordonates
+ * The Wrangler class represents objects that allow transformations on the list of coordonates
  * given in order to get the desired output
  */
 public class Wrangler {
@@ -43,7 +43,7 @@ public class Wrangler {
 //---------------------Transformation methods---------------------------------------
 
     /**
-     *  This is the main method for the Algorithm class. 
+     *  This is the main method for the Wrangler class.
      * Once all the parameters are set the method runs the entire set of transformations 
      * to get to the desired coordonate configuration
      *  The main concept here is a class that runs through the list and passes individual
