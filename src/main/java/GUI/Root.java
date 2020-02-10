@@ -1,22 +1,27 @@
 package GUI;
 
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Root {
+public class Root extends Application {
     private Pane currentPage;
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
     private BorderPane root;
 
-    Root() {
+    @Override
+    public void start(Stage stage) {
+        stage.setTitle("TheBackrowers");
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
@@ -79,9 +84,9 @@ public class Root {
         root.setBottom(navigation);
         root.setCenter(loadPage);
         root.setStyle("-fx-background-color: aliceblue;");
-    }
 
-    Pane getPane() {
-        return root;
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
