@@ -60,21 +60,20 @@ public class Wrangler {
     public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
                                                     float targetX, float targetY, Node pivotNode){
 
-        //First part of the transformation representing rotation and scaling
+        //Preparing the variables for the transformations
         double theta = Math.toRadians(rotationAngle);
+        setRotation(pivotNode, theta);
+        setScale(pivotNode, scaleX, scaleY);
+        float deltaX = getDeltaX(pivotNode, targetX);
+        float deltaY = getDeltaY(pivotNode, targetY);
+
+        //Apply rotation, scale and shift to all the nodes
         for(Node index: outputNodes.values()){
             setRotation(index, theta);
             setScale(index, scaleX, scaleY);
-        }
-
-        //distance we want to shift by to match pivot node with the target
-        float deltaX = getDeltaX(pivotNode, targetX);
-        float deltaY = getDeltaY(pivotNode, targetY);
-        
-        //Last part of the transformation representing shifting and reducing to 2 point decimal
-        for(Node index: outputNodes.values()){
             setShift(index, deltaX, deltaY);
         }
+
         return outputNodes;
     }
    
