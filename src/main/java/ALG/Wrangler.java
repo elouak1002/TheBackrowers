@@ -61,11 +61,12 @@ public class Wrangler {
                                                     float targetX, float targetY, Node pivotNode){
 
         //Preparing the variables for the transformations
+        Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
         double theta = Math.toRadians(rotationAngle);
-        setRotation(pivotNode, theta);
-        setScale(pivotNode, scaleX, scaleY);
-        float deltaX = getDeltaX(pivotNode, targetX);
-        float deltaY = getDeltaY(pivotNode, targetY);
+        setRotation(pivot, theta);
+        setScale(pivot, scaleX, scaleY);
+        float deltaX = getDeltaX(pivot, targetX);
+        float deltaY = getDeltaY(pivot, targetY);
 
         //Apply rotation, scale and shift to all the nodes
         for(Node index: outputNodes.values()){
