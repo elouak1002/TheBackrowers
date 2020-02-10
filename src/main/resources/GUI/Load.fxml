@@ -4,29 +4,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoadController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoadController">
    <children>
-      <HBox alignment="CENTER" layoutX="190.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="358.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="294.0" prefWidth="600.0">
-               <children>
-                  <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" onAction="#chooseFile" text="Upload File">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin></Button>
-                  <TextArea fx:id="dragTarget" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="296.0" prefWidth="600.0" promptText="Drop file here..." VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <Label fx:id="selectedFileLabel" alignment="CENTER" prefHeight="17.0" prefWidth="314.0" text="Selected File: " />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+      <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" onAction="#chooseFile" text="Upload File">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <TextArea fx:id="dragTarget" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDropped="#handleDrop" onDragOver="#handleDragOver" promptText="Drop file here..." style="-fx-background-image: url(&quot;preview.png&quot;);" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </TextArea>
+      <Label fx:id="selectedFileLabel" alignment="CENTER" prefHeight="17.0" prefWidth="314.0" text="Selected File: " />
    </children>
-</AnchorPane>
+</VBox>
