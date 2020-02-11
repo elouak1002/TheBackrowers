@@ -2,22 +2,19 @@ package GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class Root extends Application {
-    private Pane currentPage;
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
-    private BorderPane root;
 
     @Override
     public void start(Stage stage) {
@@ -36,56 +33,17 @@ public class Root extends Application {
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
 
-        root = new BorderPane();
-        BorderPane navigation = new BorderPane();
+        loadController.setInputController(inputController);
+        inputController.setOutputController(outputController);
 
-        Button previous = new Button("Previous");
-        Button next = new Button("Next");
-        currentPage = loadPage;
-        previous.setDisable(true);
-
-        previous.setOnAction(event -> {
-            if (currentPage == inputPage) {
-                currentPage = loadPage;
-                root.setCenter(loadPage);
-                previous.setDisable(true);
-            } else if (currentPage == outputPage) {
-                currentPage = inputPage;
-                root.setCenter(inputPage);
-                next.setDisable(false);
-            }
-        });
-        next.setOnAction(event -> {
-            if (currentPage == loadPage) {
-                if (loadController.getPath() != null) {
-                    currentPage = inputPage;
-                    root.setCenter(inputPage);
-                    previous.setDisable(false);
-                    inputController.setNodes(loadController.getPath());
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
-                }
-            } else if (currentPage == inputPage) {
-                if (inputController.inputIsValid()) {
-                    currentPage = outputPage;
-                    root.setCenter(outputPage);
-                    next.setDisable(true);
-                    outputController.setOutputText(inputController.getOutput());
-                    outputController.setInputFileName(loadController.getPath().getFileName().toString());
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
-                }
-            }
-        });
-
-        navigation.setLeft(previous);
-        navigation.setRight(next);
-
-        root.setBottom(navigation);
-        root.setCenter(loadPage);
+        BorderPane root = new BorderPane();
+        VBox panes = new VBox(loadPage,inputPage,outputPage);
+        panes.setAlignment(Pos.CENTER);
+        root.setCenter(panes);
+        BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
         root.setStyle("-fx-background-color: aliceblue;");
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,600,900);
         stage.setScene(scene);
         stage.show();
     }

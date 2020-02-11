@@ -14,13 +14,18 @@ import java.io.*;
 
 public class OutputController {
     @FXML private Button saveButton = new Button();
+    @FXML private Button clearButton = new Button();
     @FXML private TextArea outputText = new TextArea();
     @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
     private String inputFileName;
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        saveButton.setDisable(true);
+        clearButton.setDisable(true);
+        outputText.setDisable(true);
+    }
 
     void setInputFileName(String name) {
         inputFileName = name;
@@ -61,6 +66,9 @@ public class OutputController {
         for (String string : outputStringList) {
             outputText.appendText(string + "\n");
         }
+        saveButton.setDisable(false);
+        clearButton.setDisable(false);
+        outputText.setDisable(false);
     }
 
     //Clear output text

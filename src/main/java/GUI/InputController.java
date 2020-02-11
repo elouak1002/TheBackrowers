@@ -19,11 +19,33 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
+    @FXML private Button confirmInput;
     private TreeMap<String,Node> nodes;
     private Path path;
+    private OutputController outputController;
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        rotationAngleSlider.setDisable(true);
+        rotationAngleField.setDisable(true);
+        referenceNodeChoiceBox.setDisable(true);
+        scaleFactorX.setDisable(true);
+        scaleFactorY.setDisable(true);
+        finalPositionX.setDisable(true);
+        finalPositionY.setDisable(true);
+        confirmInput.setDisable(true);
+    }
+
+    void enableInput() {
+        rotationAngleSlider.setDisable(false);
+        rotationAngleField.setDisable(false);
+        referenceNodeChoiceBox.setDisable(false);
+        scaleFactorX.setDisable(false);
+        scaleFactorY.setDisable(false);
+        finalPositionX.setDisable(false);
+        finalPositionY.setDisable(false);
+        confirmInput.setDisable(false);
+    }
 
     @FXML
     private void sliderToField() {
@@ -53,6 +75,16 @@ public class InputController {
             referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void confirmInput() {
+        if (inputIsValid()) {
+            outputController.setOutputText(getOutput());
+            outputController.setInputFileName(path.getFileName().toString());
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
         }
     }
 
@@ -86,5 +118,9 @@ public class InputController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    void setOutputController(OutputController outputController) {
+        this.outputController = outputController;
     }
 }

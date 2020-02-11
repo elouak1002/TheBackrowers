@@ -18,13 +18,10 @@ public class LoadController {
 	@FXML private Button uploadButton;
 	@FXML private Label selectedFileLabel;
 	private Path fullPath;
+	private InputController inputController;
 
     @FXML
     public void initialize() {}
-
-    public Path getPath() {
-    	return fullPath;
-    }
 
     @FXML
     private void chooseFile(){
@@ -39,6 +36,8 @@ public class LoadController {
         if(selectedFile != null ){
             fullPath = selectedFile.toPath();
             setLabelText("Selected File: " + selectedFile.getName());
+            inputController.enableInput();
+            inputController.setNodes(fullPath);
         }
     }
 
@@ -60,9 +59,15 @@ public class LoadController {
             if(selectedFile.getName().endsWith(".txt")){
                 fullPath = selectedFile.toPath();
                 setLabelText("Selected File: " + selectedFile.getName());
+                inputController.enableInput();
+                inputController.setNodes(fullPath);
             } else {
                 setLabelText("Only .txt files allowed");
             }
         }
+    }
+
+    void setInputController(InputController inputController) {
+        this.inputController = inputController;
     }
 }
