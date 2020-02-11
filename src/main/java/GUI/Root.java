@@ -5,8 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class Root extends Application {
         inputController.setOutputController(outputController);
 
         BorderPane root = new BorderPane();
-        VBox panes = new VBox(loadPage,inputPage,outputPage);
+        FlowPane panes = new FlowPane(loadPage,inputPage,outputPage);
         panes.setAlignment(Pos.CENTER);
         root.setCenter(panes);
         BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
