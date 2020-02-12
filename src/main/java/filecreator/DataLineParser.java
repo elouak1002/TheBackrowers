@@ -2,6 +2,7 @@ package filecreator; // File Creation package.
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.LinkedList;
 
 /**
@@ -38,7 +39,7 @@ public class DataLineParser {
 	 * Parse the line and set the fields to their corresponding values.
 	 * @param line The line to be parsed.
 	 */
-	private void parseNewLine(String line) {
+	public void parseNewLine(String line) {
 		this.line = line;
 		this.namePart = getNamePart();
 		this.argumentPart = getArgumentPart();
@@ -49,7 +50,7 @@ public class DataLineParser {
 	 * @return the name part of the data line, everything before the "=" sign.
 	 */
 	private List<String> getNamePart() {
-		return Arrays.asList(line.substring(0, line.indexOf("=")).split(" "));
+		return Arrays.asList(line.substring(0, line.indexOf("=")).split(" ")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
 	}
 
 	/**
@@ -57,13 +58,13 @@ public class DataLineParser {
 	 */
 	private List<String> getArgumentPart() {
 		String assignmentPart = line.substring(line.indexOf("=")+1);
-		return Arrays.asList(assignmentPart.substring(assignmentPart.indexOf("(")+1, assignmentPart.indexOf(")")).trim().split(","));
+		return Arrays.asList(assignmentPart.substring(assignmentPart.indexOf("(")+1, assignmentPart.indexOf(")")).trim().split(",")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
 	}
 
 	/**
 	 * @return end part of the data line, everything after the closing parenthesis of the node creation.
 	 */
-	private String getEndPart() {
+	public String getEndPart() {
 		String assignmentPart = line.substring(line.indexOf("=")+1);
 		return assignmentPart.substring(assignmentPart.indexOf(")")+1).trim();
 	}
@@ -71,7 +72,7 @@ public class DataLineParser {
 	/**
 	 * @return the dynamic type of the node created in the data line.
 	 */
-	private String getDynamicType() {
+	public String getDynamicType() {
 		String assignmentPart = line.substring(line.indexOf("=")+1);
 		return assignmentPart.substring(0,assignmentPart.indexOf("(")).replace("new", "").trim();
 	}
@@ -79,38 +80,47 @@ public class DataLineParser {
 	/**
 	 * @return the static type of the node created in the data line.
 	 */
-	private String getStaticType() {
-		return namePart.get(0);
+	public String getStaticType() {
+		if (namePart != null && namePart.size() > 0)
+			return namePart.get(0);
+		return "";
 	}
 
 	/**
 	 * @return the variable name of the node created in the data line.
 	 */
-	private String getDataName() {
-		return namePart.get(1);
+	public String getDataName() {
+		if (namePart != null && namePart.size() > 1)
+			return namePart.get(1);
+		return "";
 	}
 
 	/**
 	 * @return the X Coordinate of the node created in the data line.
 	 */
-	private String getxCoord() {
-		return argumentPart.get(0);
+	public String getxCoord() {
+		if (argumentPart != null && argumentPart.size() > 0)
+			return argumentPart.get(0);
+		return "";
 	}
 
 	/**
 	 * @return the Y Coordinate of the node created in the data line.
 	 */
-	private String getyCoord() {
-		return argumentPart.get(1);
+	public String getyCoord() {
+		if (argumentPart != null && argumentPart.size() > 1) 
+			return argumentPart.get(1);
+		return "";
 	}
 
 	/**
 	 * @return A list of the remaining arguments of the node created in the data line.
 	 */
-	private List<String> getOtherArguments() {
+	public List<String> getOtherArguments() {
 		LinkedList<String> tempArgList = new LinkedList<>(argumentPart);
-		tempArgList.removeFirst();
-		tempArgList.removeFirst();
+		for (int i=0; i<2; i++)
+			if (tempArgList.size() > 0)
+				tempArgList.removeFirst();
 		return tempArgList;
 	}
 
