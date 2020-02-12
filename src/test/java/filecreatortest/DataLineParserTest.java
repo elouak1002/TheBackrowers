@@ -58,7 +58,7 @@ public class DataLineParserTest {
 	}
 
 	@Test
-	public void testDataLineCreation() {
+	public void dataLineCreationTest() {
 		parser.parseNewLine(inputLine);
 		assertEquals(parser.getStaticType(), staticType);
 		assertEquals(parser.getDataName(), dataName);

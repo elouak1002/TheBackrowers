@@ -46,7 +46,7 @@ public class DataLineTest {
 	}
 
 	@Test
-	public void testStringOutput() {
+	public void stringOutputTest() {
 		DataLine line = new DataLine("name", xCoord, yCoord, otherArgs, "Node", "Node", "");
 		assertEquals(line.toString(),output);
 	}
