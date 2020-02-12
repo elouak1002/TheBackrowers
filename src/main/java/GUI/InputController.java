@@ -87,9 +87,4 @@ public class InputController {
             return null;
         }
     }
-
-    @FXML
-    private void showNodes() {
-        referenceNodeChoiceBox.show();
-    }
 }

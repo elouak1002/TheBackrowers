@@ -69,7 +69,7 @@ public class ParserTest {
     @Test
     public void extractNameTest(){
         String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
-        String expected = "Node HenRaph_04_493_264";
+        String expected = "HenRaph_04_493_264";
         String name = parser.extractName(line);
         assertEquals(expected, name);
     }
@@ -81,8 +81,8 @@ public class ParserTest {
         List<String> dataToMatch = Arrays.asList(testInput,testInput2);
 
         HashMap<String, Node> expectedOutcomes = new HashMap<>();
-        expectedOutcomes.put("Node MajorProject",new Node("Node MajorProject",67.040802f , 67.040802f));
-        expectedOutcomes.put("Room BushHouseRoom",new Node("Room BushHouseRoom",127.040802f , 335.411697f));
+        expectedOutcomes.put("MajorProject",new Node("Node MajorProject",67.040802f , 67.040802f));
+        expectedOutcomes.put("BushHouseRoom",new Node("Room BushHouseRoom",127.040802f , 335.411697f));
 
         assertEquals(expectedOutcomes.keySet(), parser.createNodes(dataToMatch).keySet());
     }
