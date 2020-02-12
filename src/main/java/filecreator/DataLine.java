@@ -42,8 +42,8 @@ public class DataLine {
 	 */
 	public DataLine(String dataName, String xCoord, String yCoord, List<String> otherArguments, String staticType, String dynamicType, String endLine) {
 		this.dataName =  dataName;
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
+		this.xCoord = xCoord.trim();
+		this.yCoord = yCoord.trim();
 		this.otherArguments = otherArguments;
 		this.staticType = staticType;
 		this.dynamicType = dynamicType;
@@ -79,7 +79,7 @@ public class DataLine {
 	 * separated by commas.
 	 */
 	private String otherArgumentsToString() {
-		if (otherArguments == null) {
+		if (otherArguments == null ||  otherArguments.size() == 0) {
 			return "";
 		}
 		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.trim());
