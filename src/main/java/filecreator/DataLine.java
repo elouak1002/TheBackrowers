@@ -79,14 +79,36 @@ public class DataLine {
 	 * separated by commas.
 	 */
 	private String otherArgumentsToString() {
+		if (otherArguments == null) {
+			return "";
+		}
 		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.trim());
-		return result.substring(2);
+		return result.substring(3);
+	}
+
+	/**
+	 * @return All the arguments format as expected,
+	 * depending on which arguments appear in the data.
+	 */
+	private String formatArguments() {
+		String allArguments = "";
+		allArguments += xCoord;
+
+		if (!allArguments.equals("") && !yCoord.equals(""))
+			allArguments += " , ";
+		allArguments += yCoord;
+
+		if (!allArguments.equals("") && !otherArgumentsToString().equals(""))
+			allArguments += " , ";
+		allArguments += otherArgumentsToString();
+
+		return allArguments;
 	}
 
 	/**
 	 * @return The Data Line as a string with the expected format.
 	 */
 	public String toString() {
-		return staticType + " " + dataName + " = new " + dynamicType + "( " + xCoord + " , " + yCoord + " ," + otherArgumentsToString() + " )" + endLine;
+		return staticType + " " + dataName + " = new " + dynamicType + "( " + formatArguments() + " )" + endLine;
 	}
 }
