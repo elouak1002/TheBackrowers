@@ -4,6 +4,7 @@ import ALG.*;
 import filecreator.FileCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class InputController {
+    @FXML private VBox vBox;
     @FXML private Slider rotationAngleSlider;
     @FXML private TextField rotationAngleField;
     @FXML private ChoiceBox<String> referenceNodeChoiceBox;
@@ -19,32 +21,21 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
-    @FXML private Button confirmInput;
     private TreeMap<String,Node> nodes;
     private Path path;
     private OutputController outputController;
 
     @FXML
     public void initialize() {
-        rotationAngleSlider.setDisable(true);
-        rotationAngleField.setDisable(true);
-        referenceNodeChoiceBox.setDisable(true);
-        scaleFactorX.setDisable(true);
-        scaleFactorY.setDisable(true);
-        finalPositionX.setDisable(true);
-        finalPositionY.setDisable(true);
-        confirmInput.setDisable(true);
+        for (javafx.scene.Node node : vBox.getChildren()) {
+            node.setDisable(true);
+        }
     }
 
     void enableInput() {
-        rotationAngleSlider.setDisable(false);
-        rotationAngleField.setDisable(false);
-        referenceNodeChoiceBox.setDisable(false);
-        scaleFactorX.setDisable(false);
-        scaleFactorY.setDisable(false);
-        finalPositionX.setDisable(false);
-        finalPositionY.setDisable(false);
-        confirmInput.setDisable(false);
+        for (javafx.scene.Node node : vBox.getChildren()) {
+            node.setDisable(false);
+        }
     }
 
     @FXML
