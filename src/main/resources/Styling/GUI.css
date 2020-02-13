@@ -4,7 +4,7 @@
 /*
     Load fxml
 */
-#load_root {
+#loadRoot {
     -fx-background-color: #CCCCCC;
 }
 
@@ -17,21 +17,21 @@
 /*
     Input fxml
 */
-#input_root {
+#inputRoot {
     -fx-background-color: #CCCCCC;
     -fx-border-width: 2px;
     -fx-padding: 10;
     -fx-spacing: 8;
 }
 
-#input_grid1, #rotationAngleSlider {
+#inputGrid1, #rotationAngleSlider {
     -fx-background-color: #B8B8B8;
     -fx-border-width: 0px;
     -fx-padding: 10;
     -fx-spacing: 0;
 }
 
-#input_grid2 {
+#inputGrid2 {
     -fx-background-color: #B8B8B8;
     -fx-border-width: 4px;
     -fx-padding: 10;
@@ -39,7 +39,7 @@
 
 }
 
-#input_grid1 .label, #input_grid2 .label {
+#inputGrid1 .label, #inputGrid2 .label {
     -fx-alignment: center;
     -fx-background-radius: 9,8,5,4;
     -fx-font-weight: bold;
@@ -55,7 +55,7 @@
     -fx-border-width: 2px;
 }
 
-#input_rotationAngle, #input_referenceNode, #input_scaleFactor, #input_FinalNodePos {
+#inputRotationAngle, #inputReferenceNode, #inputScaleFactor, #inputFinalNodePos {
     -fx-background-color: #A6A6A6;
     -fx-max-width:200;
 }
@@ -66,7 +66,7 @@
 /*
     Output fxml
 */
-#output_root {
+#outputRoot {
     -fx-border-width: 2px;
     -fx-padding: 10;
     -fx-spacing: 8;

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class InputController {
-    @FXML private VBox input_root;
+    @FXML private VBox inputRoot;
     @FXML private Slider rotationAngleSlider;
     @FXML private TextField rotationAngleField;
     @FXML private ChoiceBox<String> referenceNodeChoiceBox;
@@ -27,13 +27,13 @@ public class InputController {
 
     @FXML
     public void initialize() {
-        for (javafx.scene.Node node : input_root.getChildren()) {
+        for (javafx.scene.Node node : inputRoot.getChildren()) {
             node.setDisable(true);
         }
     }
 
     void enableInput() {
-        for (javafx.scene.Node node : input_root.getChildren()) {
+        for (javafx.scene.Node node : inputRoot.getChildren()) {
             node.setDisable(false);
         }
     }
