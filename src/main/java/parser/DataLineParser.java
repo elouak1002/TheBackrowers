@@ -1,4 +1,4 @@
-package filecreator; // File Creation package.
+package parser; // File Creation package.
 
 import java.util.Arrays;
 import java.util.List;

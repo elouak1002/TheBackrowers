@@ -1,138 +1,118 @@
-package filecreator; // File Creation package.
+package parser;	
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.LinkedList;
+import java.io.IOException;	
+import java.nio.file.Files;	
+import java.nio.file.Path;	
+import java.util.*;	
 
-/**
- * Parse the information from a line of data of the input file.
- * and create a DataLine representation of it.
- * Call the createDataLine method in order to make use of it.
- */
-public class DataLineParser {
-
-	// The name part of the data line. (Static Type + Variable Name)
-	private List<String> namePart;
-	
-	// The argument part of the data line. (Xcoord + Ycoord + The remaining arguments)
-	private List<String> argumentPart;
-	
-	// The end part of the data line. (The end of the line as a string)
-	private String endPart;
-	
-	// The full data line.
-	private String line;
+import javafx.util.Pair;	
 
 
-	/**
-	 * Create a DataLineParser and set all fields to their default values.
-	 */
-	public DataLineParser() {
-		namePart = null;
-		argumentPart = null;
-		endPart = "";
-		line = "";
-	}
-	
-	/**
-	 * Parse the line and set the fields to their corresponding values.
-	 * @param line The line to be parsed.
-	 */
-	public void parseNewLine(String line) {
-		this.line = line;
-		this.namePart = getNamePart();
-		this.argumentPart = getArgumentPart();
-		this.endPart = getEndPart();
-	}
+/**	
+ * Parser class is responsible for parsing lines from 	
+ * an input file and creating a list of Node with the	
+ * data from the file	
+ */	
+public class Parser {	
 
-	/**
-	 * @return the name part of the data line, everything before the "=" sign.
-	 */
-	private List<String> getNamePart() {
-		return Arrays.asList(line.substring(0, line.indexOf("=")).split(" ")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
-	}
+    private Path path; //Path to the input file	
 
-	/**
-	 * @return the argument part of the data line, split by commas.
-	 */
-	private List<String> getArgumentPart() {
-		String assignmentPart = line.substring(line.indexOf("=")+1);
-		return Arrays.asList(assignmentPart.substring(assignmentPart.indexOf("(")+1, assignmentPart.indexOf(")")).trim().split(",")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
-	}
 
-	/**
-	 * @return end part of the data line, everything after the closing parenthesis of the node creation.
-	 */
-	public String getEndPart() {
-		String assignmentPart = line.substring(line.indexOf("=")+1);
-		return assignmentPart.substring(assignmentPart.indexOf(")")+1).trim();
-	}
+    /**	
+     * Constructor for the Parser class	
+     * @param path Path to the input file	
+     */	
+    public Parser(Path path){	
+        this.path = path;	
+    }	
 
-	/**
-	 * @return the dynamic type of the node created in the data line.
-	 */
-	public String getDynamicType() {
-		String assignmentPart = line.substring(line.indexOf("=")+1);
-		return assignmentPart.substring(0,assignmentPart.indexOf("(")).replace("new", "").trim();
-	}
+    /**	
+     * @return List of lines that contain data	
+     * @throws IOException if the file was not found	
+     */	
+    public List<String> getLines() throws IOException { return filter(getAllLines()); }	
 
-	/**
-	 * @return the static type of the node created in the data line.
-	 */
-	public String getStaticType() {
-		if (namePart != null && namePart.size() > 0)
-			return namePart.get(0);
-		return "";
-	}
+    /**	
+     * @return All lines from the input file	
+     * @throws IOException if the file was not found	
+     */	
+    public List<String> getAllLines() throws IOException{ return Files.readAllLines(path); }	
 
-	/**
-	 * @return the variable name of the node created in the data line.
-	 */
-	public String getDataName() {
-		if (namePart != null && namePart.size() > 1)
-			return namePart.get(1);
-		return "";
-	}
+    /**	
+     * Filters out lines that do not contain data	
+     * @param lines List of lines from a file	
+     * @return List of lines with data	
+     */	
+    private List<String> filter(List<String> lines){	
+        lines.removeIf(line ->	
+                line.contains("NODE LISTS")	
+                        || line.startsWith("//")	
+                        || line.contains("addAllNeighbours")	
+                        || line.startsWith(" ")	
+                        || line.equals(""));	
 
-	/**
-	 * @return the X Coordinate of the node created in the data line.
-	 */
-	public String getxCoord() {
-		if (argumentPart != null && argumentPart.size() > 0)
-			return argumentPart.get(0);
-		return "";
-	}
+        return lines;	
+    }	
 
-	/**
-	 * @return the Y Coordinate of the node created in the data line.
-	 */
-	public String getyCoord() {
-		if (argumentPart != null && argumentPart.size() > 1) 
-			return argumentPart.get(1);
-		return "";
-	}
+	/**	
+	 * @return The position of the first data line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int beginOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
+        if (filteredLines.size() > 0) {	
+            return fullLines.indexOf((filteredLines.get(0)));	
+        }	
+        return -1;	
+	}	
 
-	/**
-	 * @return A list of the remaining arguments of the node created in the data line.
-	 */
-	public List<String> getOtherArguments() {
-		LinkedList<String> tempArgList = new LinkedList<>(argumentPart);
-		for (int i=0; i<2; i++)
-			if (tempArgList.size() > 0)
-				tempArgList.removeFirst();
-		return tempArgList;
-	}
+    /**	
+	 * @return The position of the last data line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int endOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
+        return fullLines.indexOf(filteredLines.get(filteredLines.size() - 1));   	
+	}	
 
-	/**
-	 * @return a DataLine using the String representation of it in the input file.
-	 */
-	public DataLine createDataLine(String line) {	
-		// Parse the line and set fields values.
-		parseNewLine(line); 
+    /**	
+     * Method to populate the hashMap with Node objects, mapping each to its name	
+     * @param filteredLines list of lines which contain data	
+     * @return a hashMap of Node objects	
+     */	
+    public TreeMap<String,Node> createNodes(List<String> filteredLines){	
+        // Main hashMap for storing each Node with its name	
+        TreeMap<String, Node> nodeMap = new TreeMap<>();	
+        for(String line : filteredLines){	
+            String name = extractName(line);	
+            Pair<Float, Float> coordinates = extractData(line);	
+            Node node = new Node(name, coordinates.getKey(), coordinates.getValue());	
+            nodeMap.put(name, node);	
+        }	
 
-		// Return a new DataLine object, calling the method of the parser to retrieve the needed information.
-		return new DataLine(getDataName(),getxCoord(),getyCoord(),getOtherArguments(),getStaticType(),getDynamicType(),endPart); 
-	}
+        return nodeMap;	
+    }	
 
-}
+    /**	
+     * Method to extract the coordinates of a node from a line	
+     * @param line to extract the data from	
+     * @return Node's coordinates enclosed in a Pair object	
+     */	
+    public Pair<Float, Float> extractData(String line) {	
+        String dataString = line.substring(line.indexOf('(')+1, line.indexOf(')'));	
+
+        List<String> dataList = new ArrayList<>(Arrays.asList(dataString.trim().split(" , ")));	
+
+        Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
+        Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
+
+        return new Pair<>(xPos, yPos);	
+    }	
+
+    /**	
+     * Method to extract the name of a node from a line	
+     * @param line to extract data from	
+     * @return Node's name	
+     */	
+    public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }	
+
+
+} 
