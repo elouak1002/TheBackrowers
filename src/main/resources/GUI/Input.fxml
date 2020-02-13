@@ -29,7 +29,7 @@
             <Label fx:id="inputRotationAngle" text="Rotation Angle" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <Slider fx:id="rotationAngleSlider" majorTickUnit="20.0" max="180.0" min="-180.0" minorTickCount="9" onMouseDragged="#sliderToField" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="rotationAngleSlider" majorTickUnit="20.0" max="180.0" min="-180.0" minorTickCount="9" onMouseClicked="#sliderToField" onMouseDragged="#sliderToField" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
       <GridPane fx:id="inputGrid2" prefHeight="136.0" prefWidth="579.0" VBox.vgrow="ALWAYS">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
