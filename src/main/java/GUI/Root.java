@@ -48,13 +48,14 @@ public class Root extends Application {
         //insert fxml panes into structured containers
         BorderPane root = new BorderPane();
         FlowPane panes = new FlowPane(loadPage,inputPage,outputPage);
+        panes.setVgap(2);
         panes.setAlignment(Pos.CENTER);
         root.setCenter(panes);
         BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
         root.setStyle("-fx-background-color: #DDDDDD ;");
 
         //show stage
-        Scene scene = new Scene(root,600,700);
+        Scene scene = new Scene(root,620,780);
         stage.setScene(scene);
         stage.show();
     }
