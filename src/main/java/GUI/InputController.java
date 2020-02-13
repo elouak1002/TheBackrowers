@@ -40,8 +40,10 @@ public class InputController {
 
     @FXML
     private void sliderToField() {
-        rotationAngleField.setText(String.valueOf(
-                new DecimalFormat("#").format(rotationAngleSlider.getValue())));
+//        rotationAngleField.setText(String.valueOf(
+//                new DecimalFormat("#").format(rotationAngleSlider.getValue())));
+        rotationAngleSlider.setOnMouseReleased(event -> rotationAngleField.setText(String.valueOf(
+                new DecimalFormat("#").format(rotationAngleSlider.getValue()))));
     }
 
     @FXML
