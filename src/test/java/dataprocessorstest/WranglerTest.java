@@ -1,4 +1,4 @@
-package ALGTest;
+package dataprocessorstest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,8 +8,8 @@ import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import ALG.Node;
-import ALG.Wrangler;
+import datastructures.Node;
+import dataprocessors.Wrangler;
 
 public class WranglerTest{
 
