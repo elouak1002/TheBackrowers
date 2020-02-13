@@ -1,8 +1,8 @@
-package ALGTest;
+package parsertest;
 
-import ALG.*;
+import parser.Parser;
+import datastructures.Node;
 import javafx.util.Pair;
-import jdk.jfr.Timestamp;
 
 import org.junit.Before;
 import org.junit.Test;

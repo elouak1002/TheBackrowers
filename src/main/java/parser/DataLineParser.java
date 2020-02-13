@@ -1,9 +1,11 @@
-package filecreator; // File Creation package.
+package parser; // File Creation package.
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.LinkedList;
+
+import datastructures.DataLine;
 
 /**
  * Parse the information from a line of data of the input file.

@@ -1,4 +1,4 @@
-package filecreatortest;
+package datastructurestest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.ArrayList;
 
-import filecreator.DataLine;
+import datastructures.DataLine;
 
 /**
  * Test the String creation of the Data Line, especially the arguments creation.

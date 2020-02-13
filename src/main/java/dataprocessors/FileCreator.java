@@ -1,8 +1,10 @@
-package filecreator;
+package dataprocessors;
 
 // import classes from the ALG package;
-import ALG.Parser;
-import ALG.Node;
+import parser.Parser;
+import parser.DataLineParser;
+import datastructures.Node;
+import datastructures.DataLine;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package filecreator; // File Creation package.
+package datastructures; // File Creation package.
 
 import java.util.List;
 

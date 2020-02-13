@@ -1,5 +1,6 @@
-package ALG;
+package dataprocessors;
 
+import datastructures.Node;
 
 import java.util.TreeMap;
 

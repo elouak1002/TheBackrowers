@@ -1,4 +1,4 @@
-package filecreatortest;
+package parsertest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
-import filecreator.DataLineParser;
+import parser.DataLineParser;
 
 /**
  * Test that each part of the parser is working as expected.
