@@ -1,6 +1,7 @@
-package ALGTest;
+package parsertest;
 
-import ALG.*;
+import parser.Parser;
+import datastructures.Node;
 import javafx.util.Pair;
 
 import org.junit.Before;

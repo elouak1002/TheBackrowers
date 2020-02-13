@@ -1,4 +1,4 @@
-package filecreatortest;
+package dataprocessorstest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import filecreator.FileCreator;
-import ALG.Node;
+import dataprocessors.FileCreator;
+import datastructures.Node;
 
 /**
  * Test the String creation of the Data Line, especially the arguments creation.
