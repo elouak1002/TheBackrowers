@@ -12,16 +12,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Root extends Application {
+
+    //initialize panes
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
 
     @Override
     public void start(Stage stage) {
+        //set stage title
         stage.setTitle("TheBackrowers");
+
+        //load fxml files
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
+
+        //try-catch declaring of panes
         try {
             loadPage = loadPageLoader.load();
             inputPage = inputPageLoader.load();
@@ -29,6 +36,8 @@ public class Root extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //declare controllers
         LoadController loadController = loadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
@@ -36,6 +45,7 @@ public class Root extends Application {
         loadController.setInputController(inputController);
         inputController.setOutputController(outputController);
 
+        //insert fxml panes into structured containers
         BorderPane root = new BorderPane();
         FlowPane panes = new FlowPane(loadPage,inputPage,outputPage);
         panes.setAlignment(Pos.CENTER);
@@ -43,7 +53,8 @@ public class Root extends Application {
         BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
         root.setStyle("-fx-background-color: aliceblue;");
 
-        Scene scene = new Scene(root,600,900);
+        //show stage
+        Scene scene = new Scene(root,600,700);
         stage.setScene(scene);
         stage.show();
     }
