@@ -51,7 +51,7 @@ public class Root extends Application {
         panes.setAlignment(Pos.CENTER);
         root.setCenter(panes);
         BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
-        root.setStyle("-fx-background-color: aliceblue;");
+        root.setStyle("-fx-background-color: #DDDDDD ;");
 
         //show stage
         Scene scene = new Scene(root,600,700);

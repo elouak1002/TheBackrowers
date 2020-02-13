@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OutputController">
+<VBox prefHeight="225.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.OutputController">
    <children>
-      <TextArea fx:id="outputText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+      <TextArea fx:id="outputText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="182.0" prefWidth="560.0" VBox.vgrow="ALWAYS" />
       <BorderPane>
-         <top>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" prefHeight="26.0" prefWidth="78.0" text="Save" BorderPane.alignment="CENTER" />
-         </top>
-         <bottom>
-            <Label fx:id="fileSaved" prefHeight="17.0" prefWidth="122.0" BorderPane.alignment="CENTER" />
-         </bottom>
          <center>
-            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearTextField" prefHeight="26.0" prefWidth="78.0" text="Clear" BorderPane.alignment="CENTER" />
+            <Label fx:id="fileSaved" prefHeight="17.0" prefWidth="122.0" BorderPane.alignment="CENTER" />
          </center>
+         <left>
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearTextField" prefHeight="26.0" prefWidth="78.0" text="Clear" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" prefHeight="26.0" prefWidth="78.0" text="Save" BorderPane.alignment="CENTER" />
+         </right>
       </BorderPane>
    </children>
    <padding>

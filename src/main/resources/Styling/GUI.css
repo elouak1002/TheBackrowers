@@ -1,0 +1,23 @@
+
+/*
+    Load fxml
+*/
+#dragTarget .content {
+    -fx-background-color: white;
+}
+#dragTarget .text {
+    -fx-text-alignment: center;
+}
+
+/*
+    Input fxml
+*/
+#vBox {
+    -fx-border-width: 2px;
+    -fx-padding: 10;
+    -fx-spacing: 8;
+}
+
+/*
+    Output fxml
+*/

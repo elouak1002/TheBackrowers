@@ -13,7 +13,7 @@
             <Insets top="10.0" />
          </VBox.margin>
       </Button>
-      <TextArea fx:id="dragTarget" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDropped="#handleDrop" onDragOver="#handleDragOver" promptText="Drop file here..." style="-fx-background-image: url(&quot;preview.png&quot;);" VBox.vgrow="ALWAYS">
+      <TextArea fx:id="dragTarget" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDropped="#handleDrop" onDragOver="#handleDragOver" promptText="Drop file here..." stylesheets="@../Styling/GUI.css" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
