@@ -25,7 +25,7 @@
          <children>
             <Label fx:id="inputReferenceNode" text="Reference Node" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <ChoiceBox fx:id="referenceNodeChoiceBox" prefHeight="26.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="rotationAngleField" onAction="#fieldToSlider" prefWidth="264.0" GridPane.rowIndex="1" />
+            <TextField fx:id="rotationAngleField" onAction="#fieldToSlider" onKeyTyped="#fieldToSlider" prefWidth="264.0" GridPane.rowIndex="1" />
             <Label fx:id="inputRotationAngle" text="Rotation Angle" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
