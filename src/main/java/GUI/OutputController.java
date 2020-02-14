@@ -1,11 +1,13 @@
 package GUI;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -33,7 +35,7 @@ public class OutputController {
         Window stage = saveButton.getScene().getWindow();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
-        fileChooser.setInitialFileName("global_" + inputFileName);
+        fileChooser.setInitialFileName("updated_" + inputFileName);
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
@@ -46,12 +48,26 @@ public class OutputController {
     //Saves the file in local
     private void saveTextToFile(String content, File file) {
         try {
+            //write to text file
             PrintWriter writer;
             writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
-            fileSaved.setText("Text saved as a .txt file!");
+
+            //file saved notification
+            fileSaved.setText("Text has been saved!");
+
+            //file saved notification disappears after 2 seconds
+            PauseTransition visiblePause = new PauseTransition(
+                    Duration.seconds(2)
+            );
+            visiblePause.setOnFinished(
+                    event -> fileSaved.setVisible(false)
+            );
+            visiblePause.play();
+
         } catch (IOException ex) {
+            //error message
             Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

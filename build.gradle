@@ -25,4 +25,11 @@ dependencies{
     testCompile 'org.testfx:testfx-junit:4.0+'
 }
 
+apply plugin: 'java'
+
+jar {
+    manifest {        attributes 'Main-Class': 'GUI.Main'
+    }
+}
+
 mainClassName = 'GUI.Main'

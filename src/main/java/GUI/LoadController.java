@@ -23,7 +23,7 @@ public class LoadController {
     public void initialize() {}
 
     public Path getPath() {
-    	return fullPath;
+        return fullPath;
     }
 
     @FXML

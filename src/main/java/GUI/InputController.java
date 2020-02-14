@@ -3,6 +3,7 @@ package GUI;
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -28,8 +29,7 @@ public class InputController {
 
     @FXML
     private void sliderToField() {
-        rotationAngleField.setText(String.valueOf(
-                new DecimalFormat("#").format(rotationAngleSlider.getValue())));
+        rotationAngleField.setText(String.valueOf(new DecimalFormat("#").format(rotationAngleSlider.getValue())));
     }
 
     @FXML
@@ -43,6 +43,19 @@ public class InputController {
             isNumber = false;
         }
         if (isNumber) rotationAngleSlider.setValue(value);
+    }
+
+    @FXML
+    private void nextField(ActionEvent event) {
+        if (event.getSource() == rotationAngleField) {
+            scaleFactorX.requestFocus();
+        } else if (event.getSource() == scaleFactorX) {
+            scaleFactorY.requestFocus();
+        } else if (event.getSource() == scaleFactorY) {
+            finalPositionX.requestFocus();
+        } else if (event.getSource() == finalPositionX) {
+            finalPositionY.requestFocus();
+        }
     }
 
     void setNodes(Path path) {
