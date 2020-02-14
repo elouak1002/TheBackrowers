@@ -14,21 +14,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
 
+
+/**
+ * The OutputController class displays the output window of the GUI where the user
+ * can preview the .txt file and make any changes needed before saving.
+ */
 public class OutputController {
-    @FXML private Button saveButton = new Button();
-    @FXML private TextArea outputText = new TextArea();
-    @FXML private Label fileSaved = new Label();
+    //Fields
+    @FXML
+    private Button saveButton = new Button();
+    @FXML
+    private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
     private String inputFileName;
 
+    //Text preview area.
     @FXML
-    public void initialize() {}
+    private TextArea outputText = new TextArea();
 
+    @FXML
+    public void initialize() {
+    }
+
+    /**
+     * Sets the File name.
+     * @param name File name.
+     */
     void setInputFileName(String name) {
         inputFileName = name;
     }
 
-    //This method allows you to choose where in you directory you would like to save your file
+    /**
+     * A method for saving the preview page into a .txt file
+     * in a directory the user wants.
+     */
     @FXML
     private void saveFile() {
         String text = outputText.getText();
@@ -45,18 +64,21 @@ public class OutputController {
         }
     }
 
-    //Saves the file in local
+    /**
+     * A method for writing the @outputText field into a file
+     * which allows the text to be saved as a .txt file in the saveFile()
+     * method. It also displays a notification about the file being saved.
+     * @param content calculated text values displayed in @outputText field.
+     * @param file file to be saved.
+     */
     private void saveTextToFile(String content, File file) {
         try {
-            //write to text file
             PrintWriter writer;
             writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
 
-            //file saved notification
             fileSaved.setText("Text has been saved!");
-
             //file saved notification disappears after 2 seconds
             PauseTransition visiblePause = new PauseTransition(
                     Duration.seconds(2)
@@ -67,11 +89,15 @@ public class OutputController {
             visiblePause.play();
 
         } catch (IOException ex) {
-            //error message
             Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * A method for outputting the @outputText area with the new
+     * calculated values.
+     * @param outputStringList calculated values to be displayed for the user to preview.
+     */
     void setOutputText(List<String> outputStringList) {
         outputText.clear();
         for (String string : outputStringList) {
@@ -79,7 +105,10 @@ public class OutputController {
         }
     }
 
-    //Clear output text
+    /**
+     * A method for clearing the @outputText area where the text preview
+     * is displayed.
+     */
     @FXML
     private void clearTextField() {
         outputText.clear();
