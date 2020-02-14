@@ -1,4 +1,4 @@
-package filecreator; // File Creation package.
+package datastructures; // File Creation package.
 
 import java.util.List;
 
@@ -42,8 +42,8 @@ public class DataLine {
 	 */
 	public DataLine(String dataName, String xCoord, String yCoord, List<String> otherArguments, String staticType, String dynamicType, String endLine) {
 		this.dataName =  dataName;
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
+		this.xCoord = xCoord.trim();
+		this.yCoord = yCoord.trim();
 		this.otherArguments = otherArguments;
 		this.staticType = staticType;
 		this.dynamicType = dynamicType;
@@ -79,14 +79,36 @@ public class DataLine {
 	 * separated by commas.
 	 */
 	private String otherArgumentsToString() {
+		if (otherArguments == null ||  otherArguments.size() == 0) {
+			return "";
+		}
 		String result = otherArguments.stream().reduce("", (acc,element) -> acc + " , " + element.trim());
-		return result.substring(2);
+		return result.substring(3);
+	}
+
+	/**
+	 * @return All the arguments format as expected,
+	 * depending on which arguments appear in the data.
+	 */
+	private String formatArguments() {
+		String allArguments = "";
+		allArguments += xCoord;
+
+		if (!allArguments.equals("") && !yCoord.equals(""))
+			allArguments += " , ";
+		allArguments += yCoord;
+
+		if (!allArguments.equals("") && !otherArgumentsToString().equals(""))
+			allArguments += " , ";
+		allArguments += otherArgumentsToString();
+
+		return allArguments;
 	}
 
 	/**
 	 * @return The Data Line as a string with the expected format.
 	 */
 	public String toString() {
-		return staticType + " " + dataName + " = new " + dynamicType + "( " + xCoord + " , " + yCoord + " ," + otherArgumentsToString() + " )" + endLine;
+		return staticType + " " + dataName + " = new " + dynamicType + "( " + formatArguments() + " )" + endLine;
 	}
 }

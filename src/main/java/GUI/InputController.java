@@ -1,7 +1,8 @@
 package GUI;
 
-import ALG.*;
-import filecreator.FileCreator;
+import datastructures.*;
+import dataprocessors.*;
+import parser.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

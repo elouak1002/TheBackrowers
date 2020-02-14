@@ -1,7 +1,9 @@
-package ALGTest;
+package parsertest;
 
-import ALG.*;
+import parser.Parser;
+import datastructures.Node;
 import javafx.util.Pair;
+
 import org.junit.Before;
 import org.junit.Test;
 import java.io.IOException;
@@ -87,5 +89,16 @@ public class ParserTest {
         assertEquals(expectedOutcomes.keySet(), parser.createNodes(dataToMatch).keySet());
     }
 
+    @Test
+    public void beginDataLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
+    }
+    
+    @Test
+    public void endDataLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
+    }
 
 }

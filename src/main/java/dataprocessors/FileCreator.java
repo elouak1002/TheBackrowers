@@ -1,8 +1,10 @@
-package filecreator;
+package dataprocessors;
 
 // import classes from the ALG package;
-import ALG.Parser;
-import ALG.Node;
+import parser.Parser;
+import parser.DataLineParser;
+import datastructures.Node;
+import datastructures.DataLine;
 
 import java.io.IOException;
 
@@ -16,10 +18,10 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 /**
- * Create an output file based on a model one.
+ * Create a list of string based on two model lists.
  * Only change the data coordinates for each node,
  * using the values from the Node Map.
- * @version 07.02.2020
+ * @version 12.02.2020
  */
 public class FileCreator {
 
@@ -49,15 +51,22 @@ public class FileCreator {
 	 */
 	public FileCreator(Map<String, Node> nodeMap, Path originPath) throws IOException{
 
-		// A Parser object
+		// A File Parser.
 		Parser parser = new Parser(originPath);
-		this.nodeMap = nodeMap;
-		this.dataLines = parser.getLines();
-		this.fileLines = parser.getAllLines();
+		// A Line Parser.
 		this.lineParser = new DataLineParser();
+		
+		this.nodeMap = nodeMap;
+		
+		// A list of the data lines to be modified.
+		this.dataLines = parser.getLines();
+		// A list of all the string of the file.
+		this.fileLines = parser.getAllLines();
+		
+		// Position of the first data line in the input file.
 		this.beginPosition = parser.beginOfDataLines(fileLines, dataLines);
+		// Position of the last data line in the input line.
 		this.endPosition = parser.endOfDataLines(fileLines, dataLines);
-
 	}
 
 	/**
@@ -116,7 +125,7 @@ public class FileCreator {
 	}
 
 	/**
-	 * Process the creation of the file.
+	 * Process the creation of the list of string with the modified data.
 	 */
 	public List<String> processOutputFile() {
 		modifyDataLines();

@@ -1,4 +1,4 @@
-package ALG;
+package datastructures;
 
 /**
  * The Node class represents location objects and allows modification of their
