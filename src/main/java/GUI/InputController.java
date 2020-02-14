@@ -22,7 +22,6 @@ public class InputController {
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
     private TreeMap<String,Node> nodes;
-    private Path path;
 
     @FXML
     public void initialize() {}
@@ -59,7 +58,6 @@ public class InputController {
     }
 
     void setNodes(Path path) {
-        this.path = path;
         Parser parser = new Parser(path);
         try {
             referenceNodeChoiceBox.getItems().clear();
@@ -84,7 +82,7 @@ public class InputController {
         }
     }
 
-    List<String> getOutput() {
+    List<String> getOutput(Path path) {
         try {
             Wrangler wrangler = new Wrangler(nodes);
             FileCreator fileCreator = new FileCreator(wrangler.runTransformations(

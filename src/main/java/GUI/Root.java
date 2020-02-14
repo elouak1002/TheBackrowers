@@ -73,7 +73,7 @@ public class Root extends Application {
                     currentPage = outputPage;
                     root.setCenter(outputPage);
                     next.setDisable(true);
-                    outputController.setOutputText(inputController.getOutput());
+                    outputController.setOutputText(inputController.getOutput(loadController.getPath()));
                     outputController.setInputFileName(loadController.getPath().getFileName().toString());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
