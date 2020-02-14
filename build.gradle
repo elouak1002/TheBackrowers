@@ -9,12 +9,6 @@ repositories {
     mavenCentral()
 }
 
-jar{
-    manifest{
-        attributes 'Main-Class' : 'GUI.Main'
-    }
-}
-
 javafx {
     version = '12'
     modules = ['javafx.controls','javafx.fxml']
@@ -28,7 +22,8 @@ dependencies{
 apply plugin: 'java'
 
 jar {
-    manifest {        attributes 'Main-Class': 'GUI.Main'
+    manifest {        
+        attributes 'Main-Class': 'GUI.Main'
     }
 }
 
