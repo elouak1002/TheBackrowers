@@ -2,10 +2,12 @@ package GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -14,14 +16,14 @@ import java.io.IOException;
 public class Root extends Application {
 
     //initialize panes
+    private Pane currentPage;
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
+    private BorderPane root;
 
     @Override
     public void start(Stage stage) {
-        //set stage title
-        stage.setTitle("TheBackrowers");
 
         //load fxml files
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
@@ -42,20 +44,57 @@ public class Root extends Application {
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
 
-        loadController.setInputController(inputController);
-        inputController.setOutputController(outputController);
+        Button previous = new Button("Previous");
+        Button next = new Button("Next");
 
-        //insert fxml panes into structured containers
-        BorderPane root = new BorderPane();
-        FlowPane panes = new FlowPane(loadPage,inputPage,outputPage);
-        panes.setVgap(2);
-        panes.setAlignment(Pos.CENTER);
-        root.setCenter(panes);
-        BorderPane.setAlignment(root.getCenter(), Pos.CENTER);
-        root.setStyle("-fx-background-color: #DDDDDD ;");
+        previous.setOnAction(event -> {
+            if (currentPage == inputPage) {
+                currentPage = loadPage;
+                root.setCenter(loadPage);
+                previous.setDisable(true);
+            } else if (currentPage == outputPage) {
+                currentPage = inputPage;
+                root.setCenter(inputPage);
+                next.setDisable(false);
+            }
+        });
+        next.setOnAction(event -> {
+            if (currentPage == loadPage) {
+                if (loadController.getPath() != null) {
+                    currentPage = inputPage;
+                    root.setCenter(inputPage);
+                    previous.setDisable(false);
+                    inputController.setNodes(loadController.getPath());
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
+                }
+            } else if (currentPage == inputPage) {
+                if (inputController.inputIsValid()) {
+                    currentPage = outputPage;
+                    root.setCenter(outputPage);
+                    next.setDisable(true);
+                    outputController.setOutputText(inputController.getOutput());
+                    outputController.setInputFileName(loadController.getPath().getFileName().toString());
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
+                }
+            }
+        });
 
-        //show stage
-        Scene scene = new Scene(root,620,780);
+        BorderPane navigation = new BorderPane();
+        navigation.setLeft(previous);
+        navigation.setRight(next);
+
+        root = new BorderPane();
+        root.setPadding(new Insets(10,10,10,10));
+        root.setBottom(navigation);
+        root.setCenter(loadPage);
+        currentPage = loadPage;
+        previous.setDisable(true);
+
+        //set and show scene and stage
+        Scene scene = new Scene(root,1000,700);
+        stage.setTitle("TheBackrowers");
         stage.setScene(scene);
         stage.show();
     }

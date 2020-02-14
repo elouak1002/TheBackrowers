@@ -16,18 +16,13 @@ import java.io.*;
 
 public class OutputController {
     @FXML private Button saveButton = new Button();
-    @FXML private Button clearButton = new Button();
     @FXML private TextArea outputText = new TextArea();
     @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
     private String inputFileName;
 
     @FXML
-    public void initialize() {
-        saveButton.setDisable(true);
-        clearButton.setDisable(true);
-        outputText.setDisable(true);
-    }
+    public void initialize() {}
 
     void setInputFileName(String name) {
         inputFileName = name;
@@ -40,7 +35,7 @@ public class OutputController {
         Window stage = saveButton.getScene().getWindow();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
-        fileChooser.setInitialFileName("global_" + inputFileName);
+        fileChooser.setInitialFileName("updated_" + inputFileName);
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
@@ -82,9 +77,6 @@ public class OutputController {
         for (String string : outputStringList) {
             outputText.appendText(string + "\n");
         }
-        saveButton.setDisable(false);
-        clearButton.setDisable(false);
-        outputText.setDisable(false);
     }
 
     //Clear output text

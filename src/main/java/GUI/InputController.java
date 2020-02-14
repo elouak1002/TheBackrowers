@@ -2,9 +2,9 @@ package GUI;
 
 import ALG.*;
 import filecreator.FileCreator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class InputController {
-    @FXML private VBox inputRoot;
     @FXML private Slider rotationAngleSlider;
     @FXML private TextField rotationAngleField;
     @FXML private ChoiceBox<String> referenceNodeChoiceBox;
@@ -23,25 +22,13 @@ public class InputController {
     @FXML private TextField finalPositionY;
     private TreeMap<String,Node> nodes;
     private Path path;
-    private OutputController outputController;
 
     @FXML
-    public void initialize() {
-        for (javafx.scene.Node node : inputRoot.getChildren()) {
-            node.setDisable(true);
-        }
-    }
-
-    void enableInput() {
-        for (javafx.scene.Node node : inputRoot.getChildren()) {
-            node.setDisable(false);
-        }
-    }
+    public void initialize() {}
 
     @FXML
     private void sliderToField() {
-        rotationAngleField.setText(String.valueOf(
-                new DecimalFormat("#").format(rotationAngleSlider.getValue())));
+        rotationAngleField.setText(String.valueOf(new DecimalFormat("#").format(rotationAngleSlider.getValue())));
     }
 
     @FXML
@@ -57,6 +44,19 @@ public class InputController {
         if (isNumber) rotationAngleSlider.setValue(value);
     }
 
+    @FXML
+    private void nextField(ActionEvent event) {
+        if (event.getSource() == rotationAngleField) {
+            scaleFactorX.requestFocus();
+        } else if (event.getSource() == scaleFactorX) {
+            scaleFactorY.requestFocus();
+        } else if (event.getSource() == scaleFactorY) {
+            finalPositionX.requestFocus();
+        } else if (event.getSource() == finalPositionX) {
+            finalPositionY.requestFocus();
+        }
+    }
+
     void setNodes(Path path) {
         this.path = path;
         Parser parser = new Parser(path);
@@ -66,16 +66,6 @@ public class InputController {
             referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void confirmInput() {
-        if (inputIsValid()) {
-            outputController.setOutputText(getOutput());
-            outputController.setInputFileName(path.getFileName().toString());
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
         }
     }
 
@@ -109,9 +99,5 @@ public class InputController {
             e.printStackTrace();
             return null;
         }
-    }
-
-    void setOutputController(OutputController outputController) {
-        this.outputController = outputController;
     }
 }
