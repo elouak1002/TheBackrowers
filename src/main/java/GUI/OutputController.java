@@ -38,6 +38,7 @@ public class OutputController {
 
     /**
      * Sets the File name.
+     * @param name File name.
      */
     void setInputFileName(String name) {
         inputFileName = name;
@@ -67,6 +68,8 @@ public class OutputController {
      * A method for writing the @outputText field into a file
      * which allows the text to be saved as a .txt file in the saveFile()
      * method. It also displays a notification about the file being saved.
+     * @param content calculated text values displayed in @outputText field.
+     * @param file file to be saved.
      */
     private void saveTextToFile(String content, File file) {
         try {
@@ -93,6 +96,7 @@ public class OutputController {
     /**
      * A method for outputting the @outputText area with the new
      * calculated values.
+     * @param outputStringList calculated values to be displayed for the user to preview.
      */
     void setOutputText(List<String> outputStringList) {
         outputText.clear();
