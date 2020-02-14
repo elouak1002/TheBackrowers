@@ -1,25 +1,36 @@
 package GUI;
 
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Root {
+public class Root extends Application {
+
+    //initialize panes
     private Pane currentPage;
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
     private BorderPane root;
 
-    Root() {
+    @Override
+    public void start(Stage stage) {
+
+        //load fxml files
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
+
+        //try-catch declaring of panes
         try {
             loadPage = loadPageLoader.load();
             inputPage = inputPageLoader.load();
@@ -27,17 +38,14 @@ public class Root {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //declare controllers
         LoadController loadController = loadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
 
-        root = new BorderPane();
-        BorderPane navigation = new BorderPane();
-
         Button previous = new Button("Previous");
         Button next = new Button("Next");
-        currentPage = loadPage;
-        previous.setDisable(true);
 
         previous.setOnAction(event -> {
             if (currentPage == inputPage) {
@@ -65,7 +73,7 @@ public class Root {
                     currentPage = outputPage;
                     root.setCenter(outputPage);
                     next.setDisable(true);
-                    outputController.setOutputText(inputController.getOutput());
+                    outputController.setOutputText(inputController.getOutput(loadController.getPath()));
                     outputController.setInputFileName(loadController.getPath().getFileName().toString());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
@@ -73,15 +81,21 @@ public class Root {
             }
         });
 
+        BorderPane navigation = new BorderPane();
         navigation.setLeft(previous);
         navigation.setRight(next);
 
+        root = new BorderPane();
+        root.setPadding(new Insets(10,10,10,10));
         root.setBottom(navigation);
         root.setCenter(loadPage);
-        root.setStyle("-fx-background-color: aliceblue;");
-    }
+        currentPage = loadPage;
+        previous.setDisable(true);
 
-    Pane getPane() {
-        return root;
+        //set and show scene and stage
+        Scene scene = new Scene(root,1000,700);
+        stage.setTitle("TheBackrowers");
+        stage.setScene(scene);
+        stage.show();
     }
 }
