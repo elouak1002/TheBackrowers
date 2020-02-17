@@ -56,7 +56,7 @@ public class Wrangler {
      * @param scaleY: as Y scale factor
      * @param targetX: the final X position of the pivot node
      * @param targetY: the final Y position of the pivot node
-     * @param pivotNode: this is an obptional pivot node that can be null
+     * @param pivotNode: this is an optional pivot node that can be null
      * @return A TreeMap with transformed nodes
      */
     public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
