@@ -5,7 +5,7 @@
     Load fxml
 */
 #loadRoot {
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: aliceblue;
 }
 
 #dragTarget .text {
@@ -18,7 +18,7 @@
     Input fxml
 */
 #inputRoot {
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: aliceblue;
     -fx-border-width: 2px;
     -fx-padding: 10;
     -fx-spacing: 8;
@@ -70,7 +70,7 @@
     -fx-border-width: 2px;
     -fx-padding: 10;
     -fx-spacing: 8;
-    -fx-background-color: #CCCCCC;
+    -fx-background-color: aliceblue;
 }
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/
