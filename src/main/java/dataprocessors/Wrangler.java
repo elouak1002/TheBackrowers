@@ -61,24 +61,48 @@ public class Wrangler {
     public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
                                                     float targetX, float targetY, Node pivotNode){
 
-        //Preparing the variables for the transformations
-        Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
+        //Preparing the variables for the transformations   
         double theta = Math.toRadians(rotationAngle);
-        setRotation(pivot, theta);
-        setScale(pivot, scaleX, scaleY);
-        float deltaX = getDeltaX(pivot, targetX);
-        float deltaY = getDeltaY(pivot, targetY);
+        float deltaX, deltaY;
+        
+        if(!pivotNode.equals(null)){
+            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
+            setRotation(pivot, theta);
+            setScale(pivot, scaleX, scaleY);
+            deltaX = getDeltaX(pivot, targetX);
+            deltaY = getDeltaY(pivot, targetY);
+        }
+
+        else{
+            deltaX = targetX;
+            deltaY = targetY;
+        }
+
 
         //Apply rotation, scale and shift to all the nodes
         for(Node index: outputNodes.values()){
             setRotation(index, theta);
             setScale(index, scaleX, scaleY);
             setShift(index, deltaX, deltaY);
+
+            roundDecimals(index);
         }
 
         return outputNodes;
     }
-   
+
+    /**
+     * This method is used to reduce the coordonates to
+     *just 2 decimals
+     * @param node 
+     */
+    private void roundDecimals(Node node){
+        double xVal = Math.round(node.getX() * 100.0) / 100.0;
+        double yVal = Math.round(node.getY() * 100.0) / 100.0;
+        node.setX((float)xVal);
+        node.setY((float)yVal);
+    }
+
     /**
      *  Method for rotating one point
      * @param node: the node we want to rotate
