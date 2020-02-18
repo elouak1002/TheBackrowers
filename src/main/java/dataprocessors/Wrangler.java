@@ -45,18 +45,18 @@ public class Wrangler {
 
     /**
      *  This is the main method for the Wrangler class.
-     * Once all the parameters are set the method runs the entire set of transformations 
+     *  The method sets the paramaters in accordance with the presence of the pivot node
+     *  Once all the parameters are set the method runs the entire set of transformations 
      * to get to the desired coordonate configuration
      *  The main concept here is a class that runs through the list and passes individual
      * nodes to other methods to be transformed
-     *  The class can also accept NULL pivot nodes for independent shifts
      * 
      * @param rotationAngle: the angle we want to rotate the nodes by (in DEGREES)
      * @param scaleX: as X scale factor
      * @param scaleY: as Y scale factor
      * @param targetX: the final X position of the pivot node
      * @param targetY: the final Y position of the pivot node
-     * @param pivotNode: this is an optional pivot node that can be null
+     * @param pivotNode: a reference node that can also accept NULL values
      * @return A TreeMap with transformed nodes
      */
     public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
@@ -66,17 +66,17 @@ public class Wrangler {
         double theta = Math.toRadians(rotationAngle);
         float deltaX, deltaY;
         
-        if(!pivotNode.equals(null)){
+        if(pivotNode == null){
+            deltaX = targetX;
+            deltaY = targetY;
+        }
+        
+        else{
             Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
             setRotation(pivot, theta);
             setScale(pivot, scaleX, scaleY);
             deltaX = getDeltaX(pivot, targetX);
             deltaY = getDeltaY(pivot, targetY);
-        }
-
-        else{
-            deltaX = targetX;
-            deltaY = targetY;
         }
 
 
@@ -93,7 +93,7 @@ public class Wrangler {
     }
 
     /**
-     *  This method is used to reduce the coordonates to
+     * This method is used to reduce the coordonates to
      *just 2 decimals
      * @param node 
      */

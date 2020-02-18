@@ -86,13 +86,37 @@ public class WranglerTest{
         //test Shift to -432.145, -846.637
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(0,1,1,-432.145f, -846.637f, pivot);
-        printList(output);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Shift 1")));
         
     }
+
+    @Test
+    public void testIndependentShift(){
+        TreeMap<String, Node> output = new TreeMap<>();
+        
+        //test No transformations done
+        output = wrangler.runTransformations(0,1,1,0, 0, null);
+        assertEquals(true, equalTreeMaps(output, resultSet.get("Nodes at same location")));
+        
+        wrangler = new Wrangler(resultSet.get("input"));
+        output = wrangler.runTransformations(90,1,1,0, 0, null);
+        assertEquals(true, equalTreeMaps(output, resultSet.get("Independent rotation 90")));
+        
+        wrangler = new Wrangler(resultSet.get("input"));
+        output = wrangler.runTransformations(25,1,1,0, 0, null);
+        assertEquals(true, equalTreeMaps(output, resultSet.get("Independent rotation 25")));
+        
+        wrangler = new Wrangler(resultSet.get("input"));
+        output = wrangler.runTransformations(0,0.75f,2.15f,0, 0, null);
+        assertEquals(true, equalTreeMaps(output, resultSet.get("Independent scale")));
+        
+        wrangler = new Wrangler(resultSet.get("input"));
+        output = wrangler.runTransformations(0,1,1,20, 15, null);
+        assertEquals(true, equalTreeMaps(output, resultSet.get("Independent shift")));
+    }
     
 
-//---------------------------------Helper Methods---------------------------------------------
+    //---------------------------------Helper Methods---------------------------------------------
 
     /**
      * Method for comparing the values inside 2 nodes to determine if 
@@ -103,7 +127,7 @@ public class WranglerTest{
      */
     private Boolean samePropertyValues(Node actual, Node expected) {
         if(actual.getX() == expected.getX() && actual.getY() == expected.getY())
-            return true;
+        return true;
         return false;
     }
    
@@ -369,10 +393,115 @@ public class WranglerTest{
         nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", 58.21f, 47.15f));
 
         resoults.put("Rotate 45", nodes);
+        
+        nodes = new TreeMap<>();
+        nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", -34.72f, 37.43f));
+        nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", -35.72f, 41.84f));
+        nodes.put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", -36.54f, 41.98f));
+        nodes.put("HenRaph_04_438_346", new Node("HenRaph_04_438_346", -34.66f, 43.81f));
+        nodes.put("HenRaph_04_439_357", new Node("HenRaph_04_439_357", -35.79f, 43.95f));
+        nodes.put("HenRaph_04_439_365", new Node("HenRaph_04_439_365", -36.58f, 43.95f));
+        nodes.put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", -26.46f, 47.61f));
+        nodes.put("HenRaph_04_476_277", new Node("HenRaph_04_476_277", -27.77f, 47.61f));
+        nodes.put("HenRaph_04_491_365", new Node("HenRaph_04_491_365", -36.58f, 49.18f));
+        nodes.put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", -26.46f, 49.31f));
+        nodes.put("HenRaph_04_493_276", new Node("HenRaph_04_493_276", -27.7f, 49.31f));
+        nodes.put("HenRaph_04_493_346", new Node("HenRaph_04_493_346", -34.66f, 49.31f));
+        nodes.put("HenRaph_04_530_359", new Node("HenRaph_04_530_359", -35.93f, 53.05f));
+        nodes.put("HenRaph_04_530_365", new Node("HenRaph_04_530_365", -36.59f, 53.05f));
+        nodes.put("HenRaph_04_579_358", new Node("HenRaph_04_579_358", -35.85f, 57.94f));
+        nodes.put("HenRaph_04_581_365", new Node("HenRaph_04_581_365", -36.59f, 58.14f));
+        nodes.put("HenRaph_04_621_354", new Node("HenRaph_04_621_354", -35.41f, 62.15f));
+        nodes.put("HenRaph_04_621_365", new Node("HenRaph_04_621_365", -36.59f, 62.15f));
+        nodes.put("HenRaph_04_670_348", new Node("HenRaph_04_670_348", -34.8f, 67.04f));
+        nodes.put("HenRaph_04_670_354", new Node("HenRaph_04_670_354", -35.41f, 67.04f));
+        nodes.put("HenRaph_04_696_341", new Node("HenRaph_04_696_341", -34.2f, 69.69f));
+        nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", -34.8f, 70.23f));
+
+        resoults.put("Independent rotation 90", nodes);
+
+        nodes = new TreeMap<>();
+        nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 19.25f, 47.28f));
+        nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 22.82f, 50.06f));
+        nodes.put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", 22.6f, 50.86f));
+        nodes.put("HenRaph_04_438_346", new Node("HenRaph_04_438_346", 25.06f, 49.93f));
+        nodes.put("HenRaph_04_439_357", new Node("HenRaph_04_439_357", 24.7f, 51.01f));
+        nodes.put("HenRaph_04_439_365", new Node("HenRaph_04_439_365", 24.37f, 51.72f));
+        nodes.put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", 31.97f, 44.11f));
+        nodes.put("HenRaph_04_476_277", new Node("HenRaph_04_476_277", 31.42f, 45.29f));
+        nodes.put("HenRaph_04_491_365", new Node("HenRaph_04_491_365", 29.11f, 53.93f));
+        nodes.put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", 33.51f, 44.82f));
+        nodes.put("HenRaph_04_493_276", new Node("HenRaph_04_493_276", 32.99f, 45.94f));
+        nodes.put("HenRaph_04_493_346", new Node("HenRaph_04_493_346", 30.04f, 52.26f));
+        nodes.put("HenRaph_04_530_359", new Node("HenRaph_04_530_359", 32.89f, 54.99f));
+        nodes.put("HenRaph_04_530_365", new Node("HenRaph_04_530_365", 32.61f, 55.58f));
+        nodes.put("HenRaph_04_579_358", new Node("HenRaph_04_579_358", 37.36f, 56.97f));
+        nodes.put("HenRaph_04_581_365", new Node("HenRaph_04_581_365", 37.23f, 57.74f));
+        nodes.put("HenRaph_04_621_354", new Node("HenRaph_04_621_354", 41.36f, 58.36f));
+        nodes.put("HenRaph_04_621_365", new Node("HenRaph_04_621_365", 40.86f, 59.43f));
+        nodes.put("HenRaph_04_670_348", new Node("HenRaph_04_670_348", 46.05f, 59.88f));
+        nodes.put("HenRaph_04_670_354", new Node("HenRaph_04_670_354", 45.79f, 60.43f));
+        nodes.put("HenRaph_04_696_341", new Node("HenRaph_04_696_341", 48.71f, 60.44f));
+        nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", 48.94f, 61.22f));
+
+        resoults.put("Independent rotation 25", nodes);
+
+        nodes = new TreeMap<>();
+        nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 28.07f, 74.64f));
+        nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 31.38f, 76.81f));
+        nodes.put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", 31.48f, 78.56f));
+        nodes.put("HenRaph_04_438_346", new Node("HenRaph_04_438_346", 32.86f, 74.53f));
+        nodes.put("HenRaph_04_439_357", new Node("HenRaph_04_439_357", 32.96f, 76.96f));
+        nodes.put("HenRaph_04_439_365", new Node("HenRaph_04_439_365", 32.96f, 78.64f));
+        nodes.put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", 35.71f, 56.9f));
+        nodes.put("HenRaph_04_476_277", new Node("HenRaph_04_476_277", 35.71f, 59.7f));
+        nodes.put("HenRaph_04_491_365", new Node("HenRaph_04_491_365", 36.88f, 78.64f));
+        nodes.put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", 36.98f, 56.9f));
+        nodes.put("HenRaph_04_493_276", new Node("HenRaph_04_493_276", 36.98f, 59.55f));
+        nodes.put("HenRaph_04_493_346", new Node("HenRaph_04_493_346", 36.98f, 74.53f));
+        nodes.put("HenRaph_04_530_359", new Node("HenRaph_04_530_359", 39.79f, 77.26f));
+        nodes.put("HenRaph_04_530_365", new Node("HenRaph_04_530_365", 39.79f, 78.68f));
+        nodes.put("HenRaph_04_579_358", new Node("HenRaph_04_579_358", 43.45f, 77.07f));
+        nodes.put("HenRaph_04_581_365", new Node("HenRaph_04_581_365", 43.61f, 78.68f));
+        nodes.put("HenRaph_04_621_354", new Node("HenRaph_04_621_354", 46.61f, 76.14f));
+        nodes.put("HenRaph_04_621_365", new Node("HenRaph_04_621_365", 46.61f, 78.68f));
+        nodes.put("HenRaph_04_670_348", new Node("HenRaph_04_670_348", 50.28f, 74.83f));
+        nodes.put("HenRaph_04_670_354", new Node("HenRaph_04_670_354", 50.28f, 76.14f));
+        nodes.put("HenRaph_04_696_341", new Node("HenRaph_04_696_341", 52.27f, 73.52f));
+        nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", 52.67f, 74.83f));
+        
+        resoults.put("Independent scale", nodes);
+
+        nodes = new TreeMap<>();
+        nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 57.43f, 49.72f));
+        nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 61.84f, 50.72f));
+        nodes.put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", 61.98f, 51.54f));
+        nodes.put("HenRaph_04_438_346", new Node("HenRaph_04_438_346", 63.81f, 49.66f));
+        nodes.put("HenRaph_04_439_357", new Node("HenRaph_04_439_357", 63.95f, 50.79f));
+        nodes.put("HenRaph_04_439_365", new Node("HenRaph_04_439_365", 63.95f, 51.58f));
+        nodes.put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", 67.61f, 41.46f));
+        nodes.put("HenRaph_04_476_277", new Node("HenRaph_04_476_277", 67.61f, 42.77f));
+        nodes.put("HenRaph_04_491_365", new Node("HenRaph_04_491_365", 69.18f, 51.58f));
+        nodes.put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", 69.31f, 41.46f));
+        nodes.put("HenRaph_04_493_276", new Node("HenRaph_04_493_276", 69.31f, 42.7f));
+        nodes.put("HenRaph_04_493_346", new Node("HenRaph_04_493_346", 69.31f, 49.66f));
+        nodes.put("HenRaph_04_530_359", new Node("HenRaph_04_530_359", 73.05f, 50.93f));
+        nodes.put("HenRaph_04_530_365", new Node("HenRaph_04_530_365", 73.05f, 51.59f));
+        nodes.put("HenRaph_04_579_358", new Node("HenRaph_04_579_358", 77.94f, 50.85f));
+        nodes.put("HenRaph_04_581_365", new Node("HenRaph_04_581_365", 78.14f, 51.59f));
+        nodes.put("HenRaph_04_621_354", new Node("HenRaph_04_621_354", 82.15f, 50.41f));
+        nodes.put("HenRaph_04_621_365", new Node("HenRaph_04_621_365", 82.15f, 51.59f));
+        nodes.put("HenRaph_04_670_348", new Node("HenRaph_04_670_348", 87.04f, 49.8f));
+        nodes.put("HenRaph_04_670_354", new Node("HenRaph_04_670_354", 87.04f, 50.41f));
+        nodes.put("HenRaph_04_696_341", new Node("HenRaph_04_696_341", 89.69f, 49.2f));
+        nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", 90.23f, 49.8f));
+
+        resoults.put("Independent shift", nodes);
 
         return resoults;
     }
- 
+
+ /*
     private static void printList(TreeMap<String, Node> nodesTree) {
     
         for (Map.Entry<String, Node> entry : nodesTree.entrySet()) {
@@ -380,5 +509,5 @@ public class WranglerTest{
             System.out.println("nodes.put(\"" +index.getName()+"\", new Node(\""+index.getName() +"\", "+ index.getX() + "f, " + index.getY() + "f));");
         }
     }
-
+*/
 }
