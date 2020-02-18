@@ -1,11 +1,6 @@
 //package dataprocessorstest;
 //
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.junit.runners.Parameterized;
-//import org.junit.runners.Parameterized.Parameters;
 //
-//import static org.junit.Assert.assertEquals;
 //
 //import java.util.ArrayList;
 //import java.util.Arrays;
@@ -16,15 +11,19 @@
 //
 //import dataprocessors.FileCreator;
 //import datastructures.Node;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//
+//import static org.junit.jupiter.api.Assertions.assertEquals;
 //
 ///**
 // * Test the String creation of the Data Line, especially the arguments creation.
 // * @version 12.02.2020
 // */
-//@RunWith(Parameterized.class)
+//@ExtendWith(Parameterized.class)
 //public class FileCreatorTest {
 //
-//	@Parameters
+//	@ParameterizedTest
 //	public static Collection<Object[]> data() {
 //		return Arrays.asList(new Object[][] {
 //			{ new HashMap<String, Node>() {{
