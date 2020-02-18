@@ -5,9 +5,9 @@ package datastructures;
  * data
  */
 public class Node {
-    
     //Fields
     private String name;
+    private int id;
     private float xCoord;
     private float yCoord;
 
@@ -21,7 +21,10 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
+
+
     }
+
 
     /**
      * Getter method for the Node's name
@@ -52,6 +55,19 @@ public class Node {
      * @param value Y coordinate to be set
      */
     public void setY(float value) { yCoord = value; }
+
+    /**
+     * Getter method for the Node's unique id
+     * @return id number
+     */
+    public int getId(){ return id; }
+
+    /**
+     * A method for setting new id value
+     * @param value id  to be set
+     */
+    public void setId(int value) { this.id = value; }
+
 
     /**
      * @return Node's data as a string

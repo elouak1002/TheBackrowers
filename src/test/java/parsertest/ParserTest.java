@@ -1,5 +1,6 @@
 package parsertest;
 
+
 import parser.Parser;
 import datastructures.Node;
 import javafx.util.Pair;
@@ -7,10 +8,10 @@ import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import static org.junit.Assert.*;
 
 public class ParserTest {
@@ -77,7 +78,7 @@ public class ParserTest {
     }
 
     @Test
-    public void ParserCreatesCorrectNodes(){
+    public void ParserCreatesCorrectNodes() throws IOException {
         String testInput  =  "Node MajorProject = new Node( 67.040802f , 67.040802f , KCL );";
         String testInput2 = "Room BushHouseRoom = new Node( 127.040802f , 335.411697f , KCLBH.09 );";
         List<String> dataToMatch = Arrays.asList(testInput,testInput2);
@@ -100,5 +101,33 @@ public class ParserTest {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
     }
+    @Test
+    public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        String empty="";
+        Files.write(Paths.get("src/test/resources/testIdLog.txt"),empty.getBytes());
 
+        int shouldBeZero = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
+        //this test should only pass when log file is empty
+        assertEquals(shouldBeZero+1,0);
+    }
+    @Test
+    public void getsCorrectLastSeenId() throws IOException {
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        List<String> numbers = new ArrayList<>();
+        numbers=Arrays.asList("1","2","3");
+        Files.write(Paths.get("src/test/resources/testIdLog.txt"),numbers.toString().getBytes());
+        int shouldBe3 = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
+
+        assertEquals(shouldBe3,3);
+    }
+    @Test
+    public void generatesUniqueIds() throws IOException {
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        Parser secondParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        int shouldBeFirst = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+        int shouldBeSecond = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+
+        assertEquals(shouldBeFirst,shouldBeSecond-1);
+    }
 }
