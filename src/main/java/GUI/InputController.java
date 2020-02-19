@@ -83,6 +83,7 @@ public class InputController {
             referenceNodeChoiceBox.getItems().clear();
             nodes = parser.createNodes(parser.getLines());
             referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+            referenceNodeChoiceBox.setMaxSize(1000,10);
         } catch (IOException e) {
             e.printStackTrace();
         }
