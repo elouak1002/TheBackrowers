@@ -18,6 +18,7 @@ public class Root extends Application {
     //initialize panes
     private Pane currentPage;
     private Pane loadPage;
+    private Pane multipleLoadPage;
     private Pane inputPage;
     private Pane outputPage;
     private BorderPane root;
@@ -27,12 +28,14 @@ public class Root extends Application {
 
         //load fxml files
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
+        FXMLLoader multipleLoadPageLoader = new FXMLLoader(getClass().getResource("MultipleLoad.fxml"));
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
 
         //try-catch declaring of panes
         try {
             loadPage = loadPageLoader.load();
+            multipleLoadPage = multipleLoadPageLoader.load();
             inputPage = inputPageLoader.load();
             outputPage = outputPageLoader.load();
         } catch (IOException e) {
@@ -88,8 +91,8 @@ public class Root extends Application {
         root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
         root.setBottom(navigation);
-        root.setCenter(loadPage);
-        currentPage = loadPage;
+        root.setCenter(multipleLoadPage);
+        currentPage = multipleLoadPage;
         previous.setDisable(true);
 
         //set and show scene and stage
