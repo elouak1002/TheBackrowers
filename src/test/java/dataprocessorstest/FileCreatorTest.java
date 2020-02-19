@@ -1,15 +1,14 @@
 package dataprocessorstest;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.Arguments;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -18,22 +17,21 @@ import dataprocessors.FileCreator;
 import datastructures.Node;
 
 /**
- * Test the String creation of the Data Line, especially the arguments creation.
- * @version 12.02.2020
- */
-@RunWith(Parameterized.class)
+* Test the String creation of the Data Line, especially the arguments creation.
+* @version 12.02.2020
+*/
 public class FileCreatorTest {
-	
-	@Parameters
-	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-			{ new HashMap<String, Node>() {{
+
+	@ParameterizedTest
+	private static Stream<Arguments> ArgumentsProvider() {
+		return Stream.of(
+			Arguments.of(new HashMap<String, Node>() {{
 				put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", 1.0f, 2.0f));
 				put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", 10.0f, 20.0f));
 				put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 14.0f, 24.0f));
 				put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 7.0f, 27.0f));
 				put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", 32.1f, 27.19f));
-			}}, 
+			}},
 			new ArrayList<String>(Arrays.asList(
 				"// Data of Mappin Technologies LTD 2019",
 				"// Thu Aug  1 11:48:39 2019",
@@ -53,25 +51,15 @@ public class FileCreatorTest {
 				"",
 				"// Nodes:",
 				" , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365"
-				))
-			}
-		});
+				)))
+		);
+		
 	}
 
-
-	private HashMap<String,Node> nodeMap;
-	private ArrayList<String> output;
-	public FileCreatorTest(HashMap<String,Node> nodeMap, ArrayList<String> output) {
-		this.nodeMap = nodeMap;
-		this.output = output;
-	}
-
-	@Test
-	public void processOutputFileTest() throws IOException {
+	@ParameterizedTest
+	@MethodSource("ArgumentsProvider")
+	public void processOutputFileTest(HashMap<String,Node> nodeMap, ArrayList<String> output) throws IOException {
 		FileCreator fileCrea = new FileCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
-
-		System.out.println(fileCrea.processOutputFile());
-		System.out.println(output);
 
 		assertEquals(fileCrea.processOutputFile(),output);
 	}

@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-   // id 'org.openjfx.javafxplugin' version '0.0.8'
     id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
@@ -9,14 +8,14 @@ repositories {
     mavenCentral()
 }
 
-//javafx {
-//    version = '12'
-//    modules = ['javafx.controls','javafx.fxml']
-//}
+dependencies {
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testCompile('org.junit.jupiter:junit-jupiter-params:5.1.0')
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+}
 
-dependencies{
-    testCompile 'junit:junit:4.6'
-    testCompile 'org.testfx:testfx-junit:4.0+'
+test {
+    useJUnitPlatform()
 }
 
 apply plugin: 'java'
@@ -26,5 +25,12 @@ jar {
         attributes 'Main-Class': 'GUI.Main'
     }
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
 
 mainClassName = 'GUI.Main'

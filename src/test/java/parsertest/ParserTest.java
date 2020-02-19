@@ -1,18 +1,24 @@
 package parsertest;
 
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import parser.Parser;
 import datastructures.Node;
 import javafx.util.Pair;
 
-import org.junit.Before;
-import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class ParserTest {
 
@@ -20,7 +26,7 @@ public class ParserTest {
     private List<String> filteredData;
     private List<String> rawData;
 
-    @Before
+    @BeforeEach
     public void setup(){
         parser = new Parser(Paths.get("src/test/resources/testData.txt"));
         filteredData = Arrays.asList("Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
@@ -43,10 +49,12 @@ public class ParserTest {
     }
 
 
-    @Test(expected = IOException.class)
+    @Test
     public void emptyPathTest() throws IOException {
-        Parser parser = new Parser(Paths.get("/"));
-        parser.getLines();
+        assertThrows(IOException.class, () ->{
+            Parser parser = new Parser(Paths.get("/"));
+            parser.getLines(); 
+        });
     }
 
     @Test
@@ -95,7 +103,7 @@ public class ParserTest {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
     }
-    
+
     @Test
     public void endDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
