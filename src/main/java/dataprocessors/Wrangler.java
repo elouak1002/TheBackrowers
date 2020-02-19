@@ -16,7 +16,7 @@ public class Wrangler {
 
     /**
      * Constructor for the Node class
-     * @param inputNodes: a list of all the nodes we want to change
+     * @param inputNodes : a list of all the nodes we want to change
      */
     public Wrangler(TreeMap<String, Node> inputNodes){
         outputNodes = new TreeMap<>();
@@ -30,8 +30,8 @@ public class Wrangler {
      * changes we want. This is just a safety measure: in case something
      * goes wrong with the transformations we don't actually modifiy the 
      * original node list
-     * 
-     * @param nodes: initial list of nodes
+     *
+     * @param nodes : initial list of nodes
      */
     private void copyNodes(TreeMap<String, Node> nodes){
         for(Node index: nodes.values()){
