@@ -27,7 +27,6 @@ public class MultipleLoadController {
 
     @FXML
     void chooseFiles() {
-        
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         List<File> files = fileChooser.showOpenMultipleDialog(null);
