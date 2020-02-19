@@ -135,7 +135,7 @@ public class ParserTest {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         Parser secondParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         int shouldBeFirst = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
-        int shouldBeSecond = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+        int shouldBeSecond = secondParser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
 
         assertEquals(shouldBeFirst,shouldBeSecond-1);
     }
