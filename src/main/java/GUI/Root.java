@@ -44,6 +44,7 @@ public class Root extends Application {
 
         //declare controllers
         LoadController loadController = loadPageLoader.getController();
+        MultipleLoadController multipleLoadController = multipleLoadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
 
@@ -62,12 +63,12 @@ public class Root extends Application {
             }
         });
         next.setOnAction(event -> {
-            if (currentPage == loadPage) {
-                if (loadController.getPath() != null) {
+            if (currentPage == loadPage || currentPage == multipleLoadPage) {
+                if (loadController.getPath() != null || multipleLoadController.getPath() != null) {
                     currentPage = inputPage;
                     root.setCenter(inputPage);
                     previous.setDisable(false);
-                    inputController.setNodes(loadController.getPath());
+                    inputController.setNodes(multipleLoadController.getPath());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
                 }
