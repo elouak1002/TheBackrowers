@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +135,7 @@ public class ParserTest {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         Parser secondParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         int shouldBeFirst = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
-        int shouldBeSecond = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+        int shouldBeSecond = secondParser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
 
         assertEquals(shouldBeFirst,shouldBeSecond-1);
     }
