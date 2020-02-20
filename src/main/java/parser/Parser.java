@@ -42,7 +42,17 @@ public class Parser {
      * @return List of lines that contain data	
      * @throws IOException if the file was not found	
      */	
-    public List<String> getLines() throws IOException { return filter(getAllLines()); }	
+    public List<String> getLines() throws IOException { 
+        return filter(getAllLines()); 
+    }	
+
+    /**
+     * @return List of lines that contain neighbours data
+     * @throws IOException if the file was not found
+     */
+    public List<String> getNeighboursLines() throws IOException { 
+        return filterNonNeighbours(getAllLines()); 
+    }
 
     /**	
      * @return All lines from the input file	
@@ -64,7 +74,20 @@ public class Parser {
                         || line.equals(""));	
 
         return lines;	
-    }	
+    }
+
+    /**
+     * Filters out lines that does not contain neighbours data
+     * @param lines List of lines from a file.
+     * @return List of lines with neighbours data.
+     */
+    private List<String> filterNonNeighbours(List<String> lines) {
+        lines.removeIf(line -> 
+            !line.contains("addAllNeighbours")
+        );
+        
+        return lines;
+    }
 
 	/**	
 	 * @return The position of the first data line in the input file,	
