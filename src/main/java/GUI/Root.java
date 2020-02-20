@@ -17,6 +17,7 @@ public class Root extends Application {
 
     //initialize panes
     private Pane currentPage;
+    private Pane homePage;
     private Pane loadPage;
     private Pane inputPage;
     private Pane outputPage;
@@ -26,12 +27,14 @@ public class Root extends Application {
     public void start(Stage stage) {
 
         //load fxml files
+        FXMLLoader homePageLoader = new FXMLLoader(getClass().getResource("Home.fxml"));
         FXMLLoader loadPageLoader = new FXMLLoader(getClass().getResource("Load.fxml"));
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
 
         //try-catch declaring of panes
         try {
+            homePage = homePageLoader.load();
             loadPage = loadPageLoader.load();
             inputPage = inputPageLoader.load();
             outputPage = outputPageLoader.load();
@@ -40,6 +43,7 @@ public class Root extends Application {
         }
 
         //declare controllers
+        HomeController homeController = homePageLoader.getController();
         LoadController loadController = loadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
@@ -48,10 +52,13 @@ public class Root extends Application {
         Button next = new Button("Next");
 
         previous.setOnAction(event -> {
-            if (currentPage == inputPage) {
+            if (currentPage == loadPage) {
+                currentPage = homePage;
+                root.setCenter(homePage);
+                previous.setDisable(true);
+            } else if (currentPage == inputPage) {
                 currentPage = loadPage;
                 root.setCenter(loadPage);
-                previous.setDisable(true);
             } else if (currentPage == outputPage) {
                 currentPage = inputPage;
                 root.setCenter(inputPage);
@@ -59,11 +66,21 @@ public class Root extends Application {
             }
         });
         next.setOnAction(event -> {
-            if (currentPage == loadPage) {
+            if (currentPage == homePage) {
+                if (homeController.getChoseWrangler() == null) {
+                    new Alert(Alert.AlertType.ERROR, "Please select what you want to do", ButtonType.CLOSE).showAndWait();
+                } else if (homeController.getChoseWrangler().booleanValue()) {
+                    currentPage = loadPage;
+                    root.setCenter(loadPage);
+                    previous.setDisable(false);
+                } else if (!homeController.getChoseWrangler().booleanValue()) {
+                    
+                }
+
+            } else if (currentPage == loadPage) {
                 if (loadController.getPath() != null) {
                     currentPage = inputPage;
                     root.setCenter(inputPage);
-                    previous.setDisable(false);
                     inputController.setNodes(loadController.getPath());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
@@ -88,8 +105,8 @@ public class Root extends Application {
         root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
         root.setBottom(navigation);
-        root.setCenter(loadPage);
-        currentPage = loadPage;
+        root.setCenter(homePage);
+        currentPage = homePage;
         previous.setDisable(true);
 
         //set and show scene and stage
