@@ -1,5 +1,7 @@
 package datastructures;
 
+import java.util.List;
+
 /**
  * The Node class represents location objects and allows modification of their
  * data
@@ -10,6 +12,7 @@ public class Node {
     private int id;
     private float xCoord;
     private float yCoord;
+    private List<Node> neighbours;
 
     /**
      * Constructor for the Node class
@@ -21,8 +24,6 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-
-
     }
 
 
