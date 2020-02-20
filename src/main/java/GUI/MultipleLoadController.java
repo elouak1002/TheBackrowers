@@ -41,7 +41,7 @@ public class MultipleLoadController {
 
             fullPath = Paths.get(showFiles);
             //listView.getItems().addAll(showFiles);
-            setLabelText("Selected File: " + showFiles);
+            setLabelText("Selected File: " + printFiles.getAbsolutePath().substring(printFiles.getAbsolutePath().lastIndexOf("\\") + 1 ));
         }
     }
 
@@ -57,16 +57,15 @@ public class MultipleLoadController {
     private void handleDrop(DragEvent event){
         List<File> selectedFile = event.getDragboard().getFiles();
         System.out.println("drop works");
-//        if(selectedFile != null ){
-//            if(selectedFile.getName().endsWith(".txt")){
-//                fullPath = selectedFile.toPath();
-//                setLabelText("Selected File: " + selectedFile.getName());
-//                System.out.println(selectedFile.getName());
-//            } else {
-//                setLabelText("Only .txt files allowed");
-//            }
-//        }
-        System.out.println(selectedFile + "\n");
+        for( File files : selectedFile){
+            if(files.getAbsolutePath().contains(".txt")){
+                fullPath = Paths.get(files.getAbsolutePath());
+                setLabelText("Selected File: " + files.getAbsolutePath().substring(files.getAbsolutePath().lastIndexOf("\\") + 1 ));
+            } else {
+                setLabelText("Only .txt files allowed");
+            }
+        }
+        System.out.println(selectedFile);
     }
 
 
