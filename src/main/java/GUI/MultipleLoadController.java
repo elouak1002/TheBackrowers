@@ -49,21 +49,24 @@ public class MultipleLoadController {
     private void handleDragOver(DragEvent event){
         if(event.getDragboard().hasFiles()){
             event.acceptTransferModes(TransferMode.ANY);
+            System.out.println("drag works");
         }
     }
 
     @FXML
     private void handleDrop(DragEvent event){
-        File selectedFile = event.getDragboard().getFiles().get(0);
-        if(selectedFile != null ){
-            if(selectedFile.getName().endsWith(".txt")){
-                fullPath = selectedFile.toPath();
-                setLabelText("Selected File: " + selectedFile.getName());
-                System.out.println(selectedFile.getName());
-            } else {
-                setLabelText("Only .txt files allowed");
-            }
-        }
+        List<File> selectedFile = event.getDragboard().getFiles();
+        System.out.println("drop works");
+//        if(selectedFile != null ){
+//            if(selectedFile.getName().endsWith(".txt")){
+//                fullPath = selectedFile.toPath();
+//                setLabelText("Selected File: " + selectedFile.getName());
+//                System.out.println(selectedFile.getName());
+//            } else {
+//                setLabelText("Only .txt files allowed");
+//            }
+//        }
+        System.out.println(selectedFile + "\n");
     }
 
 
