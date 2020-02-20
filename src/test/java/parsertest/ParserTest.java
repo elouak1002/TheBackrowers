@@ -71,6 +71,17 @@ public class ParserTest {
     }
 
     @Test
+    public void getNeighboursLinesTest() throws IOException {
+        List<String> data = parser.getNeighboursLines();
+        List<String> neighboursData = Arrays.asList(
+            "HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
+            "HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
+            "HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );"
+            );
+        assertEquals(neighboursData, data);
+    }
+
+    @Test
     public void extractDataTest(){
         String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
         Pair<Float, Float> expected = new Pair<>(49.31f, 26.46f);
