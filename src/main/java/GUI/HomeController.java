@@ -2,10 +2,11 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class HomeController{
 
-	private boolean choseWrangler = true;
+	private Boolean choseWrangler = null;
 	
 	//FXML Components and initialisation
 	@FXML
@@ -28,7 +29,7 @@ public class HomeController{
 	*/
 	@FXML
 	private void chooseWrangler(){
-		choseWrangler = true;
+		choseWrangler = new Boolean(true);
 		chosenLabel.setText("Data wrangling");
 	}
 
@@ -37,7 +38,7 @@ public class HomeController{
 	*/
 	@FXML
 	private void chooseXML(){
-		choseWrangler = false;
+		choseWrangler = new Boolean(false);
 		chosenLabel.setText("XML generation");
 	}
 
@@ -45,7 +46,7 @@ public class HomeController{
 	* Returns what the user has chosen, to do XML generation or data wrangling.
 	* Returns true if user chose wrangling, false if XML.
 	*/
-	public boolean getChoseWrangler(){
+	public Boolean getChoseWrangler(){
 		return choseWrangler;
 	}
 
