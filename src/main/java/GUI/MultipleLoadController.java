@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -19,9 +20,7 @@ public class MultipleLoadController {
 
     @FXML private Button uploadButton;
     @FXML private javafx.scene.control.Label selectedFileLabel;
-    //@FXML private javafx.scene.control.ListView listView;
-    @FXML
-    ListView<String> listView = new ListView<String>();
+    @FXML private ListView<String> listView = new ListView<String>();
 
 
     @FXML
@@ -39,6 +38,7 @@ public class MultipleLoadController {
         //allow multiple selection of files
         List<File> selectFiles = fileChooser.showOpenMultipleDialog(null);
 
+        //this for each loop might be useless
         for(File printFiles : selectFiles){
             String showFiles = printFiles.getAbsolutePath();
             //testing purposes
@@ -46,15 +46,15 @@ public class MultipleLoadController {
 
             fullPath = Paths.get(showFiles);
             setLabelText("Selected File: " + printFiles.getAbsolutePath().substring(printFiles.getAbsolutePath().lastIndexOf("\\") + 1 ));
-
-
         }
+
+        //add and display the selected files into listview
         if (selectFiles != null) {
             for (int i = 0; i < selectFiles.size(); i++) {
                 listView.getItems().add(selectFiles.get(i).getAbsolutePath());
             }
         }
-
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //listView.getItems().addAll(selectFiles);
     }
 
@@ -70,6 +70,8 @@ public class MultipleLoadController {
     private void handleDrop(DragEvent event){
         List<File> selectedFile = event.getDragboard().getFiles();
         System.out.println("drop works");
+
+        //this for each loop might be useless
         for( File files : selectedFile){
             if(files.getAbsolutePath().contains(".txt")){
                 fullPath = Paths.get(files.getAbsolutePath());
@@ -78,11 +80,14 @@ public class MultipleLoadController {
                 setLabelText("Only .txt files allowed");
             }
         }
+
+        //add and display the selected files into listview
         if (selectedFile != null) {
             for (int i = 0; i < selectedFile.size(); i++) {
                 listView.getItems().add(selectedFile.get(i).getAbsolutePath());
             }
         }
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         System.out.println(selectedFile);
     }
 
