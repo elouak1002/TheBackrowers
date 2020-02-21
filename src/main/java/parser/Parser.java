@@ -96,10 +96,12 @@ public class Parser {
         TreeMap<String, Node> nodeMap = new TreeMap<>();
         for(String line : filteredLines){	
             String name = extractName(line);
+            String type = extractType(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
             Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
             node.setId(nodeId);
+            node.setType(type);
             nodeMap.put(name, node);
 
         }
@@ -169,7 +171,12 @@ public class Parser {
      * @param line to extract data from	
      * @return Node's name	
      */	
-    public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }	
-
+    public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }
+    /**
+     * Method to extract the type of a node from a line
+     * @param line to extract data from
+     * @return Node's type aka Node, Room, Elevator etc.
+     */
+    public String extractType(String line){ return line.substring(0,line.indexOf("=")).split(" ")[0]; }
 
 } 

@@ -10,6 +10,7 @@ public class Node {
     private int id;
     private float xCoord;
     private float yCoord;
+    private String type;
 
     /**
      * Constructor for the Node class
@@ -73,4 +74,20 @@ public class Node {
      * @return Node's data as a string
      */
     public String toString(){ return "Node: " + name + ", X: " + xCoord + ", Y:" + yCoord; }
+
+    /**
+     * Set a node's type.
+     * @param type
+     */
+    public void setType(String type) {
+        this.type= type;
+    }
+
+    /**
+     *
+     * @return a node's type
+     */
+    public String getType(){
+        return type;
+    }
 }
