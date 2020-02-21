@@ -78,6 +78,11 @@ public class MultipleLoadController {
                 setLabelText("Only .txt files allowed");
             }
         }
+        if (selectedFile != null) {
+            for (int i = 0; i < selectedFile.size(); i++) {
+                listView.getItems().add(selectedFile.get(i).getAbsolutePath());
+            }
+        }
         System.out.println(selectedFile);
     }
 
