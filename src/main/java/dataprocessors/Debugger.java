@@ -21,4 +21,19 @@ public class Debugger {
 	
 	
 	// TODO ADD YOUR METHODS HERE for Septimiu
+
+	/**
+	 * Remove the Nodes without neighbours from the Map.
+	 */
+	public void removeNeighbourlessNodes() {
+		for (String nodeName : nodeMap.keySet()) {
+			if (nodeMap.get(nodeName).getNeighbours().isEmpty()) {
+				nodeMap.remove(nodeName);
+				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
+			}
+		}
+	}
+
+	
 }
