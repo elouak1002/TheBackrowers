@@ -19,6 +19,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat; 
+import static org.hamcrest.Matchers.*;
 
 public class ParserTest {
 
@@ -134,8 +137,10 @@ public class ParserTest {
         expectedOutcome.put("Node2",node2);
         expectedOutcome.put("Node3",node3);
 
-        // TODO IMPROVE IT WITH HAMCREST
-        assertEquals(expectedOutcome.toString(), parser.setNeighbours(neighboursData, nodeMap).toString()); 
+        TreeMap<String, Node> actualOutcome = parser.setNeighbours(neighboursData, nodeMap);
+        for (String nodeName : actualOutcome.keySet()) {
+            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+        }
     }
 
 

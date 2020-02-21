@@ -3,8 +3,6 @@ build/
 .project
 .settings/
 bin/
-src/main/java/parser/logs/*
-src/test/resources/testIdLog.txt
 
 
 # Created by https://www.gitignore.io/api/git,java,linux,macos,gradle,windows,intellij,sublimetext
