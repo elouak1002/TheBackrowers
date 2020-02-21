@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,16 +12,16 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.List;
 
 public class MultipleLoadController {
 
     private Path fullPath;
 
-    @FXML private Button uploadButton;
     @FXML private javafx.scene.control.Label selectedFileLabel;
-    @FXML private ListView<String> listView = new ListView<String>();
+    @FXML private ListView<String> listView = new ListView<>();
+    @FXML private ListView<String> chosenFiles = new ListView<>();
+    @FXML private javafx.scene.control.Button selectedFiles;
 
 
     @FXML
@@ -95,4 +96,17 @@ public class MultipleLoadController {
     private void setLabelText(String display){
         selectedFileLabel.setText(display);
     }
+
+    @FXML
+    private void selectFiles(){
+        String choose = "";
+        ObservableList listOfItems = listView.getSelectionModel().getSelectedItems();
+        for (Object items : listOfItems){
+            choose += (String) items;
+        }
+        chosenFiles.getItems().addAll(choose);
+    }
+
+
+
 }
