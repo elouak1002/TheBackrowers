@@ -24,8 +24,8 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
+        this.neighbours = null;
     }
-
 
     /**
      * Getter method for the Node's name
@@ -69,7 +69,17 @@ public class Node {
      */
     public void setId(int value) { this.id = value; }
 
+    /**
+     * A method for setting neighbours of a Node.
+     * @param neighbours list of neighbours to be set.
+     */
+    public void setNeighbours(List<Node> neighbours) { this.neighbours = neighbours; }
 
+    /**
+     * @return Neighbour's list.
+     */
+    public List<Node> getNeighbours() { return neighbours; }
+    
     /**
      * @return Node's data as a string
      */
