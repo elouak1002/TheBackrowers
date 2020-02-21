@@ -1,17 +1,13 @@
-package parser;	
+package parser;
 
 import datastructures.Node;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javafx.util.Pair;	
 
@@ -126,7 +122,42 @@ public class Parser {
             nodeMap.put(name, node);
 
         }
-        return nodeMap;	
+        return nodeMap;
+    }
+
+    /**
+     * Set the neighbours list for each node in the node map.
+     * @param NeighboursLines list of lines that contain the neighbours information.
+     * @param nodeMap the map of node
+     * @return the modified node map with neighbours added.
+     * @throws IOException
+     */
+    public TreeMap<String, Node> setNeighbours(List<String> neighboursLines, TreeMap<String,Node> nodeMap) throws IOException {
+        for (String line : neighboursLines) {
+            String nodeName = extractNodeFromNeighboursLine(line);
+            if (nodeMap.containsKey(nodeName)) {
+                List<Node> neighbours = extractNeighbours(line).stream().map(name -> nodeMap.get(name)).filter(Objects::nonNull).collect(Collectors.toList());
+                nodeMap.get(nodeName).setNeighbours(neighbours);
+            }
+        }
+        return nodeMap;
+    }
+
+    /**
+     * @param line a line that set the neighbours of a node
+     * @return The name of the node to which the neighbours are added in the file line.
+     */
+    private String extractNodeFromNeighboursLine(String line) {
+        return line.substring(0, line.indexOf("."));
+    }
+
+    /**
+     * 
+     * @param line a line that set the neighbours of a node
+     * @return A list of the neighbours added to the node.
+     */
+    private List<String> extractNeighbours(String line) {
+        return Arrays.asList(line.substring(line.indexOf("{") + 1, line.indexOf("}")).split(",")).stream().map(String::trim).collect(Collectors.toList());
     }
 
     /**
