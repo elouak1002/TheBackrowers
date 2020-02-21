@@ -102,9 +102,31 @@ public class MultipleLoadController {
         String choose = "";
         ObservableList listOfItems = listView.getSelectionModel().getSelectedItems();
         for (Object items : listOfItems){
-            choose += (String) items;
+            choose +=  items;
         }
         chosenFiles.getItems().addAll(choose);
+        listView.getItems().removeAll(choose);
+        System.out.println("file got chosen : " + choose);
+        System.out.println("file in original location : " + listView);
+        if (!listView.getItems().isEmpty()) {
+            listView.getSelectionModel().select(0);
+        }
+    }
+
+    @FXML
+    private void unselectFiles(){
+        String choose = "";
+        ObservableList listOfItems = chosenFiles.getSelectionModel().getSelectedItems();
+        for (Object items : listOfItems){
+            choose +=  items;
+        }
+        listView.getItems().addAll(choose);
+        chosenFiles.getItems().removeAll(choose);
+        System.out.println("file got chosen : " + choose);
+        System.out.println("file in original location : " + chosenFiles);
+        if (!listView.getItems().isEmpty()) {
+            listView.getSelectionModel().select(0);
+        }
     }
 
 

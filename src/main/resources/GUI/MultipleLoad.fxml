@@ -25,7 +25,7 @@
             <VBox prefHeight="434.0" prefWidth="205.0">
                <children>
                   <Button fx:id="selectedFiles" mnemonicParsing="false" onAction="#selectFiles" prefHeight="26.0" prefWidth="204.0" text="Select Files" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="222.0" text="Unselect Files" />
+                  <Button mnemonicParsing="false" onAction="#unselectFiles" prefHeight="26.0" prefWidth="222.0" text="Unselect Files" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
