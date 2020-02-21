@@ -46,8 +46,8 @@ public class MultipleLoadController {
 
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
-            for (int i = 0; i < selectFiles.size(); i++) {
-                uploadTable.getItems().add(selectFiles.get(i).getAbsolutePath());
+            for (File selectFile : selectFiles) {
+                uploadTable.getItems().add(selectFile.getAbsolutePath());
             }
         }
         //allows multiple selection of files in uploadTable [bad coding]
@@ -76,8 +76,8 @@ public class MultipleLoadController {
 
         //add and display the selected files into listview
         if (selectedFile != null) {
-            for (int i = 0; i < selectedFile.size(); i++) {
-                uploadTable.getItems().add(selectedFile.get(i).getAbsolutePath());
+            for (File file : selectedFile) {
+                uploadTable.getItems().add(file.getAbsolutePath());
             }
         }
 
@@ -95,17 +95,17 @@ public class MultipleLoadController {
     @FXML
     private void selectFiles(){
         //initialise variable
-        String choose = "";
+        StringBuilder choose = new StringBuilder();
         //store selected items into listOfItems
-        ObservableList listOfItems = uploadTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
         //no idea what this does
-        for (Object items : listOfItems){
-            choose +=  items;
+        for (String items : listOfItems){
+            choose.append(items);
         }
         //replace selected files from uploadTable to selectedTable
-        if(choose != "") {
-            selectedTable.getItems().addAll(choose);
-            uploadTable.getItems().removeAll(choose);
+        if(!choose.toString().equals("")) {
+            selectedTable.getItems().addAll(choose.toString());
+            uploadTable.getItems().removeAll(choose.toString());
             System.out.println("file got chosen : " + choose);
             System.out.println("file in original location : " + uploadTable);
         }
@@ -118,17 +118,17 @@ public class MultipleLoadController {
     @FXML
     private void unselectFiles(){
         //initialise variable
-        String choose = "";
+        StringBuilder choose = new StringBuilder();
         //store selected items into listOfItems
-        ObservableList listOfItems = selectedTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> listOfItems = selectedTable.getSelectionModel().getSelectedItems();
         //no idea what this does
-        for (Object items : listOfItems){
-            choose +=  items;
+        for (String items : listOfItems){
+            choose.append(items);
         }
         //replace selected files from uploadTable to selectedTable
-        if(choose != "") {
-            uploadTable.getItems().addAll(choose);
-            selectedTable.getItems().removeAll(choose);
+        if(!choose.toString().equals("")) {
+            uploadTable.getItems().addAll(choose.toString());
+            selectedTable.getItems().removeAll(choose.toString());
             System.out.println("file got chosen : " + choose);
             System.out.println("file in original location : " + selectedTable);
         }
