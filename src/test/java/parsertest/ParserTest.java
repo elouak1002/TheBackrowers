@@ -1,6 +1,5 @@
 package parsertest;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +14,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 public class ParserTest {
 
@@ -48,7 +47,6 @@ public class ParserTest {
                 "====== NODE LISTS =======", "", "// Nodes:",
                 " , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365");
     }
-
 
     @Test
     public void emptyPathTest() throws IOException {
@@ -111,6 +109,37 @@ public class ParserTest {
     }
 
     @Test
+    public void setNeighborsTest() throws IOException {
+        List<String> neighboursData = Arrays.asList(
+            "Node1.addAllNeighbours( new List<Node>{ Node2 , Node3 } );",
+            "Node2.addAllNeighbours( new List<Node>{ Node1 , Node3 } );",
+            "Node3.addAllNeighbours( new List<Node>{ Node1 } );"
+        );
+
+        TreeMap<String, Node> nodeMap = new TreeMap<>();
+        nodeMap.put("Node1",new Node("Node Node1",67.040802f , 67.040802f));
+        nodeMap.put("Node2",new Node("Node Node2",127.040802f , 335.411697f));
+        nodeMap.put("Node3",new Node("Room Node3",127.040802f , 335.411697f));
+        
+        TreeMap<String, Node> expectedOutcome = new TreeMap<>();
+        Node node1 = new Node("Node Node1",67.040802f , 67.040802f);
+        Node node2 = new Node("Node Node2",127.040802f , 335.411697f);
+        Node node3 = new Node("Room Node3",127.040802f , 335.411697f);
+
+        node1.setNeighbours(Arrays.asList(node2,node3));
+        node2.setNeighbours(Arrays.asList(node1,node3));
+        node3.setNeighbours(Arrays.asList(node1));
+
+        expectedOutcome.put("Node1",node1);
+        expectedOutcome.put("Node2",node2);
+        expectedOutcome.put("Node3",node3);
+
+        // TODO IMPROVE IT WITH HAMCREST
+        assertEquals(expectedOutcome.toString(), parser.setNeighbours(neighboursData, nodeMap).toString()); 
+    }
+
+
+    @Test
     public void beginDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
@@ -121,6 +150,7 @@ public class ParserTest {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
     }
+
     @Test
     public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
@@ -131,6 +161,7 @@ public class ParserTest {
         //this test should only pass when log file is empty
         assertEquals(shouldBeZero+1,0);
     }
+
     @Test
     public void getsCorrectLastSeenId() throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
@@ -141,6 +172,7 @@ public class ParserTest {
 
         assertEquals(shouldBe3,3);
     }
+
     @Test
     public void generatesUniqueIds() throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
