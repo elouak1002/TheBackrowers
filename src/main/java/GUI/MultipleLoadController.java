@@ -99,17 +99,13 @@ public class MultipleLoadController {
      */
     @FXML
     private void selectFiles(){
-        //initialise ArrayList
-        ArrayList<String> choose = new ArrayList<>();
         //Updates any changes in listOfItems if any items get highlighted/unhighlight
         ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
-        //assign each item to an index in an ArrayList
-        for (String items : listOfItems){
-            choose.add(items);
-        }
+        //initialise ArrayList
+        ArrayList<String> choose = new ArrayList<>(listOfItems);
         //replace selected files from uploadTable to selectedTable
-        if(!choose.equals("")) {
-            for(int i=0; i < choose.size(); i++) {
+        for(int i=0; i < choose.size(); i++) {
+            if(!(choose.get(i) == null)) {
                 selectedTable.getItems().addAll(choose.get(i));
                 uploadTable.getItems().removeAll(choose.get(i));
                 //testing purposes
@@ -124,17 +120,13 @@ public class MultipleLoadController {
      */
     @FXML
     private void unselectFiles(){
-        //initialise ArrayList
-        ArrayList<String> choose = new ArrayList<>();
         //Updates any changes in listOfItems if any items get highlighted/unhighlight
         ObservableList<String> listOfItems = selectedTable.getSelectionModel().getSelectedItems();
-        //assign each item to an index in an ArrayList
-        for (String items : listOfItems){
-            choose.add(items);
-        }
+        //initialise ArrayList
+        ArrayList<String> choose = new ArrayList<>(listOfItems);
         //replace selected files from uploadTable to selectedTable
-        if(!choose.toString().equals("")) {
-            for(int i=0; i < choose.size(); i++) {
+        for(int i=0; i < choose.size(); i++) {
+            if(!(choose.get(i) == null)) {
                 uploadTable.getItems().addAll(choose.get(i));
                 selectedTable.getItems().removeAll(choose.get(i));
                 //testing purposes
