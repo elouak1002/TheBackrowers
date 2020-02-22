@@ -44,16 +44,14 @@ public class MultipleLoadController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         //allow multiple selection of files
         List<File> selectFiles = fileChooser.showOpenMultipleDialog(null);
-
+        //allows multiple selection of files in uploadTable and selectedTable
+        multipleSelection();
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
                 uploadTable.getItems().add(selectFile.getAbsolutePath());
             }
         }
-        //allows multiple selection of files in uploadTable and selectedTable
-        uploadTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
@@ -75,22 +73,25 @@ public class MultipleLoadController {
     private void handleDrop(DragEvent event){
         //receive files when dropped
         List<File> selectedFile = event.getDragboard().getFiles();
-
+        //allows multiple selection of files in uploadTable and selectedTable
+        multipleSelection();
         //add and display the selected files into listview
         if (selectedFile != null) {
             for (File file : selectedFile) {
                 uploadTable.getItems().add(file.getAbsolutePath());
             }
         }
-
-        //allows multiple selection of files in uploadTable and selectedTable
-        uploadTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-
         //testing purposes
         System.out.println("drop works");
         System.out.println(selectedFile);
+    }
+
+    /**
+     * Allows multiple selection of files in uploadTable and selectedTable
+     */
+    private void multipleSelection(){
+        uploadTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
