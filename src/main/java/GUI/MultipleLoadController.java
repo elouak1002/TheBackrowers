@@ -9,6 +9,7 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,8 +51,9 @@ public class MultipleLoadController {
                 uploadTable.getItems().add(selectFile.getAbsolutePath());
             }
         }
-        //allows multiple selection of files in uploadTable [bad coding]
+        //allows multiple selection of files in uploadTable and selectedTable
         uploadTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
@@ -81,8 +83,10 @@ public class MultipleLoadController {
             }
         }
 
-        //allows multiple selection of files in uploadTable [bad coding]
+        //allows multiple selection of files in uploadTable and selectedTable
         uploadTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectedTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 
         //testing purposes
         System.out.println("drop works");
@@ -94,47 +98,48 @@ public class MultipleLoadController {
      */
     @FXML
     private void selectFiles(){
-        //initialise variable
-        StringBuilder choose = new StringBuilder();
-        //store selected items into listOfItems
+        //initialise ArrayList
+        ArrayList<String> choose = new ArrayList<>();
+        //Updates any changes in listOfItems if any items get highlighted/unhighlight
         ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
-        //no idea what this does
+        //assign each item to an index in an ArrayList
         for (String items : listOfItems){
-            choose.append(items);
+            choose.add(items);
         }
         //replace selected files from uploadTable to selectedTable
-        if(!choose.toString().equals("")) {
-            selectedTable.getItems().addAll(choose.toString());
-            uploadTable.getItems().removeAll(choose.toString());
-            System.out.println("file got chosen : " + choose);
-            System.out.println("file in original location : " + uploadTable);
+        if(!choose.equals("")) {
+            for(int i=0; i < choose.size(); i++) {
+                selectedTable.getItems().addAll(choose.get(i));
+                uploadTable.getItems().removeAll(choose.get(i));
+                //testing purposes
+                System.out.println("file got chosen : " + choose);
+                System.out.println("file in original location : " + uploadTable);
+            }
         }
-        //not working
-//        if (!uploadTable.getItems().isEmpty()) {
-//            uploadTable.getSelectionModel().select(0);
-//        }
     }
 
+    /**
+     * Transfer selected files from the uploadTable to selectedTable
+     */
     @FXML
     private void unselectFiles(){
-        //initialise variable
-        StringBuilder choose = new StringBuilder();
-        //store selected items into listOfItems
+        //initialise ArrayList
+        ArrayList<String> choose = new ArrayList<>();
+        //Updates any changes in listOfItems if any items get highlighted/unhighlight
         ObservableList<String> listOfItems = selectedTable.getSelectionModel().getSelectedItems();
-        //no idea what this does
+        //assign each item to an index in an ArrayList
         for (String items : listOfItems){
-            choose.append(items);
+            choose.add(items);
         }
         //replace selected files from uploadTable to selectedTable
         if(!choose.toString().equals("")) {
-            uploadTable.getItems().addAll(choose.toString());
-            selectedTable.getItems().removeAll(choose.toString());
-            System.out.println("file got chosen : " + choose);
-            System.out.println("file in original location : " + selectedTable);
+            for(int i=0; i < choose.size(); i++) {
+                uploadTable.getItems().addAll(choose.get(i));
+                selectedTable.getItems().removeAll(choose.get(i));
+                //testing purposes
+                System.out.println("file got chosen : " + choose);
+                System.out.println("file in original location : " + selectedTable);
+            }
         }
-        //not working
-//        if (!uploadTable.getItems().isEmpty()) {
-//            uploadTable.getSelectionModel().select(0);
-//        }
     }
 }

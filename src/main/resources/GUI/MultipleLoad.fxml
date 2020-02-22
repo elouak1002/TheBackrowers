@@ -11,7 +11,7 @@
    <children>
       <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" onAction="#uploadFiles" text="Upload Files">
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets bottom="10.0" />
          </VBox.margin>
       </Button>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="434.0" prefWidth="660.0">
@@ -24,8 +24,11 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="434.0" prefWidth="202.0">
                <children>
-                  <Button fx:id="selectedFiles" mnemonicParsing="false" onAction="#selectFiles" prefHeight="26.0" prefWidth="204.0" text="Select Files" />
-                  <Button mnemonicParsing="false" onAction="#unselectFiles" prefHeight="26.0" prefWidth="222.0" text="Unselect Files" />
+                  <Button fx:id="selectedFiles" mnemonicParsing="false" onAction="#selectFiles" prefHeight="26.0" prefWidth="170.0" text="Select Files">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#unselectFiles" prefHeight="26.0" prefWidth="170.0" text="Unselect Files" />
                </children>
             </VBox>
             <VBox prefHeight="434.0" prefWidth="330.0">
@@ -36,5 +39,10 @@
             </VBox>
          </children>
       </HBox>
+      <Button mnemonicParsing="false" text="Merge and Save">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
    </children>
 </VBox>
