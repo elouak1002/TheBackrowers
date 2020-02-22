@@ -89,9 +89,9 @@ public class Parser {
 	 * @return The position of the first data line in the input file,	
      * -1 otherwise.	
 	 */	
-	public int beginOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
-        if (filteredLines.size() > 0) {	
-            return fullLines.indexOf((filteredLines.get(0)));	
+	public int beginOfDataLines() throws IOException { 	
+        if (getLines().size() > 0) {	
+            return getAllLines().indexOf((getLines().get(0)));	
         }	
         return -1;	
 	}	
@@ -100,8 +100,27 @@ public class Parser {
 	 * @return The position of the last data line in the input file,	
      * -1 otherwise.	
 	 */	
-	public int endOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
-        return fullLines.indexOf(filteredLines.get(filteredLines.size() - 1));   	
+	public int endOfDataLines() throws IOException { 	
+        return getAllLines().indexOf(getLines().get(getLines().size() - 1));   	
+	}	
+
+    /**	
+	 * @return The position of the first neighbour line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int beginOfNeighbourLines() throws IOException { 	
+        if (getNeighboursLines().size() > 0) {	
+            return getAllLines().indexOf((getNeighboursLines().get(0)));	
+        }	
+        return -1;	
+	}	
+
+    /**	
+	 * @return The position of the last neighbour line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int endOfNeighbourLines() throws IOException { 	
+        return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
 	}	
 
     /**	
@@ -147,7 +166,7 @@ public class Parser {
      * @param line a line that set the neighbours of a node
      * @return The name of the node to which the neighbours are added in the file line.
      */
-    private String extractNodeFromNeighboursLine(String line) {
+    public String extractNodeFromNeighboursLine(String line) {
         return line.substring(0, line.indexOf("."));
     }
 
