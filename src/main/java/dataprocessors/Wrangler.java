@@ -16,7 +16,7 @@ public class Wrangler {
 
     /**
      * Constructor for the Node class
-     * @param inputNodes: a list of all the nodes we want to change
+     * @param inputNodes : a list of all the nodes we want to change
      */
     public Wrangler(TreeMap<String, Node> inputNodes){
         outputNodes = new TreeMap<>();
@@ -30,8 +30,8 @@ public class Wrangler {
      * changes we want. This is just a safety measure: in case something
      * goes wrong with the transformations we don't actually modifiy the 
      * original node list
-     * 
-     * @param nodes: initial list of nodes
+     *
+     * @param nodes : initial list of nodes
      */
     private void copyNodes(TreeMap<String, Node> nodes){
         for(Node index: nodes.values()){
@@ -45,7 +45,8 @@ public class Wrangler {
 
     /**
      *  This is the main method for the Wrangler class.
-     * Once all the parameters are set the method runs the entire set of transformations 
+     *  The method sets the paramaters in accordance with the presence of the pivot node
+     *  Once all the parameters are set the method runs the entire set of transformations 
      * to get to the desired coordonate configuration
      *  The main concept here is a class that runs through the list and passes individual
      * nodes to other methods to be transformed
@@ -55,30 +56,54 @@ public class Wrangler {
      * @param scaleY: as Y scale factor
      * @param targetX: the final X position of the pivot node
      * @param targetY: the final Y position of the pivot node
-     * @param pivotNode: a reference node (can either belong to the list or a completly new one)
+     * @param pivotNode: a reference node that can also accept NULL values
      * @return A TreeMap with transformed nodes
      */
     public TreeMap<String, Node> runTransformations(float rotationAngle,float scaleX, float scaleY,
                                                     float targetX, float targetY, Node pivotNode){
 
-        //Preparing the variables for the transformations
-        Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
+        //Preparing the variables for the transformations   
         double theta = Math.toRadians(rotationAngle);
-        setRotation(pivot, theta);
-        setScale(pivot, scaleX, scaleY);
-        float deltaX = getDeltaX(pivot, targetX);
-        float deltaY = getDeltaY(pivot, targetY);
+        float deltaX, deltaY;
+        
+        if(pivotNode == null){
+            deltaX = targetX;
+            deltaY = targetY;
+        }
+        
+        else{
+            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
+            setRotation(pivot, theta);
+            setScale(pivot, scaleX, scaleY);
+            deltaX = getDeltaX(pivot, targetX);
+            deltaY = getDeltaY(pivot, targetY);
+        }
+
 
         //Apply rotation, scale and shift to all the nodes
         for(Node index: outputNodes.values()){
             setRotation(index, theta);
             setScale(index, scaleX, scaleY);
             setShift(index, deltaX, deltaY);
+
+            roundDecimals(index);
         }
 
         return outputNodes;
     }
-   
+
+    /**
+     * This method is used to reduce the coordonates to
+     *just 2 decimals
+     * @param node 
+     */
+    private void roundDecimals(Node node){
+        double xVal = Math.round(node.getX() * 100.0) / 100.0;
+        double yVal = Math.round(node.getY() * 100.0) / 100.0;
+        node.setX((float)xVal);
+        node.setY((float)yVal);
+    }
+
     /**
      *  Method for rotating one point
      * @param node: the node we want to rotate
