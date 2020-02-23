@@ -54,7 +54,6 @@ public class FileLinesCreator {
 		// Initially the ouput file is the input file.
 		this.file = parser.getAllLines();
 		
-		
 		// compute begin and end of data lines in the input
 		this.beginDataPosition = parser.beginOfDataLines();
 		this.endDataPosition = parser.endOfDataLines();
