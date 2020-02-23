@@ -50,4 +50,20 @@ public class HomeController{
 		return choseWrangler;
 	}
 
+	/**
+	* Returns the XML option button.
+	* This method is to be called from the above layer, to assign functionality.
+	*/
+	public Button getXMLButton(){
+		return xmlButton;
+	}
+
+	/**
+	* Returns the wrangler option button.
+	* This method is to be called from the above layer, to assign functionality.
+	*/
+	public Button getWranglerButton(){
+		return wranglerButton;
+	}
+
 }
