@@ -1,17 +1,27 @@
 package parsertest;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import parser.Parser;
 import datastructures.Node;
 import javafx.util.Pair;
 
-import org.junit.Before;
-import org.junit.Test;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat; 
+import static org.hamcrest.Matchers.*;
 
 public class ParserTest {
 
@@ -19,7 +29,7 @@ public class ParserTest {
     private List<String> filteredData;
     private List<String> rawData;
 
-    @Before
+    @BeforeEach
     public void setup(){
         parser = new Parser(Paths.get("src/test/resources/testData.txt"));
         filteredData = Arrays.asList("Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
@@ -41,11 +51,12 @@ public class ParserTest {
                 " , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365");
     }
 
-
-    @Test(expected = IOException.class)
+    @Test
     public void emptyPathTest() throws IOException {
-        Parser parser = new Parser(Paths.get("/"));
-        parser.getLines();
+        assertThrows(IOException.class, () ->{
+            Parser parser = new Parser(Paths.get("/"));
+            parser.getLines(); 
+        });
     }
 
     @Test
@@ -58,6 +69,17 @@ public class ParserTest {
     public void getFilteredLinesTest() throws IOException {
         List<String> data = parser.getLines();
         assertEquals(filteredData, data);
+    }
+
+    @Test
+    public void getNeighboursLinesTest() throws IOException {
+        List<String> data = parser.getNeighboursLines();
+        List<String> neighboursData = Arrays.asList(
+            "HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
+            "HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
+            "HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );"
+            );
+        assertEquals(neighboursData, data);
     }
 
     @Test
@@ -77,7 +99,7 @@ public class ParserTest {
     }
 
     @Test
-    public void ParserCreatesCorrectNodes(){
+    public void ParserCreatesCorrectNodes() throws IOException {
         String testInput  =  "Node MajorProject = new Node( 67.040802f , 67.040802f , KCL );";
         String testInput2 = "Room BushHouseRoom = new Node( 127.040802f , 335.411697f , KCLBH.09 );";
         List<String> dataToMatch = Arrays.asList(testInput,testInput2);
@@ -90,15 +112,79 @@ public class ParserTest {
     }
 
     @Test
+    public void setNeighborsTest() throws IOException {
+        List<String> neighboursData = Arrays.asList(
+            "Node1.addAllNeighbours( new List<Node>{ Node2 , Node3 } );",
+            "Node2.addAllNeighbours( new List<Node>{ Node1 , Node3 } );",
+            "Node3.addAllNeighbours( new List<Node>{ Node1 } );"
+        );
+
+        TreeMap<String, Node> nodeMap = new TreeMap<>();
+        nodeMap.put("Node1",new Node("Node Node1",67.040802f , 67.040802f));
+        nodeMap.put("Node2",new Node("Node Node2",127.040802f , 335.411697f));
+        nodeMap.put("Node3",new Node("Room Node3",127.040802f , 335.411697f));
+        
+        TreeMap<String, Node> expectedOutcome = new TreeMap<>();
+        Node node1 = new Node("Node Node1",67.040802f , 67.040802f);
+        Node node2 = new Node("Node Node2",127.040802f , 335.411697f);
+        Node node3 = new Node("Room Node3",127.040802f , 335.411697f);
+
+        node1.setNeighbours(Arrays.asList(node2,node3));
+        node2.setNeighbours(Arrays.asList(node1,node3));
+        node3.setNeighbours(Arrays.asList(node1));
+
+        expectedOutcome.put("Node1",node1);
+        expectedOutcome.put("Node2",node2);
+        expectedOutcome.put("Node3",node3);
+
+        TreeMap<String, Node> actualOutcome = parser.setNeighbours(neighboursData, nodeMap);
+        for (String nodeName : actualOutcome.keySet()) {
+            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+        }
+    }
+
+
+    @Test
     public void beginDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
     }
-    
+
     @Test
     public void endDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
     }
 
+    @Test
+    public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        String empty="";
+        Files.write(Paths.get("src/test/resources/testIdLog.txt"),empty.getBytes());
+
+        int shouldBeZero = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
+        //this test should only pass when log file is empty
+        assertEquals(shouldBeZero+1,0);
+    }
+
+    @Test
+    public void getsCorrectLastSeenId() throws IOException {
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        List<String> numbers = new ArrayList<>();
+        numbers=Arrays.asList("1","2","3");
+        Files.write(Paths.get("src/test/resources/testIdLog.txt"),numbers.toString().getBytes());
+        int shouldBe3 = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
+
+        assertEquals(shouldBe3,3);
+    }
+
+    @Test
+    public void generatesUniqueIds() throws IOException {
+        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        Parser secondParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        int shouldBeFirst = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+        int shouldBeSecond = secondParser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
+
+        assertEquals(shouldBeFirst,shouldBeSecond-1);
+    }
 }

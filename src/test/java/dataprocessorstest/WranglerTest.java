@@ -1,12 +1,12 @@
 package dataprocessorstest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.junit.Before;
-import org.junit.Test;
 
 import datastructures.Node;
 import dataprocessors.Wrangler;
@@ -15,24 +15,24 @@ public class WranglerTest{
 
     static TreeMap<String, TreeMap<String, Node>> resultSet;
     Wrangler wrangler;
-    
+
 //---------------------------------Test Methods-----------------------------------------------
-    
-    @Before
+
+    @BeforeEach
     public void setup(){
         resultSet = setTestData();
         wrangler = new Wrangler(resultSet.get("input"));
     }
-    
+
     @Test
     public void testNoTransformations(){
         TreeMap<String, Node> output = new TreeMap<>();
         Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-        
+
         //test no rotation no scale and no shift
         output = wrangler.runTransformations(0,1,1,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Nodes at same location")));
-        
+      
         //test rotation 360* no scale and no shift
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(360,1,1,pivot.getX(), pivot.getY(), pivot);
@@ -43,7 +43,7 @@ public class WranglerTest{
     public void testRotation(){
         TreeMap<String, Node> output = new TreeMap<>();
         Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-        
+
         //test rotation by 90*
         output = wrangler.runTransformations(90,1,1,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Rotate 90")));
@@ -52,42 +52,42 @@ public class WranglerTest{
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(60,1,1,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Rotate 60")));
-        
+
         //test rotation by 45*
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(45,1,1,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Rotate 45")));
     }
-    
+
     @Test
     public void testScale(){
         TreeMap<String, Node> output = new TreeMap<>();
         Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-        
+
         //test scale by 0.25, 0.25
         output = wrangler.runTransformations(0,0.25f,0.25f,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Scale 0.25")));
-        
+
         //test scale by 2.75, 2.75
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(0,2.75f,2.75f,pivot.getX(), pivot.getY(), pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Scale 2.75")));
     }
-    
+
     @Test
     public void testShift(){
         TreeMap<String, Node> output = new TreeMap<>();
         Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-        
+
         //test Shift to 0, 0
         output = wrangler.runTransformations(0,1,1,0, 0, pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Shift to 0, 0")));
-        
+
         //test Shift to -432.145, -846.637
         wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(0,1,1,-432.145f, -846.637f, pivot);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Shift 1")));
-        
+
     }
 
     @Test
@@ -114,12 +114,12 @@ public class WranglerTest{
         output = wrangler.runTransformations(0,1,1,20, 15, null);
         assertEquals(true, equalTreeMaps(output, resultSet.get("Independent shift")));
     }
-    
+
 
     //---------------------------------Helper Methods---------------------------------------------
 
     /**
-     * Method for comparing the values inside 2 nodes to determine if 
+     * Method for comparing the values inside 2 nodes to determine if
      * they are equal
      * @param actual
      * @param expected
@@ -130,7 +130,7 @@ public class WranglerTest{
         return true;
         return false;
     }
-   
+
     /**
      * Method to compare 2 TreeMaps.
      * Makes calls to samePropertyValues to compare Nodes
@@ -154,11 +154,11 @@ public class WranglerTest{
 
     /**
      * Method creates the expected results for the test cases
-     * @return  returns a TreeMap containing various instances 
+     * @return  returns a TreeMap containing various instances
      *          of the original list
      */
     public TreeMap<String, TreeMap<String, Node>> setTestData() {
-        
+
         TreeMap<String, TreeMap<String, Node>> resoults = new TreeMap<>();
         TreeMap<String, Node> nodes = new TreeMap<>();
         nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 37.426018f, 34.71667f));
@@ -365,7 +365,7 @@ public class WranglerTest{
         nodes.put("HenRaph_04_670_354", new Node("HenRaph_04_670_354", 50.43f, 46.29f));
         nodes.put("HenRaph_04_696_341", new Node("HenRaph_04_696_341", 52.8f, 47.98f));
         nodes.put("HenRaph_04_702_348", new Node("HenRaph_04_702_348", 52.55f, 48.75f));
-                
+        
         resoults.put("Rotate 60", nodes);
 
         nodes = new TreeMap<>();
@@ -500,14 +500,4 @@ public class WranglerTest{
 
         return resoults;
     }
-
- /*
-    private static void printList(TreeMap<String, Node> nodesTree) {
-    
-        for (Map.Entry<String, Node> entry : nodesTree.entrySet()) {
-            Node index = entry.getValue();
-            System.out.println("nodes.put(\"" +index.getName()+"\", new Node(\""+index.getName() +"\", "+ index.getX() + "f, " + index.getY() + "f));");
-        }
-    }
-*/
 }
