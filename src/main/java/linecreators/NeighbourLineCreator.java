@@ -5,7 +5,7 @@ import datastructures.Node;
 import java.io.IOException;
 
 import java.nio.file.Path;
-
+import java.util.Arrays;
 import java.util.Map;
 
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class NeighbourLineCreator extends LineCreator {
 		super(nodeMap, originPath);
 		
 		// A list of the neighbour lines to be modified.
-		this.lines = parser.getNeighboursLines();
+		this.lines = Arrays.asList();
 		
 		// Process the modification of the neighbour lines.
 		createLines();
@@ -74,8 +74,8 @@ public class NeighbourLineCreator extends LineCreator {
 	 */
 	@Override
 	protected void createLines() {
-		lines =  lines.stream()
-		.map(line -> parser.extractNodeFromNeighboursLine(line))
+		nodeMap.keySet()
+		.stream()
 		.map(nodeName -> createNeighbourLine(nodeName, nodeMap))
 		// Eliminate all the empty line from List, i.e. , all the nodes without neighbours.
 		.filter(line -> !line.isEmpty())
