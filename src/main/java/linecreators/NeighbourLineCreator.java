@@ -49,7 +49,7 @@ public class NeighbourLineCreator extends LineCreator {
 		Node parentNode = nodeMap.get(nodeName); 
 		
 		// Check if the parent exist in the node map and if there are neighbours.
-		if (parentNode == null || parentNode.getNeighbours() == null) {
+		if (parentNode == null || parentNode.getNeighbours().isEmpty()) {
 			return "";
 		}
 
