@@ -1,4 +1,4 @@
-package dataprocessorstest;
+package linecreatorstest;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,14 +13,14 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import dataprocessors.FileCreator;
+import linecreators.FileLinesCreator;
 import datastructures.Node;
 
 /**
 * Test the String creation of the Data Line, especially the arguments creation.
 * @version 12.02.2020
 */
-public class FileCreatorTest {
+public class FileLinesCreatorTest {
 
 	@ParameterizedTest
 	private static Stream<Arguments> ArgumentsProvider() {
@@ -43,9 +43,9 @@ public class FileCreatorTest {
 				"FloorChanger HenRaph_04_418_357 = new FloorChanger( 7.0f , 27.0f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );",
 				"FloorChanger HenRaph_04_419_365 = new FloorChanger( 32.1f , 27.19f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2",
 				"",
-				"HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
-				"HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
-				"HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );",
+				// "HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
+				// "HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
+				// "HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );",
 				"",
 				"====== NODE LISTS =======",
 				"",
@@ -59,8 +59,8 @@ public class FileCreatorTest {
 	@ParameterizedTest
 	@MethodSource("ArgumentsProvider")
 	public void processOutputFileTest(HashMap<String,Node> nodeMap, ArrayList<String> output) throws IOException {
-		FileCreator fileCrea = new FileCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
+		FileLinesCreator fileCrea = new FileLinesCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
 
-		assertEquals(fileCrea.processOutputFile(),output);
+		assertEquals(fileCrea.getOutputFile(),output); // Need to be modified when wrangler will be added.
 	}
 }
