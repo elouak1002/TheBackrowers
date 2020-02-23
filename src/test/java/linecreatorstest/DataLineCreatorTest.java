@@ -65,7 +65,7 @@ public class DataLineCreatorTest {
 
 	@ParameterizedTest
 	@MethodSource("ArgumentsProvider")
-	public void processOutputFileTest(HashMap<String,Node> nodeMap, ArrayList<String> output) throws IOException {
+	public void getModifiedLinesTest(HashMap<String,Node> nodeMap, ArrayList<String> output) throws IOException {
 		LineCreator dataLineCreator = new DataLineCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
 
 		assertEquals(dataLineCreator.getLines(),output);
