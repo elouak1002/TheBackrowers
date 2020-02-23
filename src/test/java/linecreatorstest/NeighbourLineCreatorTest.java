@@ -69,4 +69,29 @@ public class NeighbourLineCreatorTest {
 
 		assertEquals(input,output);
 	}
+
+	@Test
+	public void getLinesFromNeighbourlessNodess() throws IOException {
+		List<String> output = new ArrayList<String>(Arrays.asList(
+		));
+
+		LineCreator neighbourLineCreator = new NeighbourLineCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
+
+		List<String> input = neighbourLineCreator.getLines();
+		assertEquals(input,output);
+	}
+
+	@Test
+	public void getLinesFromNullMap() throws IOException {
+		List<String> output = new ArrayList<String>(Arrays.asList(
+			"HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
+			"HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
+			"HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );"
+		));
+
+		LineCreator neighbourLineCreator = new NeighbourLineCreator(null,Paths.get("src/test/resources/testData.txt"));
+
+		List<String> input = neighbourLineCreator.getLines();
+		assertEquals(input,output);
+	}
 }
