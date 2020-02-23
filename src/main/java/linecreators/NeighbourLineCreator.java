@@ -29,7 +29,7 @@ public class NeighbourLineCreator extends LineCreator {
 		
 		// A list of the neighbour lines to be modified.
 		this.lines = Arrays.asList();
-		
+
 		// Process the modification of the neighbour lines.
 		createLines();
 	}
@@ -52,18 +52,17 @@ public class NeighbourLineCreator extends LineCreator {
 
 		String neighbourLine = nodeName;
 		neighbourLine += ".addAllNeighbours( new List<Node>{ ";
-
+		
 		// Add each neighbour using it's name to the neighbour line.
 		for (Node node : parentNode.getNeighbours()) {
 			neighbourLine += node.getName();
 			neighbourLine += " , ";	
 		}
-
+		
 		neighbourLine = neighbourLine.substring(0, neighbourLine.length() - 3);
-
+		
 		neighbourLine += " } );";
-
-
+		
 		// return the modified DataLine object.
 		return neighbourLine;
 	}
@@ -74,7 +73,7 @@ public class NeighbourLineCreator extends LineCreator {
 	 */
 	@Override
 	protected void createLines() {
-		nodeMap.keySet()
+		lines = nodeMap.keySet()
 		.stream()
 		.map(nodeName -> createNeighbourLine(nodeName, nodeMap))
 		// Eliminate all the empty line from List, i.e. , all the nodes without neighbours.
