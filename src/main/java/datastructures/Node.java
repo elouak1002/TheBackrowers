@@ -1,5 +1,6 @@
 package datastructures;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        this.neighbours = null;
+        this.neighbours = Arrays.asList();
     }
 
     /**
