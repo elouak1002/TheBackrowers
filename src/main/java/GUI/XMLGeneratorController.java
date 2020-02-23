@@ -14,9 +14,9 @@ import java.util.List;
 
 
 /**
- * Controller class for the MultipleLoad window, where user chooses multiple files.
+ * Controller class for the XMLGenerator window, where user chooses multiple files.
  */
-public class MultipleLoadController {
+public class XMLGeneratorController {
 
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
