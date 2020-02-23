@@ -3,6 +3,7 @@ package GUI;
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
+import linecreators.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -115,7 +116,7 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Wrangler wrangler = new Wrangler(nodes);
-            FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
+            FileLinesCreator fileLinesCreator = new FileLinesCreator(wrangler.runTransformations(
                     Float.parseFloat(rotationAngleField.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
@@ -123,7 +124,7 @@ public class InputController {
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue())
             ), path);
-            return fileCreator.processOutputFile();
+            return fileLinesCreator.getOutputFile();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
