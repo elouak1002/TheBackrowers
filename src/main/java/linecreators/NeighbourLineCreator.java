@@ -31,7 +31,10 @@ public class NeighbourLineCreator extends LineCreator {
 		this.lines = Arrays.asList();
 
 		// Process the modification of the neighbour lines.
+		if (nodeMap != null ) 
 		createLines();
+		else
+			lines = parser.getNeighboursLines();
 	}
 
 	/**
