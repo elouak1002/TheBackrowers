@@ -38,8 +38,9 @@ public class DataLineCreator extends LineCreator {
 		// A list of the data lines to be modified.
 		this.lines = parser.getLines();
 		
+		if (nodeMap != null)
 		// Process the modification of the data lines.
-		createLines();
+			createLines();
 	}
 
 	/**
