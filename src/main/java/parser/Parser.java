@@ -24,14 +24,24 @@ public class Parser {
     private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
     //ArrayList of used ids
     private ArrayList<Integer> usedIds = new ArrayList<>();
-
-
+    // Map of the node from the file.
+    private TreeMap<String,Node> nodeMap;
+    
+    
+    
     /**	
      * Constructor for the Parser class	
      * @param path Path to the input file	
      */	
-    public Parser(Path path){	
-        this.path = path;	
+    public Parser(Path path) {	
+        this.path = path;
+        
+        nodeMap = new TreeMap<>();
+        try {
+            createNodes();
+            setNeighbours();
+        } catch (IOException e) {
+        }
     }	
 
     /**	
@@ -127,12 +137,11 @@ public class Parser {
      * Method to populate the hashMap with Node objects, mapping each to its name;
      * Assigns ids to each node
      * @param filteredLines list of lines which contain data	
-     * @return a hashMap of Node objects	
      */	
-    public TreeMap<String,Node> createNodes(List<String> filteredLines) throws IOException {
+    private void createNodes() throws IOException {
         // Main hashMap for storing each Node with its name	
-        TreeMap<String, Node> nodeMap = new TreeMap<>();
-        for(String line : filteredLines){	
+        List<String> lines = getLines();
+        for(String line : lines){	
             String name = extractName(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
@@ -141,24 +150,29 @@ public class Parser {
             nodeMap.put(name, node);
 
         }
-        return nodeMap;
     }
 
     /**
      * Set the neighbours list for each node in the node map.
      * @param NeighboursLines list of lines that contain the neighbours information.
      * @param nodeMap the map of node
-     * @return the modified node map with neighbours added.
      * @throws IOException
      */
-    public TreeMap<String, Node> setNeighbours(List<String> neighboursLines, TreeMap<String,Node> nodeMap) throws IOException {
-        for (String line : neighboursLines) {
+    private void setNeighbours() throws IOException {
+        List<String> lines = getNeighboursLines();
+        for (String line : lines) {
             String nodeName = extractNodeFromNeighboursLine(line);
             if (nodeMap.containsKey(nodeName)) {
                 List<Node> neighbours = extractNeighbours(line).stream().map(name -> nodeMap.get(name)).filter(Objects::nonNull).collect(Collectors.toList());
                 nodeMap.get(nodeName).setNeighbours(neighbours);
             }
         }
+    }
+
+    /**
+     * @return The node map with node and neighbours set.
+     */
+    public TreeMap<String,Node> getNodes() {
         return nodeMap;
     }
 
@@ -231,10 +245,10 @@ public class Parser {
 
         List<String> dataList = new ArrayList<>(Arrays.asList(dataString.trim().split(" , ")));	
 
-        Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
-        Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
+        // Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
+        // Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
 
-        return new Pair<>(xPos, yPos);	
+        return new Pair<>(Float.parseFloat(dataList.get(0)), Float.parseFloat(dataList.get(1)));	
     }	
 
     /**	
