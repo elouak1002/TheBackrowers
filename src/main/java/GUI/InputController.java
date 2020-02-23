@@ -80,14 +80,10 @@ public class InputController {
      */
     void setNodes(Path path) {
         Parser parser = new Parser(path);
-        try {
-            referenceNodeChoiceBox.getItems().clear();
-            nodes = parser.createNodes(parser.getLines());
-            referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
-            referenceNodeChoiceBox.setMaxSize(1000,10);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        referenceNodeChoiceBox.getItems().clear();
+        nodes = parser.getNodes();
+        referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+        referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
     /**
