@@ -14,9 +14,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Create a list of string based on two model lists.
- * Only change the data coordinates for each node,
- * using the values from the Node Map.
+ * Modify the data lines from the input file
+ * using a node map with updated coordinates.
  * @version 23.02.2020
  */
 public class DataLineCreator extends LineCreator {
@@ -25,21 +24,21 @@ public class DataLineCreator extends LineCreator {
 	private DataLineParser lineParser;
 
 	/**
-	 * Constructor for the FileCreator class.
-	 * @param nodeMap Map of the file nodes. 
+	 * Constructor for the DataLineCreator class.
+	 * @param nodeMap Map of the nodes. 
 	 * @param originPath Path to the input file
 	 * @throws IOException IOException
 	 */
 	public DataLineCreator(Map<String, Node> nodeMap, Path originPath) throws IOException{
 
 		super(nodeMap, originPath);
-		// A Line Parser.
+		// A Data Line Parser.
 		this.lineParser = new DataLineParser();
 		
 		// A list of the data lines to be modified.
 		this.lines = parser.getLines();
 		
-		// Modify the data lines.
+		// Process the modification of the data lines.
 		createLines();
 	}
 
