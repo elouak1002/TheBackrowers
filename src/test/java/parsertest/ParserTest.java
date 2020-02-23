@@ -146,13 +146,25 @@ public class ParserTest {
     @Test
     public void beginDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
+        assertEquals(fullInputParser.beginOfDataLines(),4);
     }
 
     @Test
     public void endDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
+        assertEquals(fullInputParser.endOfDataLines(),25);
+    }
+
+    @Test
+    public void beginNeighbourLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.beginOfNeighbourLines(),27);
+    }
+
+    @Test
+    public void endNeighbourLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.endOfNeighbourLines(),48);
     }
 
     @Test
