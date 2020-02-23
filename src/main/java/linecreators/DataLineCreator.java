@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import java.util.Map;
-
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +52,10 @@ public class DataLineCreator extends LineCreator {
 	private static DataLine modifyCoordinatesValues(DataLine dataLine, Map<String, Node> nodeMap) {	
 		// Get the node from the map using its name.
 		Node node = nodeMap.get(dataLine.getDataName()); 
+
+		if (node == null) {
+			return null;
+		}
 		
 		// Get the coordinate from the node.s
 		Float xCoord = node.getX();
@@ -73,6 +77,8 @@ public class DataLineCreator extends LineCreator {
 	protected void createLines() {
 		lines =  lines.stream().map(line -> lineParser.createDataLine(line))
 							  .map(dataLine -> modifyCoordinatesValues(dataLine, nodeMap))
+							  // remove the null values, i.e., the nodes that aren't in the node map anymore.
+							  .filter(Objects::nonNull)
 							  .map(DataLine::toString)
 							  .collect(Collectors.toList());
 	}
