@@ -1,5 +1,8 @@
 package datastructures;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The Node class represents location objects and allows modification of their
  * data
@@ -11,6 +14,8 @@ public class Node {
     private float xCoord;
     private float yCoord;
     private String type;
+    private List<Node> neighbours;
+
 
     /**
      * Constructor for the Node class
@@ -22,10 +27,8 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-
-
+        this.neighbours = Arrays.asList();
     }
-
 
     /**
      * Getter method for the Node's name
@@ -69,7 +72,29 @@ public class Node {
      */
     public void setId(int value) { this.id = value; }
 
+    /**
+     * A method for setting neighbours of a Node.
+     * @param neighbours list of neighbours to be set.
+     */
+    public void setNeighbours(List<Node> neighbours) { this.neighbours = neighbours; }
 
+    /**
+     * A method for adding a neighbour to the neighbour list.
+     * @param neighbour the neighbour to be added to the neighbour list.
+     */
+    public void addNeighbour(Node neighbour) { neighbours.add(neighbour); }
+
+    /**
+     * @param node
+     * @return true if the node is a neighbour of the node.
+     */
+    public boolean hasNeighbour(Node node) { return neighbours.contains(node); }
+
+    /**
+     * @return Neighbour's list.
+     */
+    public List<Node> getNeighbours() { return neighbours; }
+    
     /**
      * @return Node's data as a string
      */

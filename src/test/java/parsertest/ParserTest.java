@@ -1,6 +1,5 @@
 package parsertest;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,12 +13,13 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.hamcrest.MatcherAssert.assertThat; 
+import static org.hamcrest.Matchers.*;
 
 public class ParserTest {
 
@@ -49,7 +49,6 @@ public class ParserTest {
                 " , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365");
     }
 
-
     @Test
     public void emptyPathTest() throws IOException {
         assertThrows(IOException.class, () ->{
@@ -71,9 +70,20 @@ public class ParserTest {
     }
 
     @Test
+    public void getNeighboursLinesTest() throws IOException {
+        List<String> data = parser.getNeighboursLines();
+        List<String> neighboursData = Arrays.asList(
+            "HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
+            "HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
+            "HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );"
+            );
+        assertEquals(neighboursData, data);
+    }
+
+    @Test
     public void extractDataTest(){
         String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
-        Pair<Float, Float> expected = new Pair<>(49.31f, 26.46f);
+        Pair<Float, Float> expected = new Pair<>(49.312683f,  26.463207f );
         Pair<Float, Float> data = parser.extractData(line);
         assertEquals(expected, data);
     }
@@ -88,28 +98,80 @@ public class ParserTest {
 
     @Test
     public void ParserCreatesCorrectNodes() throws IOException {
-        String testInput  =  "Node MajorProject = new Node( 67.040802f , 67.040802f , KCL );";
-        String testInput2 = "Room BushHouseRoom = new Node( 127.040802f , 335.411697f , KCLBH.09 );";
-        List<String> dataToMatch = Arrays.asList(testInput,testInput2);
+        TreeMap<String, Node> expectedOutcome = new TreeMap<>();
+        Node node1 = new Node("HenRaph_04_493_264",49.312683f,26.463207f);
+        Node node2 = new Node("HenRaph_04_476_264",47.614590f,26.463207f);
+        Node node3 = new Node("HenRaph_04_374_347",37.426018f,34.716671f);
+        Node node4 = new Node("HenRaph_04_418_357",41.841064f,35.724461f);
+        Node node5 = new Node("HenRaph_04_419_365",41.976913f,36.541119f);
 
-        HashMap<String, Node> expectedOutcomes = new HashMap<>();
-        expectedOutcomes.put("MajorProject",new Node("Node MajorProject",67.040802f , 67.040802f));
-        expectedOutcomes.put("BushHouseRoom",new Node("Room BushHouseRoom",127.040802f , 335.411697f));
+        expectedOutcome.put("HenRaph_04_493_264",node1);
+        expectedOutcome.put("HenRaph_04_476_264",node2);
+        expectedOutcome.put("HenRaph_04_374_347",node3);
+        expectedOutcome.put("HenRaph_04_418_357",node4);
+        expectedOutcome.put("HenRaph_04_419_365",node5);
+        
+        TreeMap<String, Node> actualOutcome = parser.getNodes();
 
-        assertEquals(expectedOutcomes.keySet(), parser.createNodes(dataToMatch).keySet());
+        for (String nodeName : actualOutcome.keySet()) {
+            assertThat(actualOutcome.get(nodeName).toString(), equalTo(expectedOutcome.get(nodeName).toString()));
+        }
     }
+
+    @Test
+    public void setNeighborsTest() throws IOException {
+        Parser neighbourParser = new Parser(Paths.get("src/test/resources/testNeighbourData.txt"));
+
+        TreeMap<String, Node> expectedOutcome = new TreeMap<>();
+        Node node1 = new Node("HenRaph_04_493_264",10f,10f);
+        Node node2 = new Node("HenRaph_04_476_264",10f,10f);
+        Node node3 = new Node("HenRaph_04_374_347",10f,10f);
+        Node node4 = new Node("HenRaph_04_418_357",10f,10f);
+        Node node5 = new Node("HenRaph_04_419_365",10f,10f);
+
+        node1.setNeighbours(Arrays.asList(node1,node4,node3));
+        node2.setNeighbours(Arrays.asList(node3,node4));
+        node3.setNeighbours(Arrays.asList(node1,node2));
+
+        expectedOutcome.put("HenRaph_04_493_264",node1);
+        expectedOutcome.put("HenRaph_04_476_264",node2);
+        expectedOutcome.put("HenRaph_04_374_347",node3);
+        expectedOutcome.put("HenRaph_04_418_357",node4);
+        expectedOutcome.put("HenRaph_04_419_365",node5);
+
+        
+        TreeMap<String, Node> actualOutcome = neighbourParser.getNodes();
+
+        for (String nodeName : actualOutcome.keySet()) {
+            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+        }
+    }
+
 
     @Test
     public void beginDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        assertEquals(fullInputParser.beginOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),4);
+        assertEquals(fullInputParser.beginOfDataLines(),4);
     }
 
     @Test
     public void endDataLinesTest() throws IOException {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        assertEquals(fullInputParser.endOfDataLines(fullInputParser.getAllLines(), fullInputParser.getLines()),25);
+        assertEquals(fullInputParser.endOfDataLines(),25);
     }
+
+    @Test
+    public void beginNeighbourLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.beginOfNeighbourLines(),27);
+    }
+
+    @Test
+    public void endNeighbourLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.endOfNeighbourLines(),48);
+    }
+
     @Test
     public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
@@ -120,6 +182,7 @@ public class ParserTest {
         //this test should only pass when log file is empty
         assertEquals(shouldBeZero+1,0);
     }
+
     @Test
     public void getsCorrectLastSeenId() throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
@@ -130,6 +193,7 @@ public class ParserTest {
 
         assertEquals(shouldBe3,3);
     }
+
     @Test
     public void generatesUniqueIds() throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));

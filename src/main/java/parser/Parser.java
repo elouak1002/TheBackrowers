@@ -1,19 +1,15 @@
-package parser;	
+package parser;
 
+import com.sun.tools.javac.util.Pair;
 import datastructures.Node;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
-import javafx.util.Pair;	
 
 
 /**	
@@ -28,21 +24,41 @@ public class Parser {
     private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
     //ArrayList of used ids
     private ArrayList<Integer> usedIds = new ArrayList<>();
-
-
+    // Map of the node from the file.
+    private TreeMap<String,Node> nodeMap;
+    
+    
+    
     /**	
      * Constructor for the Parser class	
      * @param path Path to the input file	
      */	
-    public Parser(Path path){	
-        this.path = path;	
+    public Parser(Path path) {	
+        this.path = path;
+        
+        nodeMap = new TreeMap<>();
+        try {
+            createNodes();
+            setNeighbours();
+        } catch (IOException e) {
+        }
     }	
 
     /**	
      * @return List of lines that contain data	
      * @throws IOException if the file was not found	
      */	
-    public List<String> getLines() throws IOException { return filter(getAllLines()); }	
+    public List<String> getLines() throws IOException { 
+        return filter(getAllLines()); 
+    }	
+
+    /**
+     * @return List of lines that contain neighbours data
+     * @throws IOException if the file was not found
+     */
+    public List<String> getNeighboursLines() throws IOException { 
+        return filterNonNeighbours(getAllLines()); 
+    }
 
     /**	
      * @return All lines from the input file	
@@ -64,15 +80,28 @@ public class Parser {
                         || line.equals(""));	
 
         return lines;	
-    }	
+    }
+
+    /**
+     * Filters out lines that does not contain neighbours data
+     * @param lines List of lines from a file.
+     * @return List of lines with neighbours data.
+     */
+    private List<String> filterNonNeighbours(List<String> lines) {
+        lines.removeIf(line -> 
+            !line.contains("addAllNeighbours")
+        );
+        
+        return lines;
+    }
 
 	/**	
 	 * @return The position of the first data line in the input file,	
      * -1 otherwise.	
 	 */	
-	public int beginOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
-        if (filteredLines.size() > 0) {	
-            return fullLines.indexOf((filteredLines.get(0)));	
+	public int beginOfDataLines() throws IOException { 	
+        if (getLines().size() > 0) {	
+            return getAllLines().indexOf((getLines().get(0)));	
         }	
         return -1;	
 	}	
@@ -81,32 +110,87 @@ public class Parser {
 	 * @return The position of the last data line in the input file,	
      * -1 otherwise.	
 	 */	
-	public int endOfDataLines(List<String> fullLines, List<String> filteredLines) { 	
-        return fullLines.indexOf(filteredLines.get(filteredLines.size() - 1));   	
+	public int endOfDataLines() throws IOException { 	
+        return getAllLines().indexOf(getLines().get(getLines().size() - 1));   	
+	}	
+
+    /**	
+	 * @return The position of the first neighbour line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int beginOfNeighbourLines() throws IOException { 	
+        if (getNeighboursLines().size() > 0) {	
+            return getAllLines().indexOf((getNeighboursLines().get(0)));	
+        }	
+        return -1;	
+	}	
+
+    /**	
+	 * @return The position of the last neighbour line in the input file,	
+     * -1 otherwise.	
+	 */	
+	public int endOfNeighbourLines() throws IOException { 	
+        return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
 	}	
 
     /**	
      * Method to populate the hashMap with Node objects, mapping each to its name;
      * Assigns ids to each node
-     * @param filteredLines list of lines which contain data	
-     * @return a hashMap of Node objects	
      */	
-    public TreeMap<String,Node> createNodes(List<String> filteredLines) throws IOException {
-        clearIDLog(idLogFilePath);
+
+    private void createNodes() throws IOException {
         // Main hashMap for storing each Node with its name	
-        TreeMap<String, Node> nodeMap = new TreeMap<>();
-        for(String line : filteredLines){	
+        List<String> lines = getLines();
+        for(String line : lines){	
             String name = extractName(line);
             String type = extractType(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
-            Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
+            Node node = new Node(name, coordinates.fst, coordinates.snd);
             node.setId(nodeId);
             node.setType(type);
             nodeMap.put(name, node);
 
         }
-        return nodeMap;	
+    }
+
+    /**
+     * Set the neighbours list for each node in the node map.
+     * @throws IOException
+     */
+    private void setNeighbours() throws IOException {
+        List<String> lines = getNeighboursLines();
+        for (String line : lines) {
+            String nodeName = extractNodeFromNeighboursLine(line);
+            if (nodeMap.containsKey(nodeName)) {
+                List<Node> neighbours = extractNeighbours(line).stream().map(name -> nodeMap.get(name)).filter(Objects::nonNull).collect(Collectors.toList());
+                nodeMap.get(nodeName).setNeighbours(neighbours);
+            }
+        }
+    }
+
+    /**
+     * @return The node map with node and neighbours set.
+     */
+    public TreeMap<String,Node> getNodes() {
+        return nodeMap;
+    }
+
+    /**
+     * @param line a line that set the neighbours of a node
+     * @return The name of the node to which the neighbours are added in the file line.
+     */
+    public String extractNodeFromNeighboursLine(String line) {
+        return line.substring(0, line.indexOf("."));
+    }
+
+    /**
+     * 
+     * @param line a line that set the neighbours of a node
+     * @return A list of the neighbours added to the node.
+     */
+    private List<String> extractNeighbours(String line) {
+        return Arrays.asList(line.substring(line.indexOf("{") + 1, line.indexOf("}")).split(",")).stream().map(String::trim).collect(Collectors.toList());
     }
 
     /**
@@ -166,10 +250,10 @@ public class Parser {
 
         List<String> dataList = new ArrayList<>(Arrays.asList(dataString.trim().split(" , ")));	
 
-        Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
-        Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
+        // Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
+        // Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
 
-        return new Pair<>(xPos, yPos);	
+        return new Pair<>(Float.parseFloat(dataList.get(0)), Float.parseFloat(dataList.get(1)));	
     }	
 
     /**	
