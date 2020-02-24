@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -41,8 +42,10 @@ public class XMLCreator{
     }
 
     private void addXMLentry(Node node) {
-        finalXMLData.add(" <"+node.getType()+" id= "+node.getId());
-        finalXMLData.add(" </"+node.getType() +">");
+        finalXMLData.add(" <"+node.getType().toLowerCase()+" id="+ "\""+node.getId()+"\""
+        +" x="+ "\""+node.getX()+"\"" + " y="+ "\""+node.getY()+"\""
+                +">");
+        finalXMLData.add(" </"+node.getType().toLowerCase() +">");
 
 
 
@@ -55,7 +58,8 @@ public class XMLCreator{
         LocalTime timeObj= LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String time = formatter.format(timeObj);
-        String documentTag = "<MappinData version=\"1.0\" created=\""+date+" "+time+ "\" copyright=\"Mappin Technologies LTD 2020\">";
+        df=new SimpleDateFormat("YYYY");
+        String documentTag = "<MappinData version=\"1.0\" created=\""+date+" "+time+ "\" copyright=\"Mappin Technologies LTD\" "+ df.format(new Date())+">";
         this.finalXMLData.add(documentTag);
     }
 

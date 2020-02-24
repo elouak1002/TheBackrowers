@@ -92,6 +92,7 @@ public class Parser {
      * @return a hashMap of Node objects	
      */	
     public TreeMap<String,Node> createNodes(List<String> filteredLines) throws IOException {
+        clearIDLog(idLogFilePath);
         // Main hashMap for storing each Node with its name	
         TreeMap<String, Node> nodeMap = new TreeMap<>();
         for(String line : filteredLines){	
@@ -115,10 +116,15 @@ public class Parser {
      * @throws IOException
      */
     public int generateNodeId(Path idLogFilePath) throws IOException {
+
         int lastUsedId=getLastUsedID(idLogFilePath);
         usedIds.add(lastUsedId+1);
         saveUsedIds(usedIds,idLogFilePath);
         return lastUsedId;
+    }
+
+    private void clearIDLog(Path idLogFilePath) throws IOException {
+        Files.write(idLogFilePath,"".getBytes());
     }
 
     /**
