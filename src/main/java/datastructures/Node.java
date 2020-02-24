@@ -109,10 +109,19 @@ public class Node {
      */
     public void setFloor(int floor) { this.floor = floor; }
 
+    /**
+     * @param type value to set
+     */
     public void setSpecialType(String type) { specialType = type; }
 
+    /**
+     * @return Node's special type
+     */
     public String getSpecialType(){ return specialType; }
 
+    /**
+     * @return true if a special type has been set
+     */
     public boolean hasSpecialType() { return !specialType.equals("None"); }
 
     /**

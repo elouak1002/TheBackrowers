@@ -21,6 +21,13 @@ public class NodeCreator {
     private ArrayList<Integer> usedIds;
 
 
+    /**
+     * Constructor for the node creator class that is responsible
+     * for extracting node data from input lines and creating the Node objects
+     *
+     * @param dataLines input lines containing node data
+     * @param neighbourLines input lines containing node's neighbours data
+     */
     public NodeCreator(List<String> dataLines, List<String> neighbourLines){ //add Path to the arguments
         usedIds = new ArrayList<>();
         this.dataLines = dataLines;
