@@ -75,7 +75,7 @@ public class Wrangler {
         }
         
         else{
-            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY(), pivotNode.getFloor());
+            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
             setRotation(pivot, theta);
             setScale(pivot, scaleX, scaleY);
             deltaX = getDeltaX(pivot, targetX);

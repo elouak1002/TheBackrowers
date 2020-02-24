@@ -13,12 +13,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class XMLCreator{
-    private List<String> dataFromGUI ;
+    private List<String> data;
     private List<String> finalXMLData = new ArrayList<>();
 
-    public XMLCreator(List<String> dataFromGUI){
-        this.dataFromGUI = dataFromGUI;
-
+    public XMLCreator(List<String> data){
+        this.data = data;
     }
 
     public List<String> createXMLFile(List<String> dataFromGUI) throws IOException {
@@ -36,7 +35,7 @@ public class XMLCreator{
 
     private void createNodeContent(List<String> dataFromGUI) throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        TreeMap<String, Node> nodes = parser.getNodes();
+        TreeMap<String, Node> nodes = parser.createNodes();
         for(String nodename: nodes.keySet()){
             addXMLentry(nodes.get(nodename));
         }
@@ -52,9 +51,6 @@ public class XMLCreator{
             finalXMLData.add("  <neighbour id="+"\""+neighbour.getId()+"\"" +"/>");
         }
         finalXMLData.add(" </"+node.getType().toLowerCase() +">");
-
-
-
     }
 
     private void createHeader(List<String> finalXMLData) {

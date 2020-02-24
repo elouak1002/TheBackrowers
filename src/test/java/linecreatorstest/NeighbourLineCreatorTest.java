@@ -29,11 +29,11 @@ public class NeighbourLineCreatorTest {
 	@BeforeEach
 	private void setUp() {
 		nodeList = new ArrayList<Node>(Arrays.asList(
-			new Node("HenRaph_04_493_264", 1.03f, 2.32f, "14"),
-			new Node("HenRaph_04_476_264", 10.34f, 20.54f, "14"),
-			new Node("HenRaph_04_374_347", 14.03f, 24.54f, "14"),
-			new Node("HenRaph_04_418_357", 7.01f, 27.03f, "14"),
-			new Node("HenRaph_04_419_365", 32.13f, 27.21f, "14")
+			new Node("HenRaph_04_493_264", 1.03f, 2.32f),
+			new Node("HenRaph_04_476_264", 10.34f, 20.54f),
+			new Node("HenRaph_04_374_347", 14.03f, 24.54f),
+			new Node("HenRaph_04_418_357", 7.01f, 27.03f),
+			new Node("HenRaph_04_419_365", 32.13f, 27.21f)
 
 		));
 		nodeMap = new HashMap<String, Node>();

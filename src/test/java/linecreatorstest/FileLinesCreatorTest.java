@@ -27,11 +27,11 @@ public class FileLinesCreatorTest {
 	@BeforeEach
 	private void setUp() {
 		nodeList = new ArrayList<Node>();
-		nodeList.add(new Node("Node1", 1.0f, 2.0f, "14"));
-		nodeList.add(new Node("Node2", 10.0f, 20.0f, "14"));
-		nodeList.add(new Node("Node3", 14.0f, 24.0f, "14"));
-		nodeList.add(new Node("Node4", 7.0f, 27.0f, "14"));
-		nodeList.add(new Node("Node5", 32.1f, 27.19f, "14"));
+		nodeList.add(new Node("Node1", 1.0f, 2.0f));
+		nodeList.add(new Node("Node2", 10.0f, 20.0f));
+		nodeList.add(new Node("Node3", 14.0f, 24.0f));
+		nodeList.add(new Node("Node4", 7.0f, 27.0f));
+		nodeList.add(new Node("Node5", 32.1f, 27.19f));
 
 		nodeMap = new LinkedHashMap<String, Node>();
 		for (Node node : nodeList) {

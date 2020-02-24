@@ -26,13 +26,11 @@ public class Node {
      * @param xCoord of the node
      * @param yCoord of the node
      */
-    public Node (String name, float xCoord, float yCoord, String floor){
+    public Node (String name, float xCoord, float yCoord){
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        this.floor = floor;
         this.neighbours = new ArrayList<>();
-
     }
 
     /**

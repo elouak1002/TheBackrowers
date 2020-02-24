@@ -82,7 +82,10 @@ public class Root extends Application {
                 if (loadController.getPath() != null) {
                     currentPage = inputPage;
                     root.setCenter(inputPage);
-                    inputController.setNodes(loadController.getPath());
+                    try{
+                        inputController.setNodes(loadController.getPath());
+                    }
+                    catch (Exception e) { } //TODO Add IOException handling
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
                 }
