@@ -34,7 +34,7 @@ public class XMLCreator{
 
     private void createNodeContent(List<String> dataFromGUI) throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        TreeMap<String, Node> nodes = parser.createNodes(parser.getLines());
+        TreeMap<String, Node> nodes = parser.getNodes();
         for(String nodename: nodes.keySet()){
             addXMLentry(nodes.get(nodename));
         }
@@ -45,6 +45,10 @@ public class XMLCreator{
         finalXMLData.add(" <"+node.getType().toLowerCase()+" id="+ "\""+node.getId()+"\""
         +" x="+ "\""+node.getX()+"\"" + " y="+ "\""+node.getY()+"\""
                 +">");
+
+        for (Node neighbour : node.getNeighbours()){
+            finalXMLData.add("  <neighbour id="+"\""+neighbour.getId()+"\"" +"/>");
+        }
         finalXMLData.add(" </"+node.getType().toLowerCase() +">");
 
 

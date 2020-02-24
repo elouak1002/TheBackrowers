@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.hamcrest.MatcherAssert.assertThat; 
-import static org.hamcrest.Matchers.*;
+
 
 public class ParserTest {
 
@@ -84,7 +83,7 @@ public class ParserTest {
     public void extractDataTest(){
         String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
         Pair<Float, Float> expected = new Pair<>(49.312683f,  26.463207f );
-        Pair<Float, Float> data = parser.extractData(line);
+        com.sun.tools.javac.util.Pair<Float, Float> data = parser.extractData(line);
         assertEquals(expected, data);
     }
 
@@ -114,7 +113,7 @@ public class ParserTest {
         TreeMap<String, Node> actualOutcome = parser.getNodes();
 
         for (String nodeName : actualOutcome.keySet()) {
-            assertThat(actualOutcome.get(nodeName).toString(), equalTo(expectedOutcome.get(nodeName).toString()));
+            assertEquals(actualOutcome.get(nodeName).toString(),(expectedOutcome.get(nodeName).toString()));
         }
     }
 
@@ -143,7 +142,7 @@ public class ParserTest {
         TreeMap<String, Node> actualOutcome = neighbourParser.getNodes();
 
         for (String nodeName : actualOutcome.keySet()) {
-            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+            assertEquals(actualOutcome.get(nodeName).getNeighbours().toString(),(expectedOutcome.get(nodeName).getNeighbours().toString()));
         }
     }
 
@@ -202,5 +201,23 @@ public class ParserTest {
         int shouldBeSecond = secondParser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
 
         assertEquals(shouldBeFirst,shouldBeSecond-1);
+    }
+    @Test
+    public void extractSpecialTraitTest(){
+        String roomLine = "Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , HR 4.2 );";
+        String toiletLine  = "Toilet HenRaph_04_374_347 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );";
+        String floorCChangerLine ="FloorChanger HenRaph_04_418_357 = new FloorChanger( 41.841064f , 35.724461f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs ); ";
+
+        String expectedRoomTrait = "HR 4.2";
+        String expectedToiletTrait = "ToiletType.Female";
+        String expectedFloorChangerTrait ="FloorChangerType.Stairs";
+
+        String roomData = parser.extractSpecialTrait(roomLine);
+        String toiletData =parser.extractSpecialTrait(toiletLine);
+        String floorChangerData = parser.extractSpecialTrait(floorCChangerLine);
+
+        assertEquals(expectedRoomTrait,roomData);
+        assertEquals(expectedToiletTrait,toiletData);
+        assertEquals(expectedFloorChangerTrait,floorChangerData);
     }
 }

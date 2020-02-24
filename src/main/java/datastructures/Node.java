@@ -13,7 +13,7 @@ public class Node {
     private int id;
     private float xCoord;
     private float yCoord;
-    private String type;
+    private String type; //what type of room it is
     private List<Node> neighbours;
 
 

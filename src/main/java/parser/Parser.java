@@ -38,6 +38,7 @@ public class Parser {
         
         nodeMap = new TreeMap<>();
         try {
+            clearIDLog(idLogFilePath);
             createNodes();
             setNeighbours();
         } catch (IOException e) {
@@ -144,13 +145,38 @@ public class Parser {
         for(String line : lines){	
             String name = extractName(line);
             String type = extractType(line);
+            String specialTrait  = extractSpecialTrait(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
             Node node = new Node(name, coordinates.fst, coordinates.snd);
+
             node.setId(nodeId);
             node.setType(type);
+            assignSpecialTrait(node,specialTrait);
             nodeMap.put(name, node);
 
+        }
+    }
+
+    /**
+     * Assigns special trait based on the nodes type aka room, toilet, floorChanger
+     * @param node
+     */
+    private void assignSpecialTrait(Node node,String specialTrait) {
+        String type= node.getType();
+
+        switch (type){
+            case "room":
+            //    node.setRoomName(specialTrait)
+                break;
+            case "toilet":
+                //    node.setToiletType(specialTrait)
+                break;
+            case "floorchanger":
+                // node.setFloorChangerType(specialTrait)
+                break;
+
+            default: break;
         }
     }
 
@@ -207,6 +233,11 @@ public class Parser {
         return lastUsedId;
     }
 
+    /**
+     * resets the counter for the id's to always start from 0;
+     * @param idLogFilePath
+     * @throws IOException
+     */
     private void clearIDLog(Path idLogFilePath) throws IOException {
         Files.write(idLogFilePath,"".getBytes());
     }
@@ -268,5 +299,19 @@ public class Parser {
      * @return Node's type aka Node, Room, Elevator etc.
      */
     public String extractType(String line){ return line.substring(0,line.indexOf("=")).split(" ")[0]; }
-
+    /**
+     * Method to extract the special trait from a line
+     * @param line to extract data from
+     * @return Node's special trait aka type of room, type of toilet, name of room etc.
+     */
+    public String extractSpecialTrait(String line){
+        String[] parsedLine = line.substring(line.indexOf('(')+1,line.indexOf(')')).trim().split(", ");
+        if(parsedLine.length>3){
+            //System.out.println(parsedLine[parsedLine.length-1]);
+            return parsedLine[parsedLine.length-1];
+        }
+        else {
+            return "";
+        }
+      }
 } 
