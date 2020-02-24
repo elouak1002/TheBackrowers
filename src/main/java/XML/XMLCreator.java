@@ -15,10 +15,12 @@ import java.util.*;
 public class XMLCreator{
     private List<String> dataFromGUI ;
     private List<String> finalXMLData = new ArrayList<>();
+
     public XMLCreator(List<String> dataFromGUI){
         this.dataFromGUI = dataFromGUI;
 
     }
+
     public List<String> createXMLFile(List<String> dataFromGUI) throws IOException {
      createHeader(finalXMLData);
      createNodeContent(dataFromGUI);
@@ -34,7 +36,7 @@ public class XMLCreator{
 
     private void createNodeContent(List<String> dataFromGUI) throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        TreeMap<String, Node> nodes = parser.createNodes(parser.getLines());
+        TreeMap<String, Node> nodes = parser.getNodes();
         for(String nodename: nodes.keySet()){
             addXMLentry(nodes.get(nodename));
         }

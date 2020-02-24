@@ -13,6 +13,7 @@ public class Node {
     private int id;
     private float xCoord;
     private float yCoord;
+    private String floor;
     private String type;
     private List<Node> neighbours;
 
@@ -23,10 +24,11 @@ public class Node {
      * @param xCoord of the node
      * @param yCoord of the node
      */
-    public Node (String name, float xCoord, float yCoord){
+    public Node (String name, float xCoord, float yCoord, String floor){
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
+        this.floor = floor;
         this.neighbours = Arrays.asList();
     }
 
@@ -94,11 +96,21 @@ public class Node {
      * @return Neighbour's list.
      */
     public List<Node> getNeighbours() { return neighbours; }
-    
+
+    /**
+     * @return Node's floor
+     */
+    public String getFloor(){ return floor; }
+
+    /**
+     * @param floor value to set
+     */
+    public void setFloor(String floor) { this.floor = floor; }
+
     /**
      * @return Node's data as a string
      */
-    public String toString(){ return "Node: " + name + ", X: " + xCoord + ", Y:" + yCoord; }
+    public String toString(){ return "Node: " + name + ", X: " + xCoord + ", Y:" + yCoord + ", Floor: " + floor + ", Type: " + type; }
 
     /**
      * Set a node's type.

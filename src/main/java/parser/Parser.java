@@ -139,18 +139,17 @@ public class Parser {
      */	
 
     private void createNodes() throws IOException {
-        // Main hashMap for storing each Node with its name	
         List<String> lines = getLines();
         for(String line : lines){	
             String name = extractName(line);
             String type = extractType(line);
+            String floor = extractFloor(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
-            Node node = new Node(name, coordinates.fst, coordinates.snd);
+            Node node = new Node(name, coordinates.fst, coordinates.snd, floor);
             node.setId(nodeId);
             node.setType(type);
             nodeMap.put(name, node);
-
         }
     }
 
@@ -269,4 +268,5 @@ public class Parser {
      */
     public String extractType(String line){ return line.substring(0,line.indexOf("=")).split(" ")[0]; }
 
+    public String extractFloor(String line){ return line.substring(line.indexOf('_'), line.indexOf('_' + 2));}
 } 
