@@ -6,7 +6,7 @@ import datastructures.Node;
 
 /**
  * A debugger, responsible for debugging the output file before it's creation.
- * @version 21.02.2020
+ * @version 23.02.2020
  */
 public class Debugger {
 
@@ -17,15 +17,28 @@ public class Debugger {
 	 */
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
+		addExistingNeighbours();
+		removeNeighbourlessNodes();
 	}
 	
 	
-	// TODO ADD YOUR METHODS HERE for Septimiu
+	// TODO ADD YOUR METHODS HERE can be improved.
+
+	private void addExistingNeighbours() {
+		for (String nodeName : nodeMap.keySet()) {
+			Node node = nodeMap.get(nodeName);
+			for (Node neighbour : node.getNeighbours()) {
+				if (neighbour.getNeighbours().contains(node)) {
+					neighbour.addNeighbour(node);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Remove the Nodes without neighbours from the Map.
 	 */
-	public void removeNeighbourlessNodes() {
+	private void removeNeighbourlessNodes() {
 		for (String nodeName : nodeMap.keySet()) {
 			if (nodeMap.get(nodeName).getNeighbours().isEmpty()) {
 				nodeMap.remove(nodeName);
@@ -34,6 +47,8 @@ public class Debugger {
 			}
 		}
 	}
+
+
 
 	
 }
