@@ -12,6 +12,7 @@ import datastructures.Node;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
+	private Logger logger = new Logger();
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
@@ -30,7 +31,7 @@ public class Debugger {
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
 			nodeA.addNeighbour(nodeB);
-			// Logger.logAdd(nodeA.getName(),nodeB.getName()) // Log the addition of nodeB as a neighbor of nodeA.
+			logger.logAdd(nodeA.getName(),nodeB.getName()); // Log the addition of nodeB as a neighbor of nodeA.
 		}
 	}
 
