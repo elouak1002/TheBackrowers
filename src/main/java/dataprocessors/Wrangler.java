@@ -35,7 +35,7 @@ public class Wrangler {
      */
     private void copyNodes(TreeMap<String, Node> nodes){
         for(Node index: nodes.values()){
-            Node copy = new Node(index.getName(), index.getX(), index.getY());
+            Node copy = new Node(index.getName(), index.getX(), index.getY(), index.getFloor());
             outputNodes.put(index.getName(), copy);
         }
     }
@@ -72,7 +72,7 @@ public class Wrangler {
         }
         
         else{
-            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY());
+            Node pivot = new Node(pivotNode.getName(), pivotNode.getX(), pivotNode.getY(), pivotNode.getFloor());
             setRotation(pivot, theta);
             setScale(pivot, scaleX, scaleY);
             deltaX = getDeltaX(pivot, targetX);

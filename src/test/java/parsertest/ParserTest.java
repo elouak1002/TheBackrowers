@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.hamcrest.MatcherAssert.assertThat; 
-import static org.hamcrest.Matchers.*;
+
 
 public class ParserTest {
 
@@ -99,11 +98,11 @@ public class ParserTest {
     @Test
     public void ParserCreatesCorrectNodes() throws IOException {
         TreeMap<String, Node> expectedOutcome = new TreeMap<>();
-        Node node1 = new Node("HenRaph_04_493_264",49.312683f,26.463207f);
-        Node node2 = new Node("HenRaph_04_476_264",47.614590f,26.463207f);
-        Node node3 = new Node("HenRaph_04_374_347",37.426018f,34.716671f);
-        Node node4 = new Node("HenRaph_04_418_357",41.841064f,35.724461f);
-        Node node5 = new Node("HenRaph_04_419_365",41.976913f,36.541119f);
+        Node node1 = new Node("HenRaph_04_493_264",49.312683f,26.463207f, "14");
+        Node node2 = new Node("HenRaph_04_476_264",47.614590f,26.463207f, "14");
+        Node node3 = new Node("HenRaph_04_374_347",37.426018f,34.716671f, "14");
+        Node node4 = new Node("HenRaph_04_418_357",41.841064f,35.724461f, "14");
+        Node node5 = new Node("HenRaph_04_419_365",41.976913f,36.541119f, "14");
 
         expectedOutcome.put("HenRaph_04_493_264",node1);
         expectedOutcome.put("HenRaph_04_476_264",node2);
@@ -114,7 +113,7 @@ public class ParserTest {
         TreeMap<String, Node> actualOutcome = parser.getNodes();
 
         for (String nodeName : actualOutcome.keySet()) {
-            assertThat(actualOutcome.get(nodeName).toString(), equalTo(expectedOutcome.get(nodeName).toString()));
+            assertEquals(actualOutcome.get(nodeName).toString(), (expectedOutcome.get(nodeName).toString()));
         }
     }
 
@@ -123,11 +122,11 @@ public class ParserTest {
         Parser neighbourParser = new Parser(Paths.get("src/test/resources/testNeighbourData.txt"));
 
         TreeMap<String, Node> expectedOutcome = new TreeMap<>();
-        Node node1 = new Node("HenRaph_04_493_264",10f,10f);
-        Node node2 = new Node("HenRaph_04_476_264",10f,10f);
-        Node node3 = new Node("HenRaph_04_374_347",10f,10f);
-        Node node4 = new Node("HenRaph_04_418_357",10f,10f);
-        Node node5 = new Node("HenRaph_04_419_365",10f,10f);
+        Node node1 = new Node("HenRaph_04_493_264",10f,10f, "14");
+        Node node2 = new Node("HenRaph_04_476_264",10f,10f, "14");
+        Node node3 = new Node("HenRaph_04_374_347",10f,10f, "14");
+        Node node4 = new Node("HenRaph_04_418_357",10f,10f, "14");
+        Node node5 = new Node("HenRaph_04_419_365",10f,10f, "14");
 
         node1.setNeighbours(Arrays.asList(node1,node4,node3));
         node2.setNeighbours(Arrays.asList(node3,node4));
@@ -143,7 +142,7 @@ public class ParserTest {
         TreeMap<String, Node> actualOutcome = neighbourParser.getNodes();
 
         for (String nodeName : actualOutcome.keySet()) {
-            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+            assertEquals(actualOutcome.get(nodeName).getNeighbours().toString(), (expectedOutcome.get(nodeName).getNeighbours().toString()));
         }
     }
 

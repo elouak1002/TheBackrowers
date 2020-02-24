@@ -1,7 +1,8 @@
 package parser;
 
-import com.sun.tools.javac.util.Pair;
+
 import datastructures.Node;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -146,7 +147,7 @@ public class Parser {
             String floor = extractFloor(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId=generateNodeId(idLogFilePath);
-            Node node = new Node(name, coordinates.fst, coordinates.snd, floor);
+            Node node = new Node(name, coordinates.getKey(), coordinates.getValue(), floor);
             node.setId(nodeId);
             node.setType(type);
             nodeMap.put(name, node);
