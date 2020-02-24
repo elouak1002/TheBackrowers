@@ -1,0 +1,17 @@
+// Data of Mappin Technologies LTD 2019
+// Thu Aug  1 11:48:39 2019
+
+
+Node Node1 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );
+Room Node2 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , "HR 4.2" );
+Toilet Node3 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );
+FloorChanger Node4 = new FloorChanger( 41.841064f , 35.724461f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );
+FloorChanger Node5 = new FloorChanger( 41.976913f , 36.541119f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2
+
+Node1.addAllNeighbours( new List<Node>{ Node2 , Node3 } );
+Node2.addAllNeighbours( new List<Node>{ Node1 , Node3 } );
+
+====== NODE LISTS =======
+
+// Nodes:
+ , Node1 , Node2 , Node3 , Node4

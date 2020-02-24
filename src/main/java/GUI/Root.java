@@ -51,11 +51,23 @@ public class Root extends Application {
         Button previous = new Button("Previous");
         Button next = new Button("Next");
 
+        //assign functionality to homeController buttons
+        homeController.getWranglerButton().setOnAction(event -> {
+            currentPage = loadPage;
+            root.setCenter(loadPage);
+            previous.setDisable(false);
+            next.setDisable(false);
+        });
+        homeController.getXMLButton().setOnAction(event -> {
+
+        });
+
         previous.setOnAction(event -> {
             if (currentPage == loadPage) {
                 currentPage = homePage;
                 root.setCenter(homePage);
                 previous.setDisable(true);
+                next.setDisable(true);
             } else if (currentPage == inputPage) {
                 currentPage = loadPage;
                 root.setCenter(loadPage);
@@ -66,18 +78,7 @@ public class Root extends Application {
             }
         });
         next.setOnAction(event -> {
-            if (currentPage == homePage) {
-                if (homeController.getChoseWrangler() == null) {
-                    new Alert(Alert.AlertType.ERROR, "Please select what you want to do", ButtonType.CLOSE).showAndWait();
-                } else if (homeController.getChoseWrangler().booleanValue()) {
-                    currentPage = loadPage;
-                    root.setCenter(loadPage);
-                    previous.setDisable(false);
-                } else if (!homeController.getChoseWrangler().booleanValue()) {
-                    
-                }
-
-            } else if (currentPage == loadPage) {
+            if (currentPage == loadPage) {
                 if (loadController.getPath() != null) {
                     currentPage = inputPage;
                     root.setCenter(inputPage);
@@ -108,6 +109,7 @@ public class Root extends Application {
         root.setCenter(homePage);
         currentPage = homePage;
         previous.setDisable(true);
+        next.setDisable(true);
 
         //set and show scene and stage
         Scene scene = new Scene(root,1000,700);

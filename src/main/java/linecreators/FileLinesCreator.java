@@ -71,8 +71,7 @@ public class FileLinesCreator {
 	 * @return A list of String that merge the modified data lines into 
 	 * the full file lines.
 	 */
-	private void mergeDataLines() {
-		List<String> outputFile = new LinkedList<>();
+	private List<String> mergeDataLines(List<String> outputFile) {
 		
 		for (int i=0; i < beginDataPosition; i++) {
 			outputFile.add(file.get(i));
@@ -80,11 +79,7 @@ public class FileLinesCreator {
 
 		outputFile.addAll(dataLines);
 		
-		for (int i = endDataPosition + 1; i < file.size(); i++) {
-			outputFile.add(file.get(i));
-		}
-		
-		this.file = outputFile;
+		return outputFile;
 	}
 
 	/**
@@ -92,12 +87,7 @@ public class FileLinesCreator {
 	 * @return A list of String that merge the modified neighbours lines into 
 	 * the full file lines.
 	 */
-	private void mergeNeighbourLines() {
-		List<String> outputFile = new LinkedList<>();
-		
-		for (int i=0; i < beginNeighbourPosition; i++) {
-			outputFile.add(file.get(i));
-		}
+	private List<String> mergeNeighbourLines(List<String> outputFile) {
 
 		outputFile.addAll(neighbourLines);
 		
@@ -105,15 +95,29 @@ public class FileLinesCreator {
 			outputFile.add(file.get(i));
 		}
 		
-		this.file = outputFile;
+		return outputFile;
+	}
+
+	private List<String> mergeBetweenDataAndNeighbour(List<String> outputFile) {
+
+		for (int i = endDataPosition + 1; i < beginNeighbourPosition; i++) {
+			outputFile.add(file.get(i));
+		}
+
+		return outputFile;
 	}
 
 	/**
 	 * Process the modifications from input file to output file.
 	 */
 	private void processOutputFile() {
-		mergeDataLines();
-		mergeNeighbourLines();
+		List<String> outputFile = new LinkedList<>();
+
+		mergeDataLines(outputFile);
+		mergeBetweenDataAndNeighbour(outputFile);
+		mergeNeighbourLines(outputFile);
+
+		this.file = outputFile;
 	}
 
 	/**

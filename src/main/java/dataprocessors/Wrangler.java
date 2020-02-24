@@ -19,26 +19,29 @@ public class Wrangler {
      * @param inputNodes : a list of all the nodes we want to change
      */
     public Wrangler(TreeMap<String, Node> inputNodes){
-        outputNodes = new TreeMap<>();
-        copyNodes(inputNodes);
+        outputNodes = inputNodes;
+        // outputNodes = new TreeMap<>();
+        // copyNodes(inputNodes);
     }
 
 //------------------Helper methods for the class------------------------------------
 
-    /**
-     *  This method creates a copy of the initial list of nodes to apply the 
-     * changes we want. This is just a safety measure: in case something
-     * goes wrong with the transformations we don't actually modifiy the 
-     * original node list
-     *
-     * @param nodes : initial list of nodes
-     */
-    private void copyNodes(TreeMap<String, Node> nodes){
-        for(Node index: nodes.values()){
-            Node copy = new Node(index.getName(), index.getX(), index.getY(), index.getFloor());
-            outputNodes.put(index.getName(), copy);
-        }
-    }
+
+    // /**
+    //  *  This method creates a copy of the initial list of nodes to apply the 
+    //  * changes we want. This is just a safety measure: in case something
+    //  * goes wrong with the transformations we don't actually modifiy the 
+    //  * original node list
+    //  *
+    //  * @param nodes : initial list of nodes
+    //  */
+    // private void copyNodes(TreeMap<String, Node> nodes){
+    //     for(Node index: nodes.values()){
+    //         Node copy = new Node(index.getName(), index.getX(), index.getY());
+    //         outputNodes.put(index.getName(), copy);
+    //     }
+    // }
+
 
 
 //---------------------Transformation methods---------------------------------------
