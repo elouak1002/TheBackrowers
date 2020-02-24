@@ -1,15 +1,14 @@
 package linecreatorstest;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -22,45 +21,65 @@ import datastructures.Node;
 */
 public class FileLinesCreatorTest {
 
-	@ParameterizedTest
-	private static Stream<Arguments> ArgumentsProvider() {
-		return Stream.of(
-			Arguments.of(new HashMap<String, Node>() {{
-				put("HenRaph_04_493_264", new Node("HenRaph_04_493_264", 1.0f, 2.0f));
-				put("HenRaph_04_476_264", new Node("HenRaph_04_476_264", 10.0f, 20.0f));
-				put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 14.0f, 24.0f));
-				put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 7.0f, 27.0f));
-				put("HenRaph_04_419_365", new Node("HenRaph_04_419_365", 32.1f, 27.19f));
-			}},
-			new ArrayList<String>(Arrays.asList(
-				"// Data of Mappin Technologies LTD 2019",
-				"// Thu Aug  1 11:48:39 2019",
-				"",
-				"",
-				"Node HenRaph_04_493_264 = new Node( 1.0f , 2.0f , GuysHeights.HenRaph_04 );",
-				"Room HenRaph_04_476_264 = new Room( 10.0f , 20.0f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
-				"Toilet HenRaph_04_374_347 = new Toilet( 14.0f , 24.0f , GuysHeights.HenRaph_04 , ToiletType.Female );",
-				"FloorChanger HenRaph_04_418_357 = new FloorChanger( 7.0f , 27.0f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );",
-				"FloorChanger HenRaph_04_419_365 = new FloorChanger( 32.1f , 27.19f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2",
-				"",
-				// "HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_476_264 , HenRaph_04_493_276 , HenRaph_04_491_243 } );",
-				// "HenRaph_04_439_365.addAllNeighbours( new List<Node>{ HenRaph_04_439_357 , HenRaph_04_491_365 , HenRaph_04_419_365 , HenRaph_04_442_369 } );",
-				// "HenRaph_04_621_365.addAllNeighbours( new List<Node>{ HenRaph_04_581_365 , HenRaph_04_621_354 } );",
-				"",
-				"====== NODE LISTS =======",
-				"",
-				"// Nodes:",
-				" , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365"
-				)))
-		);
-		
+	private LinkedHashMap<String, Node> nodeMap;
+	private List<Node> nodeList;
+
+	@BeforeEach
+	private void setUp() {
+		nodeList = new ArrayList<Node>();
+		nodeList.add(new Node("Node1", 1.0f, 2.0f));
+		nodeList.add(new Node("Node2", 10.0f, 20.0f));
+		nodeList.add(new Node("Node3", 14.0f, 24.0f));
+		nodeList.add(new Node("Node4", 7.0f, 27.0f));
+		nodeList.add(new Node("Node5", 32.1f, 27.19f));
+
+		nodeMap = new LinkedHashMap<String, Node>();
+		for (Node node : nodeList) {
+			nodeMap.put(node.getName(), node);
+		}
 	}
 
-	@ParameterizedTest
-	@MethodSource("ArgumentsProvider")
-	public void processOutputFileTest(HashMap<String,Node> nodeMap, ArrayList<String> output) throws IOException {
-		FileLinesCreator fileCrea = new FileLinesCreator(nodeMap,Paths.get("src/test/resources/testData.txt"));
+	@Test
+	public void processOutputFileTest() throws IOException {
+		// Add neighbour for node 1
+		nodeMap.get("Node1").addNeighbour(nodeList.get(1));
+		nodeMap.get("Node1").addNeighbour(nodeList.get(3));
 
-		assertEquals(fileCrea.getOutputFile(),output); // Need to be modified when wrangler will be added.
+		// Add neighbour for node 2
+		nodeMap.get("Node2").addNeighbour(nodeList.get(2));
+
+		// Add neighbour for node 3
+		nodeMap.get("Node3").addNeighbour(nodeList.get(0));
+		nodeMap.get("Node3").addNeighbour(nodeList.get(1));
+
+		// Add neighbour for node 4
+		nodeMap.get("Node4").addNeighbour(nodeList.get(0));
+		nodeMap.get("Node4").addNeighbour(nodeList.get(1));
+
+		List<String> output = new ArrayList<String>(Arrays.asList(
+			"// Data of Mappin Technologies LTD 2019",
+			"// Thu Aug  1 11:48:39 2019",
+			"",
+			"",
+			"Node Node1 = new Node( 1.0f , 2.0f , GuysHeights.HenRaph_04 );",
+			"Room Node2 = new Room( 10.0f , 20.0f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
+			"Toilet Node3 = new Toilet( 14.0f , 24.0f , GuysHeights.HenRaph_04 , ToiletType.Female );",
+			"FloorChanger Node4 = new FloorChanger( 7.0f , 27.0f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );",
+			"FloorChanger Node5 = new FloorChanger( 32.1f , 27.19f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2",
+			"",
+			"Node1.addAllNeighbours( new List<Node>{ Node2 , Node4 } );",
+			"Node2.addAllNeighbours( new List<Node>{ Node3 } );",
+			"Node3.addAllNeighbours( new List<Node>{ Node1 , Node2 } );",
+			"Node4.addAllNeighbours( new List<Node>{ Node1 , Node2 } );",
+			"",
+			"====== NODE LISTS =======",
+			"",
+			"// Nodes:",
+			" , Node1 , Node2 , Node3 , Node4"
+			));
+
+			FileLinesCreator fileCrea = new FileLinesCreator(nodeMap,Paths.get("src/test/resources/testFileLinesCreatorData.txt"));
+
+			assertEquals(fileCrea.getOutputFile(),output); // Need to be modified when wrangler will be added.
 	}
 }
