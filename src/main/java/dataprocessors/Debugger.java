@@ -22,15 +22,27 @@ public class Debugger {
 	}
 	
 	
-	// TODO ADD YOUR METHODS HERE can be improved.
+	/**
+	 * If nodeB doesn't already have nodeA as a neighbour,
+	 * then add it.
+	 */
+	private void addAsNeighbour(Node nodeA, Node nodeB) {
+		if(!nodeA.hasNeighbour(nodeB)) {
+			nodeA.addNeighbour(nodeB);
+			// Logger.logAdd(nodeA.getName(),nodeB.getName())
+		}
+	}
 
+
+	/**
+	 * Run over the key of the map,
+	 * and add neighbours to each node if needed.
+	 */
 	private void addExistingNeighbours() {
 		for (String nodeName : nodeMap.keySet()) {
 			Node node = nodeMap.get(nodeName);
 			for (Node neighbour : node.getNeighbours()) {
-				if (neighbour.getNeighbours().contains(node)) {
-					neighbour.addNeighbour(node);
-				}
+				addAsNeighbour(neighbour, node);
 			}
 		}
 	}
@@ -48,7 +60,11 @@ public class Debugger {
 		}
 	}
 
-
-
+	/**
+	 * @return the debugged node map.
+	 */
+	public Map<String,Node> getMap() {
+		return nodeMap;
+	}
 	
 }
