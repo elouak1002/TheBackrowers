@@ -2,6 +2,11 @@ package parser;
 
 import datastructures.Node;
 import javafx.util.Pair;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,11 +15,14 @@ public class NodeCreator {
     private TreeMap<String, Node> nodeMap;
     private List<String> neighbourLines;
     private List<String> dataLines;
-    private int lastID;
+    //Path to the log file
+    private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
+    //ArrayList of used ids
+    private ArrayList<Integer> usedIds;
 
 
-    public NodeCreator(List<String> dataLines, List<String> neighbourLines){
-        lastID = 0;
+    public NodeCreator(List<String> dataLines, List<String> neighbourLines){ //add Path to the arguments
+        usedIds = new ArrayList<>();
         this.dataLines = dataLines;
         this.neighbourLines = neighbourLines;
         nodeMap = new TreeMap<>();
@@ -26,15 +34,27 @@ public class NodeCreator {
      */
 
     public TreeMap<String, Node> createNodes() {
+        int reserveIDs = 0;
+        try{
+            clearIDLog();
+        }
+        catch (Exception e ){
+            System.out.println("An exception has occurred while clearing an ID list");
+        }
         for(String line : dataLines){
             String name = extractName(line);
             String type = extractType(line);
             String specialTrait  = extractSpecialTrait(line);
             int floor = extractFloor(line);
             Pair<Float, Float> coordinates = extractData(line);
-            int nodeId = lastID++;
             Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
-            node.setId(nodeId);
+            try{
+                node.setId(generateNodeId(idLogFilePath));
+            }
+            catch (Exception e){
+                node.setId(reserveIDs);
+                reserveIDs += 1;
+            }
             node.setType(type);
             node.setFloor(floor);
             assignSpecialTrait(node,specialTrait);
@@ -117,7 +137,6 @@ public class NodeCreator {
     }
 
     /**
-     *
      * @param line a line that set the neighbours of a node
      * @return A list of the neighbours added to the node.
      */
@@ -145,6 +164,7 @@ public class NodeCreator {
      * @return Node's name
      */
     public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }
+
     /**
      * Method to extract the type of a node from a line
      * @param line to extract data from
@@ -167,10 +187,65 @@ public class NodeCreator {
         }
     }
 
-
+    /**
+     * Method to extract the node's floor from a line
+     * @param line to extract data from
+     * @return Node's floor
+     */
     public int extractFloor(String line){
         return Integer.parseInt(line.substring(line.indexOf('_')+1, line.indexOf('_' )+3));
     }
+
+    /**
+     * Generates a unique integer id each time it is called.
+     * @param idLogFilePath path to the file
+     * @return int unique id
+     * @throws IOException
+     */
+    public int generateNodeId(Path idLogFilePath) throws IOException {
+        int lastUsedId=getLastUsedID(idLogFilePath);
+        usedIds.add(lastUsedId+1);
+        saveUsedIds(usedIds,idLogFilePath);
+        return lastUsedId;
+    }
+
+    /**
+     * Goes through the log file and extracts the last recorded
+     * id so we know from which one to start generating new ones.
+     * @param idLogFilePath path to the log file
+     * @return int last used id, -1 if the log file is empty
+     * @throws IOException if the input is illegal
+     */
+    public int getLastUsedID(Path idLogFilePath) throws IOException {
+        List<String> listLines = Files.readAllLines(idLogFilePath);
+        if(listLines.isEmpty()){
+            return -1;
+        }
+        String lastLine =listLines.get(listLines.size() - 1).replace("[","").replace("]","").trim();
+        List<String> numbersInFilteredLine = Arrays.asList(lastLine.trim().split(","));
+        int last = Integer.parseInt(numbersInFilteredLine.get(numbersInFilteredLine.size()-1).trim());
+        return last;
+    }
+
+    /**
+     * Writes ids from the last wrangled file to the idLog.txt so
+     * that we can generate unique ones for the next file
+     * @param usedIds to write to the files
+     * @param idLogFilePath path to the log file
+     * @throws IOException
+     */
+    public void saveUsedIds(ArrayList<Integer> usedIds, Path idLogFilePath) throws IOException{
+        Files.write(idLogFilePath,usedIds.toString().getBytes());
+    }
+
+    /**
+     * A method to clear the ID log text file
+     * @throws IOException
+     */
+    private void clearIDLog() throws IOException {
+        Files.write(idLogFilePath,"".getBytes());
+    }
+
 
 }
 
