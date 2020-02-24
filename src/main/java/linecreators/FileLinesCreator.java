@@ -61,8 +61,6 @@ public class FileLinesCreator {
 		// compute begin and end of neighbours lines in the input
 		this.beginNeighbourPosition = parser.beginOfNeighbourLines();
 		this.endNeighbourPosition =  parser.endOfNeighbourLines();
-
-		System.out.println(beginNeighbourPosition);
 		
 		// Process the modifications to the input file.
 		processOutputFile();
