@@ -3,6 +3,7 @@ package GUI;
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
+import linecreators.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -79,14 +80,10 @@ public class InputController {
      */
     void setNodes(Path path) {
         Parser parser = new Parser(path);
-        try {
-            referenceNodeChoiceBox.getItems().clear();
-            nodes = parser.createNodes(parser.getLines());
-            referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
-            referenceNodeChoiceBox.setMaxSize(1000,10);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        referenceNodeChoiceBox.getItems().clear();
+        nodes = parser.getNodes();
+        referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+        referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
     /**
@@ -115,15 +112,20 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Wrangler wrangler = new Wrangler(nodes);
-            FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
+            TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngleField.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
                     Float.parseFloat(finalPositionX.getText()),
                     Float.parseFloat(finalPositionY.getText()),
-                    nodes.get(referenceNodeChoiceBox.getValue())
-            ), path);
-            return fileCreator.processOutputFile();
+                    nodes.get(referenceNodeChoiceBox.getValue()));
+
+            Debugger debugger = new Debugger(nodeMap);
+            nodeMap = new TreeMap<>(debugger.getMap());
+
+
+            FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
+            return fileLinesCreator.getOutputFile();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
