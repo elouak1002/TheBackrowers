@@ -10,7 +10,7 @@ public class Logger {
 
     }
 
-    public void lofRemove(String nodeName) {
+    public void logRemove(String nodeName) {
 
     }
 }
