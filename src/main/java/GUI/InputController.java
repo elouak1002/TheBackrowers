@@ -112,14 +112,19 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Wrangler wrangler = new Wrangler(nodes);
-            FileLinesCreator fileLinesCreator = new FileLinesCreator(wrangler.runTransformations(
+            TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngleField.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
                     Float.parseFloat(finalPositionX.getText()),
                     Float.parseFloat(finalPositionY.getText()),
-                    nodes.get(referenceNodeChoiceBox.getValue())
-            ), path);
+                    nodes.get(referenceNodeChoiceBox.getValue()));
+
+            Debugger debugger = new Debugger(nodeMap);
+            nodeMap = new TreeMap<>(debugger.getMap());
+
+
+            FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
             return fileLinesCreator.getOutputFile();
         } catch (IOException e) {
             e.printStackTrace();
