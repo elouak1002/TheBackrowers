@@ -14,9 +14,9 @@ public class Node {
     private float xCoord;
     private float yCoord;
 
-    private String floor;
+    private int floor;
     private String type;
-
+    private String specialType;
     private List<Node> neighbours;
 
 
@@ -31,6 +31,7 @@ public class Node {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.neighbours = new ArrayList<>();
+        specialType = "None";
     }
 
     /**
@@ -101,12 +102,18 @@ public class Node {
     /**
      * @return Node's floor
      */
-    public String getFloor(){ return floor; }
+    public int getFloor(){ return floor; }
 
     /**
      * @param floor value to set
      */
-    public void setFloor(String floor) { this.floor = floor; }
+    public void setFloor(int floor) { this.floor = floor; }
+
+    public void setSpecialType(String type) { specialType = type; }
+
+    public String getSpecialType(){ return specialType; }
+
+    public boolean hasSpecialType() { return !specialType.equals("None"); }
 
     /**
      * @return Node's data as a string

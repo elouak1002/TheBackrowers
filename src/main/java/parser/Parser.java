@@ -7,9 +7,8 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 
 
@@ -21,8 +20,10 @@ import java.util.stream.Collectors;
 public class Parser {
     //Path to the input file
     private Path path;
+    private ArrayList<String> paths;
     //Path to the log file
     private ArrayList<Integer> usedIds = new ArrayList<>();
+    private boolean xml;
 
     /**
      * Constructor for the Parser class
@@ -31,12 +32,20 @@ public class Parser {
      */
     public Parser(Path path) {
         this.path = path;
+        xml = false;
     }
 
     public Parser(ArrayList<String> paths) {
-
+        this.paths = paths;
+        xml = true;
     }
 
+//    private List<String> combineFiles() throws IOException{
+//        for (String filePath: paths) {
+//
+//        }
+//    }
+//
     /**
      * @return List of lines that contain data
      * @throws IOException if the file was not found
@@ -58,7 +67,12 @@ public class Parser {
      * @throws IOException if the file was not found
      */
     public List<String> getAllLines() throws IOException {
-        return Files.readAllLines(path);
+//        if(xml) {
+//            return combineFiles();
+//        }
+//        else {
+            return Files.readAllLines(path);
+//        }
     }
 
     /**

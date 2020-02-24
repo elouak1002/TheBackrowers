@@ -43,10 +43,20 @@ public class XMLCreator{
     }
 
     private void addXMLentry(Node node) {
-        finalXMLData.add(" <"+node.getType().toLowerCase()+" id="+ "\""+node.getId()+"\""
-        +" x="+ "\""+node.getX()+"\"" + " y="+ "\""+node.getY()+"\""
-                +">");
+        String xmlLine = " <" + node.getType().toLowerCase() + " id=" + "\"" + node.getId() + "\""
+        + " x=" + "\""+node.getX() + "\"" + " y=" + "\""+node.getY()+"\""
+                + " Floor=" + "\"" + node.getFloor() + "\"";
 
+        if(node.hasSpecialType()){
+            if (node.getType().equals("room")){
+                xmlLine += " name=" + "\"" + node.getSpecialType() + "\"";
+            }
+            else {
+                xmlLine += " type=" + "\"" + node.getSpecialType() + "\"";
+            }
+        }
+        xmlLine += ">";
+        finalXMLData.add(xmlLine);
         for (Node neighbour : node.getNeighbours()){
             finalXMLData.add("  <neighbour id="+"\""+neighbour.getId()+"\"" +"/>");
         }

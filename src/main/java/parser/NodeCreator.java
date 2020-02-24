@@ -30,7 +30,7 @@ public class NodeCreator {
             String name = extractName(line);
             String type = extractType(line);
             String specialTrait  = extractSpecialTrait(line);
-            String floor = extractFloor(line);
+            int floor = extractFloor(line);
             Pair<Float, Float> coordinates = extractData(line);
             int nodeId = lastID++;
             Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
@@ -49,21 +49,43 @@ public class NodeCreator {
      * @param node
      */
     private void assignSpecialTrait(Node node,String specialTrait) {
-        String type= node.getType();
-
+        String type = node.getType();
+        String specialType = "None";
         switch (type){
-            case "room":
-                //    node.setRoomName(specialTrait)
+            case "Room":
+                specialType = specialTrait;
                 break;
-            case "toilet":
-                //    node.setToiletType(specialTrait)
+            case "Toilet":
+                switch (specialTrait){
+                    case "ToiletType.Male": //TODO Verify numbers with client
+                        specialType = "1";
+                        break;
+                    case "ToiletType.Female":
+                        specialType = "2";
+                        break;
+//                    case "ToiletType.Disabled":
+//                        specialType = "3";
+//                        break;
+//                    case "ToiletType.Neutral":
+//                        specialType = "4";
+//                        break;
+                    default: break;
+                }
                 break;
-            case "floorchanger":
-                // node.setFloorChangerType(specialTrait)
+            case "FloorChanger":
+                switch (specialTrait) {
+                    case "FloorChangerType.Stairs":
+                        specialType = "1";
+                        break;
+                    case "FloorChangerType.Lift":
+                        specialType = "2"; //TODO Verify numbers with client
+                        break;
+                    default: break;
+                }
                 break;
-
             default: break;
         }
+        node.setSpecialType(specialType);
     }
 
     /**
@@ -146,7 +168,9 @@ public class NodeCreator {
     }
 
 
-    public String extractFloor(String line){ return line.substring(line.indexOf('_')+1, line.indexOf('_' )+3);}
+    public int extractFloor(String line){
+        return Integer.parseInt(line.substring(line.indexOf('_')+1, line.indexOf('_' )+3));
+    }
 
 }
 
