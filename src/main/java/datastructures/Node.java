@@ -1,7 +1,7 @@
 package datastructures;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The Node class represents location objects and allows modification of their
@@ -25,7 +25,7 @@ public class Node {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        this.neighbours = Arrays.asList();
+        this.neighbours = new ArrayList<>();
     }
 
     /**
