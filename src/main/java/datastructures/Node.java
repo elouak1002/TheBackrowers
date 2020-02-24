@@ -77,6 +77,12 @@ public class Node {
     public void setNeighbours(List<Node> neighbours) { this.neighbours = neighbours; }
 
     /**
+     * A method for adding a neighbour to the neighbour list.
+     * @param neighbour the neighbour to be added to the neighbour list.
+     */
+    public void addNeighbour(Node neighbour) { neighbours.add(neighbour); }
+
+    /**
      * @return Neighbour's list.
      */
     public List<Node> getNeighbours() { return neighbours; }
