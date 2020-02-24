@@ -49,6 +49,7 @@ public class XMLGeneratorController {
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
+                if (!uploadTable.getItems().contains(selectFile.getAbsolutePath()))
                 uploadTable.getItems().add(selectFile.getAbsolutePath());
             }
         }
@@ -72,18 +73,19 @@ public class XMLGeneratorController {
     @FXML
     private void handleDrop(DragEvent event){
         //receive files when dropped
-        List<File> selectedFile = event.getDragboard().getFiles();
+        List<File> selectedFiles = event.getDragboard().getFiles();
         //allows multiple selection of files in uploadTable and selectedTable
         multipleSelection();
         //add and display the selected files into listview
-        if (selectedFile != null) {
-            for (File file : selectedFile) {
+        if (selectedFiles != null) {
+            for (File file : selectedFiles) {
+                if (!uploadTable.getItems().contains(file.getAbsolutePath()))
                 uploadTable.getItems().add(file.getAbsolutePath());
             }
         }
         //testing purposes
         System.out.println("drop works");
-        System.out.println(selectedFile);
+        System.out.println(selectedFiles);
     }
 
     /**
