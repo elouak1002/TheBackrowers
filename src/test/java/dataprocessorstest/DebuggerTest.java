@@ -123,7 +123,6 @@ public class DebuggerTest {
 		Comparator<Node> byName = (Node nodeA, Node nodeB) -> node1.getName().compareTo(node2.getName());
 		
 		for (String nodeName : actualOutcome.keySet()) {
-			System.out.println(nodeName);
 			actualOutcome.get(nodeName).getNeighbours().sort(byName);
 			expectedOutcome.get(nodeName).getNeighbours().sort(byName);
             assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
