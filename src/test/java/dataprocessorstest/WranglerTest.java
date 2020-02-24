@@ -24,44 +24,24 @@ public class WranglerTest{
         wrangler = new Wrangler(resultSet.get("input"));
     }
     
-    /*
     @Test
     public void testNoTransformations(){
         TreeMap<String, Node> output = new TreeMap<>();
-        Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
+        Node pivot = resultSet.get("input").get("HenRaph_04_374_347");
 
         //test no rotation no scale and no shift
         output = wrangler.runTransformations(0,1,1,pivot.getX(), pivot.getY(), pivot);
-        assertEquals(true, equalTreeMaps(output, resultSet.get("No transformation")));
+        assertEquals(true, equalTreeMaps(output, resultSet.get("case0")));
       
         //test rotation 360* no scale and no shift
-        wrangler = new Wrangler(resultSet.get("input"));
         output = wrangler.runTransformations(360,1,1,pivot.getX(), pivot.getY(), pivot);
-        assertEquals(true, equalTreeMaps(output, resultSet.get("No transformation")));
+        assertEquals(true, equalTreeMaps(output, resultSet.get("case0")));
         
-        wrangler = new Wrangler(resultSet.get("input"));
+        //test transformation independent from pivot node
         output = wrangler.runTransformations(0,1,1,0, 0, null);
-        assertEquals(true, equalTreeMaps(output, resultSet.get("No transformation")));
-    }
-    @Test
-    public void testRotation(){
-        TreeMap<String, Node> output = new TreeMap<>();
-        Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-
-    }
-    @Test
-    public void testScale(){
-        TreeMap<String, Node> output = new TreeMap<>();
-        Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
+        assertEquals(true, equalTreeMaps(output, resultSet.get("case0")));
     }
     
-    @Test
-    public void testShift(){
-        TreeMap<String, Node> output = new TreeMap<>();
-        Node pivot = resultSet.get("input").get("HenRaph_04_493_264");
-    }
-    */
-
 
     //---------------------------------Helper Methods---------------------------------------------
 
@@ -117,7 +97,7 @@ public class WranglerTest{
         nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 37.43f, 34.72f));
         nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 41.84f, 35.72f));
 
-        resoults.put("No transformation", nodes);
+        resoults.put("case0", nodes);
 
         return resoults;
     }
