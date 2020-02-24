@@ -83,6 +83,12 @@ public class Node {
     public void addNeighbour(Node neighbour) { neighbours.add(neighbour); }
 
     /**
+     * @param node
+     * @return true if the node is a neighbour of the node.
+     */
+    public boolean hasNeighbour(Node node) { return neighbours.contains(node); }
+
+    /**
      * @return Neighbour's list.
      */
     public List<Node> getNeighbours() { return neighbours; }
