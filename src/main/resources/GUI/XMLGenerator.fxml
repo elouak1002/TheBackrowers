@@ -39,7 +39,7 @@
             </VBox>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#saveFile" text="Merge and Save">
+      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>

@@ -2,6 +2,7 @@ package GUI;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.DragEvent;
@@ -20,11 +21,14 @@ public class XMLGeneratorController {
 
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
+    @FXML private Button saveButton;
 
     private Path fullPath;
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        saveButton.setDisable(true);
+    }
 
     /**
      * Returns absolute path of file
@@ -42,7 +46,7 @@ public class XMLGeneratorController {
         FileChooser fileChooser = new FileChooser();
         //set specific extensions for fileChooser
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        //allow multiple selection of files
+        //allow multiple selection of files in fileChooser
         List<File> selectFiles = fileChooser.showOpenMultipleDialog(null);
         //allows multiple selection of files in uploadTable and selectedTable
         multipleSelection();
@@ -154,6 +158,9 @@ public class XMLGeneratorController {
                 System.out.println("file in original location : " + uploadTable.getId());
             }
         }
+        if(!selectedTable.getItems().isEmpty()){
+            saveButton.setDisable(false);
+        }
     }
 
     /**
@@ -174,6 +181,9 @@ public class XMLGeneratorController {
                 System.out.println("file got chosen : " + choose);
                 System.out.println("file in original location : " + selectedTable.getId());
             }
+        }
+        if(selectedTable.getItems().isEmpty()){
+           saveButton.setDisable(true);
         }
     }
 }
