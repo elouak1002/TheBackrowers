@@ -37,6 +37,8 @@ public class XMLGeneratorController {
                 removeFiles();
             }
         });
+        //allow multiple selection of files in uploadTable and selectedTable
+        multipleSelection();
     }
 
     /**
@@ -50,8 +52,6 @@ public class XMLGeneratorController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         //allow multiple selection of files in fileChooser
         List<File> selectFiles = fileChooser.showOpenMultipleDialog(null);
-        //allows multiple selection of files in uploadTable and selectedTable
-        multipleSelection();
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
@@ -110,8 +110,6 @@ public class XMLGeneratorController {
     private void handleDrop(DragEvent event){
         //receive files when dropped
         List<File> selectedFiles = event.getDragboard().getFiles();
-        //allows multiple selection of files in uploadTable and selectedTable
-        multipleSelection();
         //add and display the selected files into listview
         if (selectedFiles != null) {
             for (File file : selectedFiles) {
