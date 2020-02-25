@@ -15,13 +15,15 @@ import java.util.List;
 
 
 /**
- * Controller class for the XMLGenerator window, where user chooses multiple files.
+ * Controller class for the XMLGenerator window, where user chooses multiple text files to merge into a xml file.
  */
 public class XMLGeneratorController {
 
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;
+    @FXML private Button removeFileButton;
+    @FXML private Button clearAllButton;
 
     private Path fullPath;
 
@@ -89,8 +91,6 @@ public class XMLGeneratorController {
         fileChooser.setInitialFileName("merged_xml");
         File file = fileChooser.showSaveDialog(null);
     }
-
-
 
     /**
      * Drag event. Allow dragging of files into uploadTable
@@ -186,6 +186,23 @@ public class XMLGeneratorController {
         //disable merge-save function if selectedTable is empty
         if(selectedTable.getItems().isEmpty()){
            saveButton.setDisable(true);
+        }
+    }
+
+    /**
+     * Remove highlighted files from uploadTable
+     */
+    @FXML
+    void removeFiles(){
+        //Updates any changes in listOfItems if any items get highlighted/unhighlight
+        ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
+        //initialise ArrayList
+        ArrayList<String> choose = new ArrayList<>(listOfItems);
+        //remove highlighted files from uploadTable
+        for(int i=0; i < choose.size(); i++) {
+            uploadTable.getItems().removeAll(choose.get(i));
+            //testing purposes
+            System.out.println(choose.get(i) + " has been removed");
         }
     }
 }

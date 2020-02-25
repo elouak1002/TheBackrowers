@@ -41,7 +41,7 @@
       </HBox>
       <HBox prefHeight="22.0" prefWidth="900.0">
          <children>
-            <Button mnemonicParsing="false" text="Remove File">
+            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File">
                <HBox.margin>
                   <Insets left="20.0" right="297.0" top="5.0" />
                </HBox.margin>
@@ -51,7 +51,7 @@
                   <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Clear All">
+            <Button fx:id="clearAllButton" mnemonicParsing="false" text="Clear All">
                <HBox.margin>
                   <Insets left="318.0" top="5.0" />
                </HBox.margin>
