@@ -56,6 +56,33 @@ public class XMLGeneratorController {
         }
     }
 
+//    /**
+//     * todo: Merging of text files into an xml file
+//     */
+//    void mergeFiles(String filePath){
+//
+//    }
+
+    /**
+     * Save xml file via a file chooser
+     */
+    @FXML
+    void saveFile() {
+        //calls the merge process
+        //mergeFiles();
+        //initialise fileChooser
+        FileChooser fileChooser = new FileChooser();
+        //set specific extensions for fileChooser
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
+        //set default save directory to user home
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialFileName("merged_xml");
+        File file = fileChooser.showSaveDialog(null);
+    }
+
+
+
     /**
      * Drag event. Allow dragging of files into uploadTable
      */
