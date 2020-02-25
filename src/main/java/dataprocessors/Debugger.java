@@ -57,7 +57,7 @@ public class Debugger {
 		while (iter.hasNext()) {
     		Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
-				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				logger.logRemove(node.getValue().getName()); // Log the deletion of a Node from the file to the logfile. 1st possibility.
 				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}
