@@ -77,4 +77,8 @@ public class Logger {
         }
     }
     
+    @FXML
+    private void clearTextField() {
+        displayLog.clear();
+    }
 }
