@@ -49,7 +49,7 @@ public class XMLGeneratorController {
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
-                if (!uploadTable.getItems().contains(selectFile.getAbsolutePath()))
+                if (!uploadTable.getItems().contains(selectFile.getAbsolutePath()) || !selectedTable.getItems().contains(selectFile.getAbsolutePath()))
                 uploadTable.getItems().add(selectFile.getAbsolutePath());
             }
         }
@@ -79,7 +79,7 @@ public class XMLGeneratorController {
         //add and display the selected files into listview
         if (selectedFiles != null) {
             for (File file : selectedFiles) {
-                if (!uploadTable.getItems().contains(file.getAbsolutePath()))
+                if (!uploadTable.getItems().contains(file.getAbsolutePath()) || !selectedTable.getItems().contains(file.getAbsolutePath()))
                 uploadTable.getItems().add(file.getAbsolutePath());
             }
         }
