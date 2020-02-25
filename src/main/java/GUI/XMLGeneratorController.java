@@ -1,9 +1,12 @@
 package GUI;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -22,12 +25,26 @@ public class XMLGeneratorController {
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;
+    @FXML private VBox loadRoot;
 
     private Path fullPath;
 
+    /**
+     * initialize functions when page starts up
+     */
     @FXML
     public void initialize() {
+        //disable merge-save function
         saveButton.setDisable(true);
+        //set delete key to delete files
+        loadRoot.setOnKeyPressed(new EventHandler<>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.DELETE) {
+                    removeFiles();
+                }
+            }
+        });
     }
 
     /**
@@ -218,4 +235,6 @@ public class XMLGeneratorController {
             selectedTable.getItems().clear();
         }
     }
+
+
 }
