@@ -37,12 +37,9 @@ public class XMLGeneratorController {
         //disable merge-save function
         saveButton.setDisable(true);
         //set delete key to delete files
-        loadRoot.setOnKeyPressed(new EventHandler<>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.DELETE) {
-                    removeFiles();
-                }
+        loadRoot.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.DELETE) {
+                removeFiles();
             }
         });
     }
