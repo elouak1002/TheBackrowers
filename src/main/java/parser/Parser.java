@@ -57,7 +57,6 @@ public class Parser {
      * @throws IOException if the file was not found
      */
     public List<String> getNeighboursLines() throws IOException { 
-        System.out.println(filterNonNeighbours(getAllLines()));
         return filterNonNeighbours(getAllLines()); 
     }
 
