@@ -117,6 +117,7 @@ public class Root extends Application {
 
         root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
+        root.getStylesheets().add("Styling/GUI.css");
         root.setBottom(navigation);
         root.setCenter(homePage);
         currentPage = homePage;
@@ -124,7 +125,7 @@ public class Root extends Application {
         next.setDisable(true);
 
         //set and show scene and stage
-        Scene scene = new Scene(root,900,600);
+        Scene scene = new Scene(root,960,640);
         stage.setTitle("TheBackrowers");
         stage.setScene(scene);
         stage.show();
