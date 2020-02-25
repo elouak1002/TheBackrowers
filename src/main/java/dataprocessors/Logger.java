@@ -3,6 +3,7 @@ package dataprocessors;
 import GUI.OutputController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -15,6 +16,9 @@ public class Logger {
     private File currentFile;
     @FXML
     private Button logButton = new Button();
+
+    @FXML
+    private TextArea displayLog = new TextArea();
 
     public Logger() {
 
@@ -64,4 +68,13 @@ public class Logger {
             saveLoggerToFile(file);
         }
     }
+
+    @FXML
+    public void displayLogger() {
+        displayLog.clear();
+        for (String string : logger) {
+            displayLog.appendText(string + "\n");
+        }
+    }
+    
 }
