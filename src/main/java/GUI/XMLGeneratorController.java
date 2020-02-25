@@ -158,6 +158,7 @@ public class XMLGeneratorController {
                 System.out.println("file in original location : " + uploadTable.getId());
             }
         }
+        //enable merge-save function if selectedTable is not empty
         if(!selectedTable.getItems().isEmpty()){
             saveButton.setDisable(false);
         }
@@ -182,6 +183,7 @@ public class XMLGeneratorController {
                 System.out.println("file in original location : " + selectedTable.getId());
             }
         }
+        //disable merge-save function if selectedTable is empty
         if(selectedTable.getItems().isEmpty()){
            saveButton.setDisable(true);
         }

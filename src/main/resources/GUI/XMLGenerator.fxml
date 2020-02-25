@@ -11,7 +11,7 @@
    <children>
       <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" onAction="#uploadFiles" text="Upload Files">
          <VBox.margin>
-            <Insets bottom="10.0" />
+            <Insets />
          </VBox.margin>
       </Button>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="434.0" prefWidth="660.0">
@@ -39,10 +39,24 @@
             </VBox>
          </children>
       </HBox>
-      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save">
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </Button>
+      <HBox prefHeight="22.0" prefWidth="900.0">
+         <children>
+            <Button mnemonicParsing="false" text="Remove File">
+               <HBox.margin>
+                  <Insets left="20.0" right="297.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Clear All">
+               <HBox.margin>
+                  <Insets left="318.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </VBox>
