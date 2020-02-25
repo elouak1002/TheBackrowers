@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -117,6 +118,7 @@ public class Root extends Application {
 
         root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
+        root.getStylesheets().add("Styling/GUI.css");
         root.setBottom(navigation);
         root.setCenter(homePage);
         currentPage = homePage;
@@ -124,8 +126,9 @@ public class Root extends Application {
         next.setDisable(true);
 
         //set and show scene and stage
-        Scene scene = new Scene(root,900,600);
+        Scene scene = new Scene(root,960,640);
         stage.setTitle("TheBackrowers");
+        stage.getIcons().add(new Image("Styling/Logo.PNG"));
         stage.setScene(scene);
         stage.show();
     }

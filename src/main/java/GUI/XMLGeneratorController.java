@@ -22,7 +22,7 @@ public class XMLGeneratorController {
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;
-    @FXML private VBox loadRoot;
+    @FXML private VBox xmlGeneratorRoot;
 
     /**
      * initialize functions when page starts up
@@ -32,7 +32,7 @@ public class XMLGeneratorController {
         //disable merge-save function
         saveButton.setDisable(true);
         //set delete key to delete files
-        loadRoot.setOnKeyPressed(keyEvent -> {
+        xmlGeneratorRoot.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DELETE) {
                 removeFiles();
             }
