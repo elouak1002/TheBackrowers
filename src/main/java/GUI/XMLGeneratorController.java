@@ -49,7 +49,10 @@ public class XMLGeneratorController {
         //add and display the selected files into uploadTable
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
-                if (!uploadTable.getItems().contains(selectFile.getAbsolutePath()) && !selectedTable.getItems().contains(selectFile.getAbsolutePath())) {
+                //condition to check if selectFile is in uploadTable && selectedTable
+                boolean itemInUploadTable = uploadTable.getItems().contains(selectFile.getAbsolutePath());
+                boolean itemInSelectedTable = selectedTable.getItems().contains(selectFile.getAbsolutePath());
+                if (!itemInUploadTable && !itemInSelectedTable) {
                     uploadTable.getItems().add(selectFile.getAbsolutePath());
                 }
             }
@@ -107,7 +110,10 @@ public class XMLGeneratorController {
         //add and display the selected files into listview
         if (selectedFiles != null) {
             for (File file : selectedFiles) {
-                if (!uploadTable.getItems().contains(file.getAbsolutePath()) && !selectedTable.getItems().contains(file.getAbsolutePath())) {
+                //condition to check if selectFile is in uploadTable && selectedTable
+                boolean itemInUploadTable = uploadTable.getItems().contains(file.getAbsolutePath());
+                boolean itemInSelectedTable = selectedTable.getItems().contains(file.getAbsolutePath());
+                if (!itemInUploadTable && !itemInSelectedTable) {
                     uploadTable.getItems().add(file.getAbsolutePath());
                 }
             }
@@ -141,7 +147,7 @@ public class XMLGeneratorController {
                 uploadTable.getItems().removeAll(choose.get(i));
                 //testing purposes
                 System.out.println("file got chosen : " + choose);
-                System.out.println("file in original location : " + uploadTable);
+                System.out.println("file in original location : " + uploadTable.getId());
             }
         }
     }
@@ -162,7 +168,7 @@ public class XMLGeneratorController {
                 selectedTable.getItems().removeAll(choose.get(i));
                 //testing purposes
                 System.out.println("file got chosen : " + choose);
-                System.out.println("file in original location : " + selectedTable);
+                System.out.println("file in original location : " + selectedTable.getId());
             }
         }
     }
