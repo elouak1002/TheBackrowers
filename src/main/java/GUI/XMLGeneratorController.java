@@ -34,7 +34,7 @@ public class XMLGeneratorController {
         //set delete key to delete files
         xmlGeneratorRoot.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DELETE) {
-                removeFiles();
+                removeHighlightedFiles();
             }
         });
         //allow multiple selection of files in uploadTable and selectedTable
@@ -109,10 +109,10 @@ public class XMLGeneratorController {
     @FXML
     private void handleDrop(DragEvent event){
         //receive files when dropped
-        List<File> selectedFiles = event.getDragboard().getFiles();
+        List<File> toBeUploaded = event.getDragboard().getFiles();
         //add and display the selected files into listview
-        if (selectedFiles != null) {
-            for (File file : selectedFiles) {
+        if (toBeUploaded != null) {
+            for (File file : toBeUploaded) {
                 //condition to check if selectFile is in uploadTable && selectedTable
                 boolean itemInUploadTable = uploadTable.getItems().contains(file.getAbsolutePath());
                 boolean itemInSelectedTable = selectedTable.getItems().contains(file.getAbsolutePath());
@@ -125,7 +125,7 @@ public class XMLGeneratorController {
         }
         //testing purposes
         System.out.println("drop works");
-        System.out.println(selectedFiles);
+        System.out.println(toBeUploaded);
     }
 
     /**
@@ -142,16 +142,16 @@ public class XMLGeneratorController {
     @FXML
     private void selectFiles(){
         //Updates any changes in listOfItems if any items get highlighted/unhighlight
-        ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> listOfFiles = uploadTable.getSelectionModel().getSelectedItems();
         //initialise ArrayList
-        ArrayList<String> choose = new ArrayList<>(listOfItems);
+        ArrayList<String> chosenFiles = new ArrayList<>(listOfFiles);
         //replace selected files from uploadTable to selectedTable
-        for(int i=0; i < choose.size(); i++) {
-            if(!(choose.get(i) == null)) {
-                selectedTable.getItems().addAll(choose.get(i));
-                uploadTable.getItems().removeAll(choose.get(i));
+        for(int i=0; i < chosenFiles.size(); i++) {
+            if(!(chosenFiles.get(i) == null)) {
+                selectedTable.getItems().addAll(chosenFiles.get(i));
+                uploadTable.getItems().removeAll(chosenFiles.get(i));
                 //testing purposes
-                System.out.println("file got chosen : " + choose);
+                System.out.println("file got chosen : " + chosenFiles);
                 System.out.println("file in original location : " + uploadTable.getId());
             }
         }
@@ -167,16 +167,16 @@ public class XMLGeneratorController {
     @FXML
     private void unselectFiles(){
         //Updates any changes in listOfItems if any items get highlighted/unhighlight
-        ObservableList<String> listOfItems = selectedTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> listOfFiles = selectedTable.getSelectionModel().getSelectedItems();
         //initialise ArrayList
-        ArrayList<String> choose = new ArrayList<>(listOfItems);
+        ArrayList<String> chosenFiles = new ArrayList<>(listOfFiles);
         //replace selected files from uploadTable to selectedTable
-        for(int i=0; i < choose.size(); i++) {
-            if(!(choose.get(i) == null)) {
-                uploadTable.getItems().addAll(choose.get(i));
-                selectedTable.getItems().removeAll(choose.get(i));
+        for(int i=0; i < chosenFiles.size(); i++) {
+            if(!(chosenFiles.get(i) == null)) {
+                uploadTable.getItems().addAll(chosenFiles.get(i));
+                selectedTable.getItems().removeAll(chosenFiles.get(i));
                 //testing purposes
-                System.out.println("file got chosen : " + choose);
+                System.out.println("file got chosen : " + chosenFiles);
                 System.out.println("file in original location : " + selectedTable.getId());
             }
         }
@@ -190,16 +190,16 @@ public class XMLGeneratorController {
      * Remove highlighted files from uploadTable
      */
     @FXML
-    void removeFiles(){
+    void removeHighlightedFiles(){
         //Updates any changes in listOfItems if any items get highlighted/unhighlight
-        ObservableList<String> listOfItems = uploadTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> listOfFiles = uploadTable.getSelectionModel().getSelectedItems();
         //initialise ArrayList
-        ArrayList<String> choose = new ArrayList<>(listOfItems);
+        ArrayList<String> chosenFiles = new ArrayList<>(listOfFiles);
         //remove highlighted files from uploadTable
-        for (String item : choose) {
-            uploadTable.getItems().removeAll(item);
+        for (String file : chosenFiles) {
+            uploadTable.getItems().removeAll(file);
             //testing purposes
-            System.out.println(item + " has been removed");
+            System.out.println(file + " has been removed");
         }
     }
 

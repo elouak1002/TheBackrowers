@@ -41,7 +41,7 @@
       </HBox>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" prefWidth="660.0" spacing="290.0">
          <children>
-            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File" />
+            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeHighlightedFiles" text="Remove File" />
             <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save" />
             <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#clearAllFiles" text="Clear All" />
          </children>
