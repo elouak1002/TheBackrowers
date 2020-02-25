@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,8 +22,6 @@ public class XMLGeneratorController {
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;
-    @FXML private Button removeFileButton;
-    @FXML private Button clearAllButton;
 
     private Path fullPath;
 
@@ -197,10 +197,10 @@ public class XMLGeneratorController {
         //initialise ArrayList
         ArrayList<String> choose = new ArrayList<>(listOfItems);
         //remove highlighted files from uploadTable
-        for(int i=0; i < choose.size(); i++) {
-            uploadTable.getItems().removeAll(choose.get(i));
+        for (String item : choose) {
+            uploadTable.getItems().removeAll(item);
             //testing purposes
-            System.out.println(choose.get(i) + " has been removed");
+            System.out.println(item + " has been removed");
         }
     }
 
