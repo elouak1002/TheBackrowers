@@ -57,6 +57,7 @@ public class Parser {
      * @throws IOException if the file was not found
      */
     public List<String> getNeighboursLines() throws IOException { 
+        System.out.println(filterNonNeighbours(getAllLines()));
         return filterNonNeighbours(getAllLines()); 
     }
 
@@ -111,7 +112,7 @@ public class Parser {
      * -1 otherwise.	
 	 */	
 	public int endOfDataLines() throws IOException { 	
-        return getAllLines().indexOf(getLines().get(getLines().size() - 1));   	
+        return getAllLines().lastIndexOf(getLines().get(getLines().size() - 1));   	
 	}	
 
     /**	
@@ -130,7 +131,7 @@ public class Parser {
      * -1 otherwise.	
 	 */	
 	public int endOfNeighbourLines() throws IOException { 	
-        return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
+        return getAllLines().lastIndexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
 	}	
 
     /**	
