@@ -14,7 +14,11 @@ public class Logger {
     }
 
     public void logRemove(String nodeName) {
-        String removedNode = "Node removed " + nodeName;
+        String removedNode = nodeName + "removed";
         logger.add(removedNode);
+    }
+
+    public void outputLogger() {
+
     }
 }
