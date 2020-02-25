@@ -53,7 +53,9 @@ public class XMLGeneratorController {
                 boolean itemInUploadTable = uploadTable.getItems().contains(selectFile.getAbsolutePath());
                 boolean itemInSelectedTable = selectedTable.getItems().contains(selectFile.getAbsolutePath());
                 if (!itemInUploadTable && !itemInSelectedTable) {
-                    uploadTable.getItems().add(selectFile.getAbsolutePath());
+                    //get file name from file path
+                    String getFileName = selectFile.getAbsolutePath().substring(selectFile.getAbsolutePath().lastIndexOf("\\") + 1);
+                    uploadTable.getItems().add(getFileName);
                 }
             }
         }
@@ -114,7 +116,9 @@ public class XMLGeneratorController {
                 boolean itemInUploadTable = uploadTable.getItems().contains(file.getAbsolutePath());
                 boolean itemInSelectedTable = selectedTable.getItems().contains(file.getAbsolutePath());
                 if (!itemInUploadTable && !itemInSelectedTable) {
-                    uploadTable.getItems().add(file.getAbsolutePath());
+                    //get file name from file path
+                    String getFileName = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\") + 1);
+                    uploadTable.getItems().add(getFileName);
                 }
             }
         }
