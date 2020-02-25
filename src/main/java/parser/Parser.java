@@ -111,7 +111,7 @@ public class Parser {
      * -1 otherwise.	
 	 */	
 	public int endOfDataLines() throws IOException { 	
-        return getAllLines().indexOf(getLines().get(getLines().size() - 1));   	
+        return getAllLines().lastIndexOf(getLines().get(getLines().size() - 1));   	
 	}	
 
     /**	
@@ -130,7 +130,7 @@ public class Parser {
      * -1 otherwise.	
 	 */	
 	public int endOfNeighbourLines() throws IOException { 	
-        return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
+        return getAllLines().lastIndexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
 	}	
 
     /**	
