@@ -30,7 +30,7 @@ public class Logger {
     }
 
     public void logRemove(String nodeName) {
-        String removedNode = nodeName + "with no neighbour removed.";
+        String removedNode = nodeName + "has no neighbour, so it was removed.";
         logger.add(removedNode);
     }
 
