@@ -2,9 +2,7 @@ package GUI;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -203,6 +201,21 @@ public class XMLGeneratorController {
             uploadTable.getItems().removeAll(choose.get(i));
             //testing purposes
             System.out.println(choose.get(i) + " has been removed");
+        }
+    }
+
+    /**
+     * Remove all files from uploadTable and selectedTable
+     */
+    @FXML
+    void clearAllFiles(){
+        //provide confirmation alert
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Clear All Files?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        //clear all information in both tables if "Yes" button is selected
+        if (alert.getResult() == ButtonType.YES) {
+            uploadTable.getItems().clear();
+            selectedTable.getItems().clear();
         }
     }
 }

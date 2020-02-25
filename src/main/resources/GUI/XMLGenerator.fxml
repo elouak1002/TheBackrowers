@@ -51,7 +51,7 @@
                   <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="clearAllButton" mnemonicParsing="false" text="Clear All">
+            <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#clearAllFiles" text="Clear All">
                <HBox.margin>
                   <Insets left="318.0" top="5.0" />
                </HBox.margin>
