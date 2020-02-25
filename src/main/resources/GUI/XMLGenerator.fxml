@@ -39,7 +39,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" prefWidth="660.0" spacing="320.0">
+      <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" prefWidth="660.0" spacing="290.0">
          <children>
             <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File" />
             <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save" />
