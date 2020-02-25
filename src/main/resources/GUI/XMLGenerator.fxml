@@ -4,10 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="loadRoot" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.XMLGeneratorController">
+<VBox fx:id="loadRoot" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="901.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.XMLGeneratorController">
    <children>
       <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" onAction="#uploadFiles" text="Upload Files">
          <VBox.margin>
@@ -39,24 +40,19 @@
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="22.0" prefWidth="900.0">
-         <children>
-            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File">
-               <HBox.margin>
-                  <Insets left="20.0" right="297.0" top="5.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save">
-               <HBox.margin>
-                  <Insets top="5.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#clearAllFiles" text="Clear All">
-               <HBox.margin>
-                  <Insets left="318.0" top="5.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
+      <BorderPane prefHeight="31.0" prefWidth="902.0">
+         <left>
+            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#clearAllFiles" text="Clear All" BorderPane.alignment="CENTER" />
+         </right>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </BorderPane>
    </children>
 </VBox>
