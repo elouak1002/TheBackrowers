@@ -9,11 +9,12 @@ public class Logger {
     }
 
     public void logAdd(String nodeNameA, String nodeNameB) {
-        String neighbour = nodeNameB + "added to become a neighbour for " + nodeNameA;
-        logger.add(neighbour);
+        String neighbourAdded = nodeNameB + "added to become a neighbour for " + nodeNameA;
+        logger.add(neighbourAdded);
     }
 
     public void logRemove(String nodeName) {
-
+        String removedNode = "Node removed " + nodeName;
+        logger.add(removedNode);
     }
 }
