@@ -1,6 +1,10 @@
 package dataprocessors;
 
 import GUI.OutputController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,6 +12,10 @@ import java.util.logging.Level;
 
 public class Logger {
     private ArrayList<String> logger = new ArrayList<>();
+    private File currentFile;
+    @FXML
+    private Button logButton = new Button();
+
     public Logger() {
 
     }
@@ -22,7 +30,7 @@ public class Logger {
         logger.add(removedNode);
     }
 
-    public void saveLoggerToFile() {
+    public void saveLoggerToFile(File file) {
         String fileName = "LogFile.txt";
 
         try {
@@ -39,9 +47,21 @@ public class Logger {
         catch (IOException e) {
             java.util.logging.Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 
+    @FXML
     public void saveFileToDir() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("log file");
+        Window stage = logButton.getScene().getWindow();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File file = fileChooser.showSaveDialog(stage);
 
+        if (file != null) {
+            saveLoggerToFile(file);
+        }
     }
 }
