@@ -22,7 +22,7 @@ public class Root extends Application {
     private Pane inputPage;
     private Pane outputPage;
     private Pane xmlGeneratorPage;
-    private Pane logger;
+    private Pane loggerPage;
     private BorderPane root;
 
     @Override
@@ -41,7 +41,7 @@ public class Root extends Application {
             inputPage = inputPageLoader.load();
             outputPage = outputPageLoader.load();
             xmlGeneratorPage = xmlGeneratorLoader.load();
-            logger = loggerLoader.load();
+            loggerPage = loggerLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,6 +93,12 @@ public class Root extends Application {
                 currentPage = homePage;
                 previous.setDisable(true);
             }
+
+            if(currentPage == loggerPage) {
+                root.setCenter(outputPage);
+                currentPage = outputPage;
+                next.setDisable(true);
+            }
         });
         next.setOnAction(event -> {
             if (currentPage == loadPage) {
@@ -117,13 +123,9 @@ public class Root extends Application {
         });
 
         log.setOnAction(event -> {
-            if(currentPage != logger) {
-                root.setCenter(logger);
-
-            }
-            else {
-                new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
-            }
+            root.setCenter(loggerPage);
+            currentPage = loggerPage;
+            previous.setDisable(false);
         });
 
 
