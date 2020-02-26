@@ -19,6 +19,7 @@ public class NodeCreator {
     private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
     //ArrayList of used ids
     private ArrayList<Integer> usedIds;
+    private ArrayList<String> nodesAsPerInsertion =new ArrayList<>(); //nodes in insertion order
 
 
     /**
@@ -65,7 +66,9 @@ public class NodeCreator {
             node.setType(type);
             node.setFloor(floor);
             assignSpecialTrait(node,specialTrait);
+            this.nodesAsPerInsertion.add(node.getName());
             nodeMap.put(name, node);
+
         }
         setNeighbours();
         return nodeMap;
@@ -220,13 +223,13 @@ public class NodeCreator {
      * Goes through the log file and extracts the last recorded
      * id so we know from which one to start generating new ones.
      * @param idLogFilePath path to the log file
-     * @return int last used id, -1 if the log file is empty
+     * @return int last used id, 0 if the log file is empty
      * @throws IOException if the input is illegal
      */
     public int getLastUsedID(Path idLogFilePath) throws IOException {
         List<String> listLines = Files.readAllLines(idLogFilePath);
         if(listLines.isEmpty()){
-            return -1;
+            return 0;
         }
         String lastLine =listLines.get(listLines.size() - 1).replace("[","").replace("]","").trim();
         List<String> numbersInFilteredLine = Arrays.asList(lastLine.trim().split(","));
@@ -253,7 +256,13 @@ public class NodeCreator {
         Files.write(idLogFilePath,"".getBytes());
     }
 
-
+    /**
+     * A method to get the nodes in the order they were inserted
+     * @return  ArrayList the names of the nodes in their order
+     */
+    public ArrayList<String> getNodesAsPerInsertion() {
+        return nodesAsPerInsertion;
+    }
 }
 
 

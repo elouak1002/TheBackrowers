@@ -23,6 +23,7 @@ public class Parser {
     private ArrayList<String> paths;
     //Path to the log file
     private ArrayList<Integer> usedIds = new ArrayList<>();
+    private ArrayList<String> nodeOrder = new ArrayList<>();
     private boolean xml;
 
     /**
@@ -146,6 +147,15 @@ public class Parser {
 
     public TreeMap<String, Node> createNodes() throws IOException{
         NodeCreator nodeCreator = new NodeCreator(getLines(), getNeighboursLines());
+        this.nodeOrder= nodeCreator.getNodesAsPerInsertion();
         return nodeCreator.createNodes();
+    }
+
+    /**
+     * Returns the nodeOrderFrom the Parser
+     * @return arrayList of the nodeOrder
+     */
+    public ArrayList<String> getNodeOrder(){
+        return  nodeOrder;
     }
 }

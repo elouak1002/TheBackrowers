@@ -36,7 +36,8 @@ public class XMLCreator{
     private void createNodeContent(List<String> dataFromGUI) throws IOException {
         Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         TreeMap<String, Node> nodes = parser.createNodes();
-        for(String nodename: nodes.keySet()){
+        ArrayList<String> nodeOrder = parser.getNodeOrder();
+        for(String nodename: nodeOrder){
             addXMLentry(nodes.get(nodename));
         }
 
