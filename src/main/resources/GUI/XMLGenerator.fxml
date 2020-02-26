@@ -29,6 +29,11 @@
                         <Insets bottom="10.0" />
                      </VBox.margin></Button>
                   <Button mnemonicParsing="false" onAction="#unselectFiles" prefHeight="26.0" prefWidth="170.0" text="Unselect Files" />
+                  <Label fx:id="saveNotification" alignment="CENTER" prefHeight="22.0" prefWidth="171.0" text="File has been saved!" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
             <VBox prefHeight="434.0" prefWidth="330.0">

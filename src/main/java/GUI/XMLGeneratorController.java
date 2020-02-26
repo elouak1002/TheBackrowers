@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,6 +9,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class XMLGeneratorController {
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;
+    @FXML private Label saveNotification;
     @FXML private VBox xmlGeneratorRoot;
 
     /**
@@ -39,6 +43,8 @@ public class XMLGeneratorController {
         });
         //allow multiple selection of files in uploadTable and selectedTable
         multipleSelection();
+        saveNotification.setVisible(false);
+
     }
 
     /**
@@ -89,6 +95,18 @@ public class XMLGeneratorController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save File");
         fileChooser.setInitialFileName("merged_xml");
+        //reveal file saved notification
+        saveNotification.setText("File has been saved!");
+        saveNotification.setVisible(true);
+        //file saved notification disappears after 2 seconds
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(2)
+        );
+        visiblePause.setOnFinished(
+                event -> saveNotification.setVisible(false)
+        );
+        visiblePause.play();
+
     }
 
     /**
