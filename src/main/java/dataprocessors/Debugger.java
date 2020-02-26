@@ -3,8 +3,9 @@ package dataprocessors;
 import java.util.Iterator;
 import java.util.Map;
 
+import GUI.LoggerController;
 import datastructures.Node;
-import GUI.Logger;
+import GUI.LoggerController;
 
 /**
  * A debugger, responsible for debugging the output file before it's creation.
@@ -13,7 +14,7 @@ import GUI.Logger;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
-	private Logger logger = new Logger();
+	private LoggerController logger = new LoggerController();
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)

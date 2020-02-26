@@ -10,16 +10,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-public class Logger {
+public class LoggerController {
     private ArrayList<String> logger = new ArrayList<>();
     private File currentFile;
     @FXML
-    private Button logButton = new Button();
+    private Button saveButton = new Button();
 
     @FXML
     private TextArea displayLog = new TextArea();
 
-    public Logger() {
+    public LoggerController() {
 
     }
 
@@ -57,7 +57,7 @@ public class Logger {
     public void saveFileToDir() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("log file");
-        Window stage = logButton.getScene().getWindow();
+        Window stage = saveButton.getScene().getWindow();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt"));

@@ -22,6 +22,7 @@ public class Root extends Application {
     private Pane inputPage;
     private Pane outputPage;
     private Pane xmlGeneratorPage;
+    private Pane logger;
     private BorderPane root;
 
     @Override
@@ -32,7 +33,7 @@ public class Root extends Application {
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
         FXMLLoader xmlGeneratorLoader = new FXMLLoader(getClass().getResource("XMLGenerator.fxml"));
-
+        FXMLLoader loggerLoader = new FXMLLoader(getClass().getResource("logger.fxml"));
         //try-catch assignment of panes
         try {
             homePage = homePageLoader.load();
@@ -40,6 +41,7 @@ public class Root extends Application {
             inputPage = inputPageLoader.load();
             outputPage = outputPageLoader.load();
             xmlGeneratorPage = xmlGeneratorLoader.load();
+            logger = loggerLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,9 +52,11 @@ public class Root extends Application {
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
         XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
+        LoggerController loggerController = loggerLoader.getController();
 
         Button previous = new Button("Previous");
         Button next = new Button("Next");
+        Button log = new Button("Log");
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
@@ -112,9 +116,22 @@ public class Root extends Application {
             }
         });
 
+        log.setOnAction(event -> {
+            if(currentPage != logger) {
+                root.setCenter(logger);
+
+            }
+            else {
+                new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
+            }
+        });
+
+
+
         BorderPane navigation = new BorderPane();
         navigation.setLeft(previous);
         navigation.setRight(next);
+        navigation.setCenter(log);
 
         root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
