@@ -29,6 +29,11 @@
                         <Insets bottom="10.0" />
                      </VBox.margin></Button>
                   <Button mnemonicParsing="false" onAction="#unselectFiles" prefHeight="26.0" prefWidth="170.0" text="Unselect Files" />
+                  <Label fx:id="saveNotification" alignment="CENTER" prefHeight="22.0" prefWidth="171.0" text="File has been saved!" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
             <VBox prefHeight="434.0" prefWidth="330.0">
@@ -41,7 +46,7 @@
       </HBox>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" prefWidth="660.0" spacing="290.0">
          <children>
-            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeFiles" text="Remove File" />
+            <Button fx:id="removeFileButton" mnemonicParsing="false" onAction="#removeHighlightedFiles" text="Remove File" />
             <Button fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveFile" text="Merge and Save" />
             <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#clearAllFiles" text="Clear All" />
          </children>
