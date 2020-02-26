@@ -1,6 +1,5 @@
-package dataprocessors;
+package GUI;
 
-import GUI.OutputController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -76,7 +75,7 @@ public class Logger {
             displayLog.appendText(string + "\n");
         }
     }
-    
+
     @FXML
     private void clearTextField() {
         displayLog.clear();

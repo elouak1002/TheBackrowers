@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import datastructures.Node;
+import GUI.Logger;
 
 /**
  * A debugger, responsible for debugging the output file before it's creation.
