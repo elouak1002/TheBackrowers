@@ -9,16 +9,16 @@
 
 <VBox fx:id="outputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoggerController">
    <children>
-      <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="522.0" prefWidth="879.0" VBox.vgrow="ALWAYS" />
+      <TextArea fx:id="displayLog" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="522.0" prefWidth="879.0" VBox.vgrow="ALWAYS" />
       <BorderPane>
          <center>
             <Label prefHeight="22.0" prefWidth="29.0" text="Log" BorderPane.alignment="CENTER" />
          </center>
          <left>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Clear" BorderPane.alignment="CENTER" />
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearTextField" prefHeight="26.0" prefWidth="78.0" text="Clear" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Save" BorderPane.alignment="CENTER" />
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveFileToDir" prefHeight="26.0" prefWidth="78.0" text="Save" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
    </children>

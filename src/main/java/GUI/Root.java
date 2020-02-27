@@ -126,6 +126,7 @@ public class Root extends Application {
             root.setCenter(loggerPage);
             currentPage = loggerPage;
             previous.setDisable(false);
+            loggerController.displayLogger();
         });
 
 

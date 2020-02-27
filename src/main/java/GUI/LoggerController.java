@@ -12,15 +12,16 @@ import java.util.logging.Level;
 
 public class LoggerController {
     private ArrayList<String> logger = new ArrayList<>();
-    private File currentFile;
     @FXML
     private Button saveButton = new Button();
 
     @FXML
     private TextArea displayLog = new TextArea();
 
-    public LoggerController() {
+    @FXML
+    private Button clearButton = new Button();
 
+    public LoggerController() {
     }
 
     public void logAdd(String nodeNameA, String nodeNameB) {
@@ -68,9 +69,7 @@ public class LoggerController {
         }
     }
 
-    @FXML
-    public void displayLogger() {
-        displayLog.clear();
+      void displayLogger() {
         for (String string : logger) {
             displayLog.appendText(string + "\n");
         }
