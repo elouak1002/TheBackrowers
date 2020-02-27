@@ -1,12 +1,13 @@
 package parser;
 
 
+
 import datastructures.Node;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -18,35 +19,33 @@ import java.util.*;
  * data from the file	
  */	
 public class Parser {
-    //Path to the input file
-    private Path path;
-    private ArrayList<String> paths;
+
+    private Path path; //Path to the input file
+    protected List<String> paths; //
     //Path to the log file
-    private ArrayList<Integer> usedIds = new ArrayList<>();
-    private ArrayList<String> nodeOrder = new ArrayList<>();
-    private boolean xml;
+    protected ArrayList<Integer> usedIds = new ArrayList<>();
+    protected ArrayList<String> nodeOrder = new ArrayList<>();
 
     /**
-     * Constructor for the Parser class
+     * Constructor for the Parser class used with data wrangling
      *
      * @param path Path to the input file
      */
     public Parser(Path path) {
         this.path = path;
-        xml = false;
     }
 
-    public Parser(ArrayList<String> paths) {
+    /**
+     * Constructor for the Parser class which takes several URIs as strings in a list
+     * and is used for XML creation
+     *
+     * @param paths URIs to the input files as a List
+     */
+    public Parser(List<String> paths) {
         this.paths = paths;
-        xml = true;
+        path = Paths.get(paths.get(0)); //
     }
 
-//    private List<String> combineFiles() throws IOException{
-//        for (String filePath: paths) {
-//
-//        }
-//    }
-//
     /**
      * @return List of lines that contain data
      * @throws IOException if the file was not found
@@ -68,12 +67,7 @@ public class Parser {
      * @throws IOException if the file was not found
      */
     public List<String> getAllLines() throws IOException {
-//        if(xml) {
-//            return combineFiles();
-//        }
-//        else {
-            return Files.readAllLines(path);
-//        }
+        return Files.readAllLines(path);
     }
 
     /**
@@ -82,7 +76,7 @@ public class Parser {
      * @param lines List of lines from a file
      * @return List of lines with data
      */
-    private List<String> filter(List<String> lines) {
+    protected List<String> filter(List<String> lines) {
         lines.removeIf(line ->
                 line.contains("NODE LISTS")
                         || line.startsWith("//")
@@ -99,7 +93,7 @@ public class Parser {
      * @param lines List of lines from a file.
      * @return List of lines with neighbours data.
      */
-    private List<String> filterNonNeighbours(List<String> lines) {
+    protected List<String> filterNonNeighbours(List<String> lines) {
         lines.removeIf(line ->
                 !line.contains("addAllNeighbours")
         );
@@ -145,6 +139,12 @@ public class Parser {
         return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));
     }
 
+    /**
+     * A method that creates a node creator object and passes the lines with node data
+     * and their neighbours data
+     * @return a TreeMap of Nodes and their names
+     * @throws IOException
+     */
     public TreeMap<String, Node> createNodes() throws IOException{
         NodeCreator nodeCreator = new NodeCreator(getLines(), getNeighboursLines());
         this.nodeOrder= nodeCreator.getNodesAsPerInsertion();

@@ -2,6 +2,7 @@ package XML;
 
 import datastructures.Node;
 import parser.Parser;
+import parser.XMLParser;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -77,7 +78,10 @@ public class XMLCreator{
     }
 
     public static void main(String[] args) throws IOException {
-        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+//        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        List<String> path = new ArrayList<>();
+        path.add("src/test/resources/fullInputData.txt");
+        XMLParser parser = new XMLParser(path);
         XMLCreator xmlc = new XMLCreator(parser.getAllLines());
         List<String> data  = xmlc.createXMLFile(parser.getAllLines());
         for(String line : data){
