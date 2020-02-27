@@ -79,18 +79,22 @@ public class Root extends Application {
                 currentPage = homePage;
                 previous.setDisable(true);
                 next.setDisable(true);
+                log.setDisable(false);
             } else if (currentPage == inputPage) {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
+                log.setDisable(false);
             } else if (currentPage == outputPage) {
                 root.setCenter(inputPage);
                 currentPage = inputPage;
                 next.setDisable(false);
+                log.setDisable(false);
             }
             //XML Generator
             if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
+                log.setDisable(false);
                 previous.setDisable(true);
             }
 
@@ -98,6 +102,7 @@ public class Root extends Application {
                 root.setCenter(outputPage);
                 currentPage = outputPage;
                 next.setDisable(true);
+                log.setDisable(false);
             }
         });
         next.setOnAction(event -> {
@@ -105,6 +110,7 @@ public class Root extends Application {
                 if (loadController.getPath() != null) {
                     root.setCenter(inputPage);
                     currentPage = inputPage;
+                    log.setDisable(false);
                     inputController.setNodes(loadController.getPath());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
@@ -114,6 +120,7 @@ public class Root extends Application {
                     root.setCenter(outputPage);
                     currentPage = outputPage;
                     next.setDisable(true);
+                    log.setDisable(false);
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
                     outputController.setInputFileName(loadController.getPath().getFileName().toString());
                 } else {
@@ -125,6 +132,7 @@ public class Root extends Application {
         log.setOnAction(event -> {
             root.setCenter(loggerPage);
             currentPage = loggerPage;
+            log.setDisable(true);
             previous.setDisable(false);
             loggerController.displayLogger();
         });
