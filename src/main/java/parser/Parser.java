@@ -21,8 +21,7 @@ import java.util.*;
 public class Parser {
 
     private Path path; //Path to the input file
-    protected List<String> paths; //
-    //Path to the log file
+    protected List<String> paths;
     protected ArrayList<Integer> usedIds = new ArrayList<>();
     protected ArrayList<String> nodeOrder = new ArrayList<>();
 

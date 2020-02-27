@@ -18,7 +18,8 @@ public class XMLParser extends Parser{
     /**
      * A constructor for the XMLParser class that inherits from one of
      * the Parser constructors and takes multiple file URIs as a List of string
-     * @param paths Input file URIs as a list of strings
+     *
+     * @param paths Input files URIs as a list of strings
      */
     public XMLParser(List<String> paths) {
         super(paths);
@@ -27,6 +28,7 @@ public class XMLParser extends Parser{
     /**
      * A method that combines Nodes' data and neighbour lines into one list,
      * separated by a '#" line
+     *
      * @return combined data and neighbour lines
      * @throws IOException
      */
