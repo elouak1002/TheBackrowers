@@ -54,6 +54,7 @@ public class InputController {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
         nodes = parser.getNodes();
+        nodes.put("NULL",null);
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
