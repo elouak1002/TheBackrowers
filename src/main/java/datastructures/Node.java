@@ -15,6 +15,15 @@ public class Node {
     private float yCoord;
     private List<Node> neighbours;
 
+
+    /**
+     * Constructor for the Node class, only with a name
+     * @param name
+     */
+    public Node(String name) {
+        this(name, 0,0);
+    }
+
     /**
      * Constructor for the Node class
      * @param name of the node
