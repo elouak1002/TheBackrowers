@@ -12,7 +12,7 @@
       <TextArea fx:id="displayLog" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="522.0" prefWidth="879.0" VBox.vgrow="ALWAYS" />
       <BorderPane>
          <center>
-            <Label prefHeight="22.0" prefWidth="29.0" text="Log" BorderPane.alignment="CENTER" />
+            <Label prefHeight="22.0" prefWidth="66.0" text="Log page" BorderPane.alignment="CENTER" />
          </center>
          <left>
             <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearTextField" prefHeight="26.0" prefWidth="78.0" text="Clear" BorderPane.alignment="CENTER" />
