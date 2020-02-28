@@ -25,6 +25,7 @@ public class InputController {
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
     private TreeMap<String,Node> nodes;
+    private Debugger debugger;
 
     @FXML
     public void initialize() {}
@@ -92,7 +93,7 @@ public class InputController {
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue()));
 
-            Debugger debugger = new Debugger(nodeMap);
+            debugger = new Debugger(nodeMap);
             nodeMap = new TreeMap<>(debugger.getMap());
 
             FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
@@ -101,5 +102,9 @@ public class InputController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    Debugger getDebugger() {
+        return debugger;
     }
 }

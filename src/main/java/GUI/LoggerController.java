@@ -1,10 +1,12 @@
 package GUI;
 
+import dataprocessors.Debugger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.util.Pair;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,38 +14,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoggerController {
-    public ArrayList<String> logger = null;
     @FXML private Button saveButton = new Button();
-    @FXML public TextArea displayLog = new TextArea();
-    public static LoggerController instance = new LoggerController();
-
-    public static LoggerController getInstance() {
-        return instance;
-    }
+    @FXML private TextArea displayLog = new TextArea();
+    private ArrayList<String> logger;
 
     public LoggerController() {
         logger = new ArrayList<>();
     }
 
-    public ArrayList<String> getList() {
-        System.out.println(logger.size() + " count");
-        return logger;
-    }
-    void setOutputText(TextArea OutputString) {
-        OutputString.clear();
-        for (String string : logger) {
-            OutputString.appendText(string + "\n");
+    void setOutputText(Debugger debugger) {
+        displayLog.clear();
+        for (Pair<String,String> nodes : debugger.getAddLog()) {
+            //nodes.getValue() is nodeNameB and nodes.getKey() is nodeNameA
+            logger.add(nodes.getValue() + " added to become a neighbour for " + nodes.getKey() + ".");
         }
-    }
-
-    public void logAdd(String nodeNameA, String nodeNameB) {
-        String neighbourAdded = nodeNameB + " added to become a neighbour for " + nodeNameA + ".";
-        this.logger.add(neighbourAdded);
-    }
-
-    public void logRemove(String nodeName) {
-        String removedNode = nodeName + " has no neighbour, so it was removed.";
-        this.logger.add(removedNode);
+        for (String node : debugger.getRemoveLog()) {
+            logger.add(node + " has no neighbour, so it was removed.");
+        }
+        for (String string : logger) {
+            displayLog.appendText(string + "\n");
+        }
     }
 
     public void saveLoggerToFile(String content, File file) {
@@ -53,7 +43,7 @@ public class LoggerController {
             writer.println(content);
             writer.close();
         } catch (IOException ex) {
-            Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoggerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
