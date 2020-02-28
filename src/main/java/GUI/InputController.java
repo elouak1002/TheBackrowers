@@ -51,10 +51,14 @@ public class InputController {
      * Sets the nodes in the reference node choice box according to the parsed file.
      * @param path - the path as set in the LoadController
      */
-    void setNodes(Path path) throws IOException {
+    void setNodes(Path path) {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
-        nodes = parser.createNodes();
+        try {
+            nodes = parser.createNodes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
