@@ -117,8 +117,9 @@ public class Root extends Application {
                     currentPage = outputPage;
                     log.setDisable(false);
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
-                    outputController.setInputFileName(loadController.getPath().getFileName().toString());
-                    loggerController.setOutputText(inputController.getDebugger());
+                    String filename = loadController.getPath().getFileName().toString();
+                    outputController.setInputFileName(filename);
+                    loggerController.setOutputText(inputController.getDebugger(),filename);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
                 }
