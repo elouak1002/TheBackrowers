@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class XMLCreator{
-    private List<String> data;
     private List<String> finalXMLData;
     private TreeMap<String, Node> nodes;
     private ArrayList<String> nodeOrder;
@@ -24,7 +23,7 @@ public class XMLCreator{
         finalXMLData = new ArrayList<>();
     }
 
-    public List<String> createXMLFile() throws IOException {
+    public List<String> createXMLFile() {
         createHeader();
         createNodeContent();
         createFooter();
@@ -49,8 +48,8 @@ public class XMLCreator{
                 + " Floor=" + "\"" + node.getFloor() + "\"";
 
         if(node.hasSpecialType()){
-            if (node.getType().equals("room")){
-                xmlLine += " name=" + "\"" + node.getSpecialType() + "\"";
+            if (node.getType().equals("Room")){
+                xmlLine += " name=" + node.getSpecialType();
             }
             else {
                 xmlLine += " type=" + "\"" + node.getSpecialType() + "\"";
