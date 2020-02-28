@@ -7,12 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Root extends Application {
     //declare panes
@@ -24,6 +27,7 @@ public class Root extends Application {
     private Pane xmlGeneratorPage;
     private Pane loggerPage;
     private BorderPane root;
+
 
     @Override
     public void start(Stage stage) {
@@ -52,7 +56,6 @@ public class Root extends Application {
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
         XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
-        LoggerController loggerController = loggerLoader.getController();
 
         Button previous = new Button("Previous");
         Button next = new Button("Next");
@@ -129,16 +132,15 @@ public class Root extends Application {
             }
         });
 
+        LoggerController logger = LoggerController.getInstance();
+        TextArea textArea = (TextArea) loggerLoader.getNamespace().get("displayLog");
         log.setOnAction(event -> {
             root.setCenter(loggerPage);
             currentPage = loggerPage;
             log.setDisable(true);
             previous.setDisable(false);
-            loggerController.displayLogger();
+            logger.test(textArea);
         });
-
-
-
         BorderPane navigation = new BorderPane();
         navigation.setLeft(previous);
         navigation.setRight(next);

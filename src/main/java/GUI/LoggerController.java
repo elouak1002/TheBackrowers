@@ -12,14 +12,9 @@ import java.util.logging.Level;
 
 public class LoggerController {
     private ArrayList<String> logger = new ArrayList<>();
-    @FXML
-    private Button saveButton = new Button();
-
-    @FXML
-    private TextArea displayLog = new TextArea();
-
-    @FXML
-    private Button clearButton = new Button();
+    @FXML private Button saveButton = new Button();
+    @FXML private TextArea displayLog = new TextArea();
+    @FXML private Button clearButton = new Button();
 
     public LoggerController() {
     }
