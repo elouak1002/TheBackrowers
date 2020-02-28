@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import dataprocessors.Debugger;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.MatcherAssert.assertThat; 
-import static org.hamcrest.Matchers.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class DebuggerTest {
 
 		HashMap<String, Node> actualOutcome = new HashMap<>(debugger.getMap());
 
-		assertThat(actualOutcome.keySet().isEmpty(), is(true));
+		assertTrue(actualOutcome.keySet().isEmpty());
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class DebuggerTest {
 		HashMap<String, Node> actualOutcome = new HashMap<>(debugger.getMap());
 		
 		for (String nodeName : actualOutcome.keySet()) {
-            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+            assertEquals(actualOutcome.get(nodeName).getNeighbours().toString(), expectedOutcome.get(nodeName).getNeighbours().toString());
         }
 	}
 
@@ -125,7 +125,7 @@ public class DebuggerTest {
 		for (String nodeName : actualOutcome.keySet()) {
 			actualOutcome.get(nodeName).getNeighbours().sort(byName);
 			expectedOutcome.get(nodeName).getNeighbours().sort(byName);
-            assertThat(actualOutcome.get(nodeName).getNeighbours().toString(), equalTo(expectedOutcome.get(nodeName).getNeighbours().toString()));
+            assertEquals(actualOutcome.get(nodeName).getNeighbours().toString(), expectedOutcome.get(nodeName).getNeighbours().toString());
         }
 	}
 }

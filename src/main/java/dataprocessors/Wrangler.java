@@ -26,6 +26,7 @@ public class Wrangler {
 
 //------------------Helper methods for the class------------------------------------
 
+
     // /**
     //  *  This method creates a copy of the initial list of nodes to apply the 
     //  * changes we want. This is just a safety measure: in case something
@@ -40,6 +41,7 @@ public class Wrangler {
     //         outputNodes.put(index.getName(), copy);
     //     }
     // }
+
 
 
 //---------------------Transformation methods---------------------------------------
