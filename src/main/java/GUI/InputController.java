@@ -1,5 +1,6 @@
 package GUI;
 
+
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
@@ -50,10 +51,10 @@ public class InputController {
      * Sets the nodes in the reference node choice box according to the parsed file.
      * @param path - the path as set in the LoadController
      */
-    void setNodes(Path path) {
+    void setNodes(Path path) throws IOException {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
-        nodes = parser.getNodes();
+        nodes = parser.createNodes();
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }

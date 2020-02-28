@@ -86,19 +86,21 @@ public class WranglerTest{
      */
     public TreeMap<String, TreeMap<String, Node>> setTestData() {
 
-        TreeMap<String, TreeMap<String, Node>> resoults = new TreeMap<>();
+        TreeMap<String, TreeMap<String, Node>> results = new TreeMap<>();
         TreeMap<String, Node> nodes = new TreeMap<>();
+
         nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 37.426018f, 34.71667f));
         nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 41.841064f, 35.72446f));
 
-        resoults.put("input", nodes);
+        results.put("input", nodes);
 
         nodes = new TreeMap<>();
         nodes.put("HenRaph_04_374_347", new Node("HenRaph_04_374_347", 37.43f, 34.72f));
         nodes.put("HenRaph_04_418_357", new Node("HenRaph_04_418_357", 41.84f, 35.72f));
 
-        resoults.put("case0", nodes);
+        results.put("case0", nodes);
 
-        return resoults;
+        return results;
+
     }
 }
