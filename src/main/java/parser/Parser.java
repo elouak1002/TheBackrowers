@@ -96,7 +96,6 @@ public class Parser {
         lines.removeIf(line ->
                 !line.contains("addAllNeighbours")
         );
-
         return lines;
     }
 

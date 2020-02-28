@@ -1,16 +1,21 @@
+/*Color scheme from https://www.colorcombos.com/color-schemes/124/ColorCombo124.html*/
+
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/
 /*
-    Load fxml
+    Global
 */
-#loadRoot {
-    -fx-background-color: #CCCCCC;
+.root, #homeRoot, #loadRoot, #inputRoot, #outputRoot, #xmlGeneratorRoot {
+    -fx-background-color: #ACD1E9;
 }
 
-#dragTarget .text {
-    -fx-text-alignment: center;
+Label, Button {
+    -fx-background-radius: 20;
+    -fx-font-size: 15;
+    -fx-text-fill: black;
 }
+
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/
@@ -18,45 +23,19 @@
     Input fxml
 */
 #inputRoot {
-    -fx-background-color: #CCCCCC;
-    -fx-border-width: 2px;
-    -fx-padding: 10;
-    -fx-spacing: 8;
+    -fx-hgap: 30;
+    -fx-padding: 20;
 }
 
-#inputGrid1, #rotationAngleSlider {
-    -fx-background-color: #B8B8B8;
-    -fx-border-width: 0px;
-    -fx-padding: 10;
-    -fx-spacing: 0;
-}
-
-#inputGrid2 {
-    -fx-background-color: #B8B8B8;
-    -fx-border-width: 4px;
-    -fx-padding: 10;
-    -fx-spacing: 8;
-
-}
-
-#inputGrid1 .label, #inputGrid2 .label {
+#inputRoot .label {
     -fx-alignment: center;
-    -fx-background-radius: 9,8,5,4;
     -fx-font-weight: bold;
     -fx-font-family: "Arial Rounded MT Bold";
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
 }
 
-
-#rotationAngleField, #scaleFactorX, #scaleFactorY, #finalPositionX, #finalPositionY {
-    -fx-pref-width: 25;
-    -fx-pref-height: 25;
-    -fx-spacing: 8;
-    -fx-border-width: 2px;
-}
-
-#inputRotationAngle, #inputReferenceNode, #inputScaleFactor, #inputFinalNodePos {
-    -fx-background-color: #A6A6A6;
+#rotationAngleLabel, #referenceNodeLabel, #scaleFactorLabel, #finalPositionLabel {
+    -fx-background-color: #C1DAD6;
     -fx-max-width:200;
 }
 
@@ -67,11 +46,6 @@
     Output fxml
 */
 #outputRoot {
-    -fx-border-width: 2px;
     -fx-padding: 10;
     -fx-spacing: 8;
-    -fx-background-color: #CCCCCC;
 }
-/*--------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------*/

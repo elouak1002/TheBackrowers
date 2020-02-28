@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -20,9 +19,8 @@ import java.util.TreeMap;
  * along with choosing the reference node passed from the parsed input file from a drop down menu.
  */
 public class InputController {
-    @FXML private Slider rotationAngleSlider;
-    @FXML private TextField rotationAngleField;
     @FXML private ChoiceBox<String> referenceNodeChoiceBox;
+    @FXML private TextField rotationAngle;
     @FXML private TextField scaleFactorX;
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
@@ -33,38 +31,12 @@ public class InputController {
     public void initialize() {}
 
     /**
-     * Passes the value in the rotation angle slider to the rotation angle field.
-     * This is called when the slider is dragged or clicked.
-     */
-    @FXML
-    private void sliderToField() {
-        rotationAngleField.setText(String.valueOf(new DecimalFormat("#").format(rotationAngleSlider.getValue())));
-    }
-
-    /**
-     * Passes the value in the rotation angle field to the rotation angle slider, provided it is a number.
-     * This is called when the text in the field changes.
-     */
-    @FXML
-    private void fieldToSlider() {
-        boolean isNumber;
-        double value = 0;
-        try {
-            value = Double.parseDouble(rotationAngleField.getText());
-            isNumber = true;
-        } catch (NumberFormatException e) {
-            isNumber = false;
-        }
-        if (isNumber) rotationAngleSlider.setValue(value);
-    }
-
-    /**
      * Takes the keyboard and cursor focus to the next logical text field when the user presses enter.
      * @param event - the source of which is the textField from which the enter key has been pressed
      */
     @FXML
     private void nextField(ActionEvent event) {
-        if (event.getSource() == rotationAngleField) {
+        if (event.getSource() == rotationAngle) {
             scaleFactorX.requestFocus();
         } else if (event.getSource() == scaleFactorX) {
             scaleFactorY.requestFocus();
@@ -93,7 +65,7 @@ public class InputController {
      */
     boolean inputIsValid() {
         try {
-            Float.parseFloat(rotationAngleField.getText());
+            Float.parseFloat(rotationAngle.getText());
             Float.parseFloat(scaleFactorX.getText());
             Float.parseFloat(scaleFactorY.getText());
             Float.parseFloat(finalPositionX.getText());
@@ -114,7 +86,7 @@ public class InputController {
         try {
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(
-                    Float.parseFloat(rotationAngleField.getText()),
+                    Float.parseFloat(rotationAngle.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
                     Float.parseFloat(finalPositionX.getText()),
@@ -123,7 +95,6 @@ public class InputController {
 
             Debugger debugger = new Debugger(nodeMap);
             nodeMap = new TreeMap<>(debugger.getMap());
-
 
             FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
             return fileLinesCreator.getOutputFile();
