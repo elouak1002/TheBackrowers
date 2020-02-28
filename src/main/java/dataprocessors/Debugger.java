@@ -5,7 +5,6 @@ import java.util.Map;
 
 import GUI.LoggerController;
 import datastructures.Node;
-import GUI.LoggerController;
 
 /**
  * A debugger, responsible for debugging the output file before it's creation.
@@ -14,7 +13,7 @@ import GUI.LoggerController;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
-	private LoggerController logger = new LoggerController();
+	private LoggerController logger = LoggerController.getInstance();
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
@@ -25,13 +24,13 @@ public class Debugger {
 		removeNeighbourlessNodes();
 	}
 	
-	
 	/**
 	 * If nodeA doesn't already have nodeB as a neighbour,
 	 * then add it.
 	 */
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
+			logger.logAdd(nodeA.getName(), nodeB.getName());
 			nodeA.addNeighbour(nodeB);
 			logger.logAdd(nodeA.getName(),nodeB.getName()); // Log the addition of nodeB as a neighbor of nodeA.
 		}

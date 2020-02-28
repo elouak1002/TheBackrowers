@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class LoggerController {
-    public ArrayList<String> logger = null; 
+    public ArrayList<String> logger = null;
     @FXML private Button saveButton = new Button();
     @FXML public TextArea displayLog = new TextArea();
     @FXML private Button clearButton = new Button();
