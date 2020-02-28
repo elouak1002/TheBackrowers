@@ -75,17 +75,4 @@ public class XMLCreator{
         this.finalXMLData.add(documentTag);
     }
 
-    public static void main(String[] args) throws IOException {
-        List<String> path = new ArrayList<>();
-        path.add("src/test/resources/fullInputData.txt");
-        XMLParser parser = new XMLParser(path);
-        TreeMap<String, Node> nodes = parser.createNodes();
-        ArrayList<String> order = parser.getNodeOrder();
-        XMLCreator xmlc = new XMLCreator(nodes, order);
-        List<String> data  = xmlc.createXMLFile();
-        for(String line : data){
-            System.out.println(line);
-        }
-
-    }
 }
