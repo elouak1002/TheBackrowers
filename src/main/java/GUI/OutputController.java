@@ -24,7 +24,6 @@ public class OutputController {
     @FXML private Button saveButton = new Button();
     @FXML private Label fileSaved = new Label();
     private String inputFileName;
-
     //Text preview area.
     @FXML
     private TextArea outputText = new TextArea();
