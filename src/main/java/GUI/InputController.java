@@ -55,9 +55,8 @@ public class InputController {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
         nodes = parser.getNodes();
-        Set<String> options = nodes.keySet();
-        options.add("NULL");
-        referenceNodeChoiceBox.getItems().addAll(options);
+        referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+        referenceNodeChoiceBox.getItems().add("NULL");
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
@@ -86,10 +85,10 @@ public class InputController {
      */
     List<String> getOutput(Path path) {
         try {
-            Node ref = nodes.get(referenceNodeChoiceBox.getValue());
-            if(ref.equals("NULL")){
+            Node ref;
+            if(referenceNodeChoiceBox.getValue().equals("NULL")){
                 ref = null;
-           }
+           } else ref = nodes.get(referenceNodeChoiceBox.getValue());
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngle.getText()),
