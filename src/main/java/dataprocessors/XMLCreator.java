@@ -14,29 +14,29 @@ import java.util.*;
 
 public class XMLCreator{
     private List<String> data;
-    private List<String> finalXMLData = new ArrayList<>();
+    private List<String> finalXMLData;
+    private TreeMap<String, Node> nodes;
+    private ArrayList<String> nodeOrder;
 
-    public XMLCreator(List<String> data){
-        this.data = data;
+    public XMLCreator(TreeMap<String, Node> nodes, ArrayList<String> nodeOrder){
+        this.nodes = nodes;
+        this.nodeOrder = nodeOrder;
+        finalXMLData = new ArrayList<>();
     }
 
-    public List<String> createXMLFile(List<String> dataFromGUI) throws IOException {
-     createHeader(finalXMLData);
-     createNodeContent(dataFromGUI);
-     createFooter(dataFromGUI);
-
-     return finalXMLData;
+    public List<String> createXMLFile() throws IOException {
+        createHeader();
+        createNodeContent();
+        createFooter();
+        return finalXMLData;
     }
 
-    private void createFooter(List<String> finalXMLData) {
+    private void createFooter() {
         String footer = "</MappinData>";
         this.finalXMLData.add(footer);
     }
 
-    private void createNodeContent(List<String> dataFromGUI) throws IOException {
-        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-        TreeMap<String, Node> nodes = parser.createNodes();
-        ArrayList<String> nodeOrder = parser.getNodeOrder();
+    private void createNodeContent() {
         for(String nodename: nodeOrder){
             addXMLentry(nodes.get(nodename));
         }
@@ -64,7 +64,7 @@ public class XMLCreator{
         finalXMLData.add(" </"+node.getType().toLowerCase() +">");
     }
 
-    private void createHeader(List<String> finalXMLData) {
+    private void createHeader() {
         this.finalXMLData.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String date = df.format(new Date());
@@ -77,12 +77,13 @@ public class XMLCreator{
     }
 
     public static void main(String[] args) throws IOException {
-//        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         List<String> path = new ArrayList<>();
         path.add("src/test/resources/fullInputData.txt");
         XMLParser parser = new XMLParser(path);
-        XMLCreator xmlc = new XMLCreator(parser.getAllLines());
-        List<String> data  = xmlc.createXMLFile(parser.getAllLines());
+        TreeMap<String, Node> nodes = parser.createNodes();
+        ArrayList<String> order = parser.getNodeOrder();
+        XMLCreator xmlc = new XMLCreator(nodes, order);
+        List<String> data  = xmlc.createXMLFile();
         for(String line : data){
             System.out.println(line);
         }
