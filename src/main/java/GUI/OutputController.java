@@ -23,7 +23,6 @@ public class OutputController {
     //Fields
     @FXML private Button saveButton = new Button();
     @FXML private Label fileSaved = new Label();
-    private FileChooser fileChooser = new FileChooser();
     private String inputFileName;
 
     //Text preview area.
@@ -50,6 +49,7 @@ public class OutputController {
     private void saveFile() {
         String text = outputText.getText();
         Window stage = saveButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("updated_" + inputFileName);
