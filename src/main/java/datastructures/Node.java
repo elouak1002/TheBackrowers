@@ -19,13 +19,15 @@ public class Node {
     private String specialType;
     private List<Node> neighbours;
 
+    private Status status;
 
     /**
      * Constructor for the Node class, only with a name
      * @param name
      */
-    public Node(String name) {
+    public Node(String name, Status status) {
         this(name, 0,0);
+        this.status = status;
     }
 
     /**
@@ -39,6 +41,7 @@ public class Node {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.neighbours = new ArrayList<>();
+        this.status = Status.INITIALISED;
         specialType = "None";
     }
 
@@ -151,5 +154,12 @@ public class Node {
      */
     public String getType(){
         return type;
+    }
+
+    /**
+     * @return the status number of the node.
+     */
+    public Status getStatus() {
+        return status;
     }
 }
