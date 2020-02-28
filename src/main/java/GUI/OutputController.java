@@ -21,10 +21,8 @@ import java.io.*;
  */
 public class OutputController {
     //Fields
-    @FXML
-    private Button saveButton = new Button();
-    @FXML
-    private Label fileSaved = new Label();
+    @FXML private Button saveButton = new Button();
+    @FXML private Label fileSaved = new Label();
     private FileChooser fileChooser = new FileChooser();
     private String inputFileName;
 
