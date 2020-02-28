@@ -1,15 +1,18 @@
 package GUI;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoggerController {
     public ArrayList<String> logger = null;
@@ -47,38 +50,36 @@ public class LoggerController {
         this.logger.add(removedNode);
     }
 
-    public void saveLoggerToFile(File file) {
-        String fileName = "LogFile.txt";
-
+    public void saveLoggerToFile(String content, File file) {
         try {
-            FileWriter fw = new FileWriter(fileName);
-            Writer output = new BufferedWriter(fw);
-            int size = logger.size();
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
 
-            for (int i = 0; i < size; i++) {
-                output.write(logger.get(i) + "\n");
-            }
+            //fileSaved.setText("Text has been saved!");
 
-            output.close();
-        }
-        catch (IOException e) {
-            java.util.logging.Logger.getLogger(LoggerController.class.getName()).log(Level.SEVERE, null, e);
+
+        } catch (IOException ex) {
+            Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     @FXML
     public void saveFileToDir() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("log file");
+        String text = displayLog.getText();
         Window stage = saveButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        fileChooser.setTitle("Save");
+        fileChooser.setInitialFileName("LOGGER");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            saveLoggerToFile(file);
+            saveLoggerToFile(text, file);
         }
     }
 
