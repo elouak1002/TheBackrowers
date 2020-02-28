@@ -1,5 +1,6 @@
 package GUI;
 
+
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
@@ -53,7 +54,11 @@ public class InputController {
     void setNodes(Path path) {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
-        nodes = parser.getNodes();
+        try {
+            nodes = parser.createNodes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }

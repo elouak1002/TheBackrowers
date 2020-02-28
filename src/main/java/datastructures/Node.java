@@ -13,6 +13,10 @@ public class Node {
     private int id;
     private float xCoord;
     private float yCoord;
+
+    private int floor;
+    private String type;
+    private String specialType;
     private List<Node> neighbours;
 
 
@@ -35,6 +39,7 @@ public class Node {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.neighbours = new ArrayList<>();
+        specialType = "None";
     }
 
     /**
@@ -101,9 +106,50 @@ public class Node {
      * @return Neighbour's list.
      */
     public List<Node> getNeighbours() { return neighbours; }
-    
+
+    /**
+     * @return Node's floor
+     */
+    public int getFloor(){ return floor; }
+
+    /**
+     * @param floor value to set
+     */
+    public void setFloor(int floor) { this.floor = floor; }
+
+    /**
+     * @param type value to set
+     */
+    public void setSpecialType(String type) { specialType = type; }
+
+    /**
+     * @return Node's special type
+     */
+    public String getSpecialType(){ return specialType; }
+
+    /**
+     * @return true if a special type has been set
+     */
+    public boolean hasSpecialType() { return !specialType.equals("None"); }
+
     /**
      * @return Node's data as a string
      */
-    public String toString(){ return "Node: " + name + ", X: " + xCoord + ", Y:" + yCoord; }
+    public String toString(){ return "Node: " + name + ", X: " + xCoord + ", Y:" + yCoord + ", Floor: " + floor + ", Type: " + type; }
+
+    /**
+     * Set a node's type.
+     * @param type
+     */
+    public void setType(String type) {
+        this.type= type;
+    }
+
+    /**
+     *
+     * @return a node's type
+     */
+    public String getType(){
+        return type;
+    }
 }
