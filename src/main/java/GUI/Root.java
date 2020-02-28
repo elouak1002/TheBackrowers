@@ -98,7 +98,7 @@ public class Root extends Application {
             if(currentPage == loggerPage) {
                 root.setCenter(outputPage);
                 currentPage = outputPage;
-                next.setDisable(true);
+                next.setDisable(false);
                 log.setDisable(false);
             }
         });

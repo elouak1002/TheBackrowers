@@ -9,47 +9,29 @@ import javafx.stage.Window;
 import javafx.util.Pair;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoggerController {
-    @FXML private Button saveButton = new Button();
-    @FXML private TextArea displayLog = new TextArea();
-    private ArrayList<String> logger;
+    @FXML private Button saveButton;
+    @FXML private TextArea displayLog;
 
-    public LoggerController() {
-        logger = new ArrayList<>();
-    }
+    @FXML
+    public void initialize() {}
 
     void setOutputText(Debugger debugger) {
         displayLog.clear();
         for (Pair<String,String> nodes : debugger.getAddLog()) {
             //nodes.getValue() is nodeNameB and nodes.getKey() is nodeNameA
-            logger.add(nodes.getValue() + " added to become a neighbour for " + nodes.getKey() + ".");
+            displayLog.appendText(nodes.getValue() + " added to become a neighbour for " + nodes.getKey() + ".\n");
         }
         for (String node : debugger.getRemoveLog()) {
-            logger.add(node + " has no neighbour, so it was removed.");
-        }
-        for (String string : logger) {
-            displayLog.appendText(string + "\n");
-        }
-    }
-
-    public void saveLoggerToFile(String content, File file) {
-        try {
-            PrintWriter writer;
-            writer = new PrintWriter(file);
-            writer.println(content);
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(LoggerController.class.getName()).log(Level.SEVERE, null, ex);
+            displayLog.appendText(node + " has no neighbour, so it was removed.\n");
         }
     }
 
     @FXML
-    public void saveFileToDir() {
-        String text = displayLog.getText();
+    private void saveFileToDir() {
         Window stage = saveButton.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -60,7 +42,18 @@ public class LoggerController {
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            saveLoggerToFile(text, file);
+            saveLoggerToFile(file);
+        }
+    }
+
+    private void saveLoggerToFile(File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(displayLog.getText());
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LoggerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
