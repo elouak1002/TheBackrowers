@@ -139,7 +139,7 @@ public class Root extends Application {
             currentPage = loggerPage;
             log.setDisable(true);
             previous.setDisable(false);
-            logger.test(textArea);
+            logger.setOutputText(textArea);
         });
         BorderPane navigation = new BorderPane();
         navigation.setLeft(previous);

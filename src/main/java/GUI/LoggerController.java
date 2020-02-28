@@ -30,7 +30,7 @@ public class LoggerController {
         System.out.println(logger.size() + " count");
         return logger;
     }
-    void test(TextArea a) {
+    void setOutputText(TextArea a) {
         a.clear();
         for (String string : logger) {
             a.appendText(string + "\n");
