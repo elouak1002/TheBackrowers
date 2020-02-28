@@ -1,13 +1,10 @@
 package GUI;
 
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,7 +15,6 @@ public class LoggerController {
     public ArrayList<String> logger = null;
     @FXML private Button saveButton = new Button();
     @FXML public TextArea displayLog = new TextArea();
-    @FXML private Button clearButton = new Button();
     public static LoggerController instance = new LoggerController();
 
     public static LoggerController getInstance() {
@@ -33,10 +29,10 @@ public class LoggerController {
         System.out.println(logger.size() + " count");
         return logger;
     }
-    void setOutputText(TextArea a) {
-        a.clear();
+    void setOutputText(TextArea OutputString) {
+        OutputString.clear();
         for (String string : logger) {
-            a.appendText(string + "\n");
+            OutputString.appendText(string + "\n");
         }
     }
 
@@ -56,14 +52,9 @@ public class LoggerController {
             writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
-
-            //fileSaved.setText("Text has been saved!");
-
-
         } catch (IOException ex) {
             Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @FXML
