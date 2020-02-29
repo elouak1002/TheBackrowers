@@ -50,7 +50,7 @@ public class DataLineCreatorTest {
 				"Room HenRaph_04_476_264 = new Room( 10.34f , 20.54f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
 				"Toilet HenRaph_04_374_347 = new Toilet( 14.03f , 24.54f , GuysHeights.HenRaph_04 , ToiletType.Female );"
 				))),
-			Arguments.of(null, 
+			Arguments.of(null,
 			new ArrayList<String>(Arrays.asList(
 				"Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
 				"Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
@@ -60,7 +60,7 @@ public class DataLineCreatorTest {
 				))),
 			Arguments.of(new HashMap<String, Node>() {{}},new ArrayList<String>(Arrays.asList()))
 		);
-		
+
 	}
 
 	@ParameterizedTest

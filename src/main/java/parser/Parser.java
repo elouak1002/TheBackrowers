@@ -1,5 +1,7 @@
 package parser;
 
+
+
 import datastructures.Node;
 
 import java.io.IOException;
@@ -7,9 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import javafx.util.Pair;	
+
 
 
 /**	
@@ -18,245 +19,141 @@ import javafx.util.Pair;
  * data from the file	
  */	
 public class Parser {
-    //Path to the input file
-    private Path path;
-    //Path to the log file
-    private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
-    //ArrayList of used ids
-    private ArrayList<Integer> usedIds = new ArrayList<>();
-    // Map of the node from the file.
-    private TreeMap<String,Node> nodeMap;
-    
-    
-    
-    /**	
-     * Constructor for the Parser class	
-     * @param path Path to the input file	
-     */	
-    public Parser(Path path) {	
-        this.path = path;
-        
-        nodeMap = new TreeMap<>();
-        try {
-            createNodes();
-            setNeighbours();
-        } catch (IOException e) {
-        }
-    }	
 
-    /**	
-     * @return List of lines that contain data	
-     * @throws IOException if the file was not found	
-     */	
-    public List<String> getLines() throws IOException { 
-        return filter(getAllLines()); 
-    }	
+    private Path path; //Path to the input file
+    protected List<String> paths;
+    protected ArrayList<Integer> usedIds = new ArrayList<>();
+    protected ArrayList<String> nodeOrder = new ArrayList<>();
+
+    /**
+     * Constructor for the Parser class used with data wrangling
+     *
+     * @param path Path to the input file
+     */
+    public Parser(Path path) {
+        this.path = path;
+    }
+
+    /**
+     * Constructor for the Parser class which takes several URIs as strings in a list
+     * and is used for XML creation
+     *
+     * @param paths URIs to the input files as a List
+     */
+    public Parser(List<String> paths) {
+        this.paths = paths;
+        path = Paths.get(paths.get(0)); //
+    }
+
+    /**
+     * @return List of lines that contain data
+     * @throws IOException if the file was not found
+     */
+    public List<String> getLines() throws IOException {
+        return filter(getAllLines());
+    }
 
     /**
      * @return List of lines that contain neighbours data
      * @throws IOException if the file was not found
      */
-    public List<String> getNeighboursLines() throws IOException { 
-        return filterNonNeighbours(getAllLines()); 
+    public List<String> getNeighboursLines() throws IOException {
+        return filterNonNeighbours(getAllLines());
     }
 
-    /**	
-     * @return All lines from the input file	
-     * @throws IOException if the file was not found	
-     */	
-    public List<String> getAllLines() throws IOException{ return Files.readAllLines(path); }	
+    /**
+     * @return All lines from the input file
+     * @throws IOException if the file was not found
+     */
+    public List<String> getAllLines() throws IOException {
+        return Files.readAllLines(path);
+    }
 
-    /**	
-     * Filters out lines that do not contain data	
-     * @param lines List of lines from a file	
-     * @return List of lines with data	
-     */	
-    private List<String> filter(List<String> lines){	
-        lines.removeIf(line ->	
-                line.contains("NODE LISTS")	
-                        || line.startsWith("//")	
-                        || line.contains("addAllNeighbours")	
-                        || line.startsWith(" ")	
-                        || line.equals(""));	
+    /**
+     * Filters out lines that do not contain data
+     *
+     * @param lines List of lines from a file
+     * @return List of lines with data
+     */
+    protected List<String> filter(List<String> lines) {
+        lines.removeIf(line ->
+                line.contains("NODE LISTS")
+                        || line.startsWith("//")
+                        || line.contains("addAllNeighbours")
+                        || line.startsWith(" ")
+                        || line.equals(""));
 
-        return lines;	
+        return lines;
     }
 
     /**
      * Filters out lines that does not contain neighbours data
+     *
      * @param lines List of lines from a file.
      * @return List of lines with neighbours data.
      */
-    private List<String> filterNonNeighbours(List<String> lines) {
-        lines.removeIf(line -> 
-            !line.contains("addAllNeighbours")
+    protected List<String> filterNonNeighbours(List<String> lines) {
+        lines.removeIf(line ->
+                !line.contains("addAllNeighbours")
         );
-        
         return lines;
     }
 
-	/**	
-	 * @return The position of the first data line in the input file,	
-     * -1 otherwise.	
-	 */	
-	public int beginOfDataLines() throws IOException { 	
-        if (getLines().size() > 0) {	
-            return getAllLines().indexOf((getLines().get(0)));	
-        }	
-        return -1;	
-	}	
-
-    /**	
-	 * @return The position of the last data line in the input file,	
-     * -1 otherwise.	
-	 */	
-	public int endOfDataLines() throws IOException { 	
-        return getAllLines().lastIndexOf(getLines().get(getLines().size() - 1));   	
-	}	
-
-    /**	
-	 * @return The position of the first neighbour line in the input file,	
-     * -1 otherwise.	
-	 */	
-	public int beginOfNeighbourLines() throws IOException { 	
-        if (getNeighboursLines().size() > 0) {	
-            return getAllLines().indexOf((getNeighboursLines().get(0)));	
-        }	
-        return -1;	
-	}	
-
-    /**	
-	 * @return The position of the last neighbour line in the input file,	
-     * -1 otherwise.	
-	 */	
-	public int endOfNeighbourLines() throws IOException { 	
-        return getAllLines().lastIndexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));   	
-	}	
-
-    /**	
-     * Method to populate the hashMap with Node objects, mapping each to its name;
-     * Assigns ids to each node
-     * @param filteredLines list of lines which contain data	
-     */	
-    private void createNodes() throws IOException {
-        // Main hashMap for storing each Node with its name	
-        List<String> lines = getLines();
-        for(String line : lines){	
-            String name = extractName(line);
-            Pair<Float, Float> coordinates = extractData(line);
-            int nodeId=generateNodeId(idLogFilePath);
-            Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
-            node.setId(nodeId);
-            nodeMap.put(name, node);
-
+    /**
+     * @return The position of the first data line in the input file,
+     * -1 otherwise.
+     */
+    public int beginOfDataLines() throws IOException {
+        if (getLines().size() > 0) {
+            return getAllLines().indexOf((getLines().get(0)));
         }
+        return -1;
     }
 
     /**
-     * Set the neighbours list for each node in the node map.
-     * @param NeighboursLines list of lines that contain the neighbours information.
-     * @param nodeMap the map of node
+     * @return The position of the last data line in the input file,
+     * -1 otherwise.
+     */
+    public int endOfDataLines() throws IOException {
+        return getAllLines().indexOf(getLines().get(getLines().size() - 1));
+    }
+
+    /**
+     * @return The position of the first neighbour line in the input file,
+     * -1 otherwise.
+     */
+    public int beginOfNeighbourLines() throws IOException {
+        if (getNeighboursLines().size() > 0) {
+            return getAllLines().indexOf((getNeighboursLines().get(0)));
+        }
+        return -1;
+    }
+
+    /**
+     * @return The position of the last neighbour line in the input file,
+     * -1 otherwise.
+     */
+    public int endOfNeighbourLines() throws IOException {
+        return getAllLines().indexOf(getNeighboursLines().get(getNeighboursLines().size() - 1));
+    }
+
+    /**
+     * A method that creates a node creator object and passes the lines with node data
+     * and their neighbours data
+     * @return a TreeMap of Nodes and their names
      * @throws IOException
      */
-    private void setNeighbours() throws IOException {
-        List<String> lines = getNeighboursLines();
-        for (String line : lines) {
-            String nodeName = extractNodeFromNeighboursLine(line);
-            if (nodeMap.containsKey(nodeName)) {
-                List<Node> neighbours = extractNeighbours(line).stream().map(name -> nodeMap.get(name)).filter(Objects::nonNull).collect(Collectors.toList());
-                nodeMap.get(nodeName).setNeighbours(neighbours);
-            }
-        }
+    public TreeMap<String, Node> createNodes() throws IOException{
+        NodeCreator nodeCreator = new NodeCreator(getLines(), getNeighboursLines());
+        this.nodeOrder= nodeCreator.getNodesAsPerInsertion();
+        return nodeCreator.createNodes();
     }
 
     /**
-     * @return The node map with node and neighbours set.
+     * Returns the nodeOrderFrom the Parser
+     * @return arrayList of the nodeOrder
      */
-    public TreeMap<String,Node> getNodes() {
-        return nodeMap;
+    public ArrayList<String> getNodeOrder(){
+        return  nodeOrder;
     }
-
-    /**
-     * @param line a line that set the neighbours of a node
-     * @return The name of the node to which the neighbours are added in the file line.
-     */
-    public String extractNodeFromNeighboursLine(String line) {
-        return line.substring(0, line.indexOf("."));
-    }
-
-    /**
-     * 
-     * @param line a line that set the neighbours of a node
-     * @return A list of the neighbours added to the node.
-     */
-    private List<String> extractNeighbours(String line) {
-        return Arrays.asList(line.substring(line.indexOf("{") + 1, line.indexOf("}")).split(",")).stream().map(String::trim).collect(Collectors.toList());
-    }
-
-    /**
-     * Generates a unique integer id each time it is called.
-     * @param idLogFilePath path to the file
-     * @return int unique id
-     * @throws IOException
-     */
-    public int generateNodeId(Path idLogFilePath) throws IOException {
-        int lastUsedId=getLastUsedID(idLogFilePath);
-        usedIds.add(lastUsedId+1);
-        saveUsedIds(usedIds,idLogFilePath);
-        return lastUsedId;
-    }
-
-    /**
-     * Goes through the log file and extracts the last recorded
-     * id so we know from which one to start generating new ones.
-     * @param idLogFilePath path to the log file
-     * @return int last used id, -1 if the log file is empty
-     * @throws IOException if the input is illegal
-     */
-    public int getLastUsedID(Path idLogFilePath) throws IOException {
-        List<String> listLines = Files.readAllLines(idLogFilePath);
-        if(listLines.isEmpty()){
-            return -1;
-        }
-        String lastLine =listLines.get(listLines.size() - 1).replace("[","").replace("]","").trim();
-        List<String> numbersInFilteredLine = Arrays.asList(lastLine.trim().split(","));
-        int last = Integer.parseInt(numbersInFilteredLine.get(numbersInFilteredLine.size()-1).trim());
-        return last;
-    }
-
-    /**
-     * Writes ids from the last wrangled file to the idLog.txt so
-     * that we can generate unique ones for the next file
-     * @param usedIds to write to the files
-     * @param idLogFilePath path to the log file
-     * @throws IOException
-     */
-    public void saveUsedIds(ArrayList<Integer> usedIds, Path idLogFilePath) throws IOException{
-        Files.write(idLogFilePath,usedIds.toString().getBytes());
-    }
-
-    /**	
-     * Method to extract the coordinates of a node from a line	
-     * @param line to extract the data from	
-     * @return Node's coordinates enclosed in a Pair object	
-     */	
-    public Pair<Float, Float> extractData(String line) {	
-        String dataString = line.substring(line.indexOf('(')+1, line.indexOf(')'));	
-
-        List<String> dataList = new ArrayList<>(Arrays.asList(dataString.trim().split(" , ")));	
-
-        // Float xPos = Math.round(Float.parseFloat(dataList.get(0))*100.0f)/100.0f;	
-        // Float yPos = Math.round(Float.parseFloat(dataList.get(1))*100.0f)/100.0f;	
-
-        return new Pair<>(Float.parseFloat(dataList.get(0)), Float.parseFloat(dataList.get(1)));	
-    }	
-
-    /**	
-     * Method to extract the name of a node from a line	
-     * @param line to extract data from	
-     * @return Node's name	
-     */	
-    public String extractName(String line){ return line.substring(0,line.indexOf("=")).split(" ")[1]; }	
-
-
-} 
+}
