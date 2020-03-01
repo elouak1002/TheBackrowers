@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javafx.util.Pair;
 
 import java.io.*;
 import java.util.logging.Level;

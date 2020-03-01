@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import datastructures.Node;
-import javafx.util.Pair;
 
 /**
  * A debugger, responsible for debugging the output file before it's creation.
@@ -29,7 +28,7 @@ public class Debugger {
 	public ArrayList<String> getLog() {
 		return log;
 	}
-	
+
 	/**
 	 * If nodeA doesn't already have nodeB as a neighbour,
 	 * then add it.
