@@ -19,6 +19,7 @@ public class Debugger {
 	 */
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
+		removeUninitialisedNeighbours();
 		addExistingNeighbours();
 		removeNeighbourlessNodes();
 	}
@@ -63,7 +64,23 @@ public class Debugger {
     		if(node.getValue().getNeighbours().isEmpty()){
 				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
 				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
-				System.out.println("remove " + node.getValue().getName());
+				System.out.println("remove neighbourless " + node.getValue().getName());
+        		iter.remove();
+    		}
+		}
+	}
+
+	/**
+	 * Remove the Nodes from the Nodes that haven't been initialised.
+	 */
+	private void removeUninitialisedNeighbours() {
+		Iterator<Map.Entry<String,Node>> iter = nodeMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry<String,Node> node = iter.next();
+    		if(node.getValue().getStatus() == Status.UNINITIALISED) {
+				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
+				System.out.println("remove unitilialised " + node.getValue().getName());
         		iter.remove();
     		}
 		}
