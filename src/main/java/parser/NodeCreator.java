@@ -128,9 +128,11 @@ public class NodeCreator {
 
             List<Node> neighbours = getNodeNeighbours(line);
 
-            if (nodeMap.containsKey(nodeName)) {
-                nodeMap.get(nodeName).setNeighbours(neighbours);
+            if (!nodeMap.containsKey(nodeName)) {
+                Node node = new Node(nodeName,Status.UNINITIALISED);
+                nodeMap.put(nodeName, node);
             }
+            nodeMap.get(nodeName).setNeighbours(neighbours);
         }
     }
 
