@@ -1,6 +1,7 @@
 package parser;
 
 import datastructures.Node;
+import datastructures.Status;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -124,11 +125,23 @@ public class NodeCreator {
     private void setNeighbours() {
         for (String line : neighbourLines) {
             String nodeName = extractNodeFromNeighboursLine(line);
+
+            List<Node> neighbours = getNodeNeighbours(line);
+
             if (nodeMap.containsKey(nodeName)) {
-                List<Node> neighbours = extractNeighbours(line).stream().map(name -> nodeMap.get(name)).filter(Objects::nonNull).collect(Collectors.toList());
                 nodeMap.get(nodeName).setNeighbours(neighbours);
             }
         }
+    }
+
+    /**
+     * @return a Node's list of neighbours declared in a neighbour line.
+     */
+    private List<Node> getNodeNeighbours(String neighbourLine) {
+        return extractNeighbours(neighbourLine).stream()
+                                        .map(name -> nodeMap.containsKey(name) ? nodeMap.get(name) : new Node(name,Status.ONLY_NEIGHBOUR))
+                                        .filter(Objects::nonNull)
+                                        .collect(Collectors.toList());
     }
 
     /**
