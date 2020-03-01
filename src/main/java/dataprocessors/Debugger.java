@@ -14,26 +14,20 @@ import javafx.util.Pair;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
-	private ArrayList<Pair<String,String>> addLog;
-	private ArrayList<String> removeLog;
+	private ArrayList<String> log;
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
 	 */
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
-		addLog = new ArrayList<>();
-		removeLog = new ArrayList<>();
+		log = new ArrayList<>();
 		addExistingNeighbours();
 		removeNeighbourlessNodes();
 	}
 
-	public ArrayList<Pair<String,String>> getAddLog() {
-		return addLog;
-	}
-
-	public ArrayList<String> getRemoveLog() {
-		return removeLog;
+	public ArrayList<String> getLog() {
+		return log;
 	}
 	
 	/**
@@ -43,7 +37,8 @@ public class Debugger {
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
 			nodeA.addNeighbour(nodeB);
-			addLog.add(new Pair<>(nodeA.getName(),nodeB.getName())); // Log the addition of nodeB as a neighbor of nodeA.
+			// Log the addition of nodeB as a neighbor of nodeA.
+			log.add(nodeB.getName() + " added to become a neighbour for " + nodeA.getName() + ".\n");
 		}
 	}
 
@@ -68,7 +63,8 @@ public class Debugger {
 		while (iter.hasNext()) {
     		Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
-				removeLog.add(node.getValue().getName()); // Log the deletion of a Node from the file to the log. 1st possibility.
+				// Log the deletion of a Node from the file to the log. 1st possibility.
+				log.add(node.getValue().getName() + " has no neighbour, so it was removed.\n");
 				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}

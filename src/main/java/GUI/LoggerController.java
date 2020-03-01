@@ -20,14 +20,10 @@ public class LoggerController {
     public void initialize() {}
 
     void setOutputText(Debugger debugger, String filename) {
-        if (!debugger.getAddLog().isEmpty() || !debugger.getRemoveLog().isEmpty()) {
+        if (!debugger.getLog().isEmpty()) {
             displayLog.appendText("For file '" + filename + "', the following debugging has happened:\n");
-            for (Pair<String, String> nodes : debugger.getAddLog()) {
-                //nodes.getValue() is nodeNameB and nodes.getKey() is nodeNameA
-                displayLog.appendText(nodes.getValue() + " added to become a neighbour for " + nodes.getKey() + ".\n");
-            }
-            for (String node : debugger.getRemoveLog()) {
-                displayLog.appendText(node + " has no neighbour, so it was removed.\n");
+            for (String string : debugger.getLog()) {
+                displayLog.appendText(string);
             }
             displayLog.appendText("\n");
         }
