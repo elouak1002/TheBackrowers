@@ -47,7 +47,7 @@ public class XMLCreator{
     /**
      * Creates the final line of the xml file.
      */
-    private void createFooter() {
+    public void createFooter() {
         String footer = "</MappinData>";
         this.finalXMLData.add(footer);
     }
@@ -55,7 +55,7 @@ public class XMLCreator{
     /**
      * Makes sure each node is parsed into correct xml format.
      */
-    private void createNodeContent() {
+    public void createNodeContent() {
         for(String nodename: nodeOrder){
             addXMLentry(nodes.get(nodename));
         }
@@ -67,7 +67,7 @@ public class XMLCreator{
      * Then adds that line to the finalXMLData arrayList.
      * @param node the node to be transformed
      */
-    private void addXMLentry(Node node) {
+    public void addXMLentry(Node node) {
         String xmlLine = " <" + node.getType().toLowerCase() + " id=" + "\"" + node.getId() + "\""
         + " x=" + "\""+node.getX() + "\"" + " y=" + "\""+node.getY()+"\""
                 + " Floor=" + "\"" + node.getFloor() + "\"";
@@ -92,7 +92,7 @@ public class XMLCreator{
      * This method ensures that the file begins with the appropriate
      * date, time, year, xml version and encoding.
      */
-    private void createHeader() {
+    public void createHeader() {
         this.finalXMLData.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String date = df.format(new Date());
@@ -102,6 +102,15 @@ public class XMLCreator{
         df=new SimpleDateFormat("YYYY");
         String documentTag = "<MappinData version=\"1.0\" created=\""+date+" "+time+ "\" copyright=\"Mappin Technologies LTD\" "+ df.format(new Date())+">";
         this.finalXMLData.add(documentTag);
+    }
+
+    /**
+     * This method returns the finalXmlData at any point in time.
+     * Mostly used for testing purposes.
+     * @return list of the final XML lines
+     */
+    public List<String> getFinalXMLData(){
+        return finalXMLData;
     }
 
 }
