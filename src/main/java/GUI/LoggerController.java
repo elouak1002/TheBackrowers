@@ -2,7 +2,9 @@ package GUI;
 
 import dataprocessors.Debugger;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -25,6 +27,13 @@ public class LoggerController {
                 displayLog.appendText(string);
             }
             displayLog.appendText("\n");
+        }
+    }
+
+    void GetNotification(Debugger debugger) {
+        if(debugger.getLog().size() > 0) {
+            System.out.println("NOTIFICATION");
+            new Alert(Alert.AlertType.INFORMATION, "Log file has been updated.", ButtonType.CLOSE).showAndWait();
         }
     }
 
