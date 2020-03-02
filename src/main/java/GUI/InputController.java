@@ -1,5 +1,6 @@
 package GUI;
 
+
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
@@ -25,6 +26,7 @@ public class InputController {
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
     private TreeMap<String,Node> nodes;
+    private Debugger debugger;
 
     @FXML
     public void initialize() {}
@@ -53,7 +55,11 @@ public class InputController {
     void setNodes(Path path) {
         Parser parser = new Parser(path);
         referenceNodeChoiceBox.getItems().clear();
-        nodes = parser.getNodes();
+        try {
+            nodes = parser.createNodes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
@@ -92,7 +98,7 @@ public class InputController {
                     Float.parseFloat(finalPositionY.getText()),
                     nodes.get(referenceNodeChoiceBox.getValue()));
 
-            Debugger debugger = new Debugger(nodeMap);
+            debugger = new Debugger(nodeMap);
             nodeMap = new TreeMap<>(debugger.getMap());
 
             FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
@@ -101,5 +107,9 @@ public class InputController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    Debugger getDebugger() {
+        return debugger;
     }
 }

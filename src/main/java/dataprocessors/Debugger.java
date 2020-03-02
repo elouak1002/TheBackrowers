@@ -1,9 +1,9 @@
 package dataprocessors;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-import GUI.LoggerController;
 import datastructures.Node;
 
 /**
@@ -13,29 +13,33 @@ import datastructures.Node;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
-	private LoggerController logger = LoggerController.getInstance();
+	private ArrayList<String> log;
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
 	 */
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
+		log = new ArrayList<>();
 		addExistingNeighbours();
 		removeNeighbourlessNodes();
 	}
-	
+
+	public ArrayList<String> getLog() {
+		return log;
+	}
+
 	/**
 	 * If nodeA doesn't already have nodeB as a neighbour,
 	 * then add it.
 	 */
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
-			logger.logAdd(nodeA.getName(), nodeB.getName());
 			nodeA.addNeighbour(nodeB);
-			logger.logAdd(nodeA.getName(),nodeB.getName()); // Log the addition of nodeB as a neighbor of nodeA.
+			// Log the addition of nodeB as a neighbor of nodeA.
+			log.add(nodeB.getName() + " added to become a neighbour for " + nodeA.getName() + ".\n");
 		}
 	}
-
 
 	/**
 	 * Run over the key of the map,
@@ -58,7 +62,8 @@ public class Debugger {
 		while (iter.hasNext()) {
     		Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
-				logger.logRemove(node.getValue().getName()); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				// Log the deletion of a Node from the file to the log. 1st possibility.
+				log.add(node.getValue().getName() + " has no neighbour, so it was removed.\n");
 				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}

@@ -1,5 +1,6 @@
 package GUI;
 
+import dataprocessors.Debugger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -7,59 +8,28 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoggerController {
-    public ArrayList<String> logger = null;
-    @FXML private Button saveButton = new Button();
-    @FXML public TextArea displayLog = new TextArea();
-    public static LoggerController instance = new LoggerController();
+    @FXML private Button saveButton;
+    @FXML private TextArea displayLog;
 
-    public static LoggerController getInstance() {
-        return instance;
-    }
+    @FXML
+    public void initialize() {}
 
-    public LoggerController() {
-        logger = new ArrayList<>();
-    }
-
-    public ArrayList<String> getList() {
-        System.out.println(logger.size() + " count");
-        return logger;
-    }
-    void setOutputText(TextArea OutputString) {
-        OutputString.clear();
-        for (String string : logger) {
-            OutputString.appendText(string + "\n");
-        }
-    }
-
-    public void logAdd(String nodeNameA, String nodeNameB) {
-        String neighbourAdded = nodeNameB + " added to become a neighbour for " + nodeNameA + ".";
-        this.logger.add(neighbourAdded);
-    }
-
-    public void logRemove(String nodeName) {
-        String removedNode = nodeName + " has no neighbour, so it was removed.";
-        this.logger.add(removedNode);
-    }
-
-    public void saveLoggerToFile(String content, File file) {
-        try {
-            PrintWriter writer;
-            writer = new PrintWriter(file);
-            writer.println(content);
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(OutputController.class.getName()).log(Level.SEVERE, null, ex);
+    void setOutputText(Debugger debugger, String filename) {
+        if (!debugger.getLog().isEmpty()) {
+            displayLog.appendText("For file '" + filename + "', the following debugging has happened:\n");
+            for (String string : debugger.getLog()) {
+                displayLog.appendText(string);
+            }
+            displayLog.appendText("\n");
         }
     }
 
     @FXML
-    public void saveFileToDir() {
-        String text = displayLog.getText();
+    private void saveFileToDir() {
         Window stage = saveButton.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -70,7 +40,18 @@ public class LoggerController {
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            saveLoggerToFile(text, file);
+            saveLoggerToFile(file);
+        }
+    }
+
+    private void saveLoggerToFile(File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(displayLog.getText());
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(LoggerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

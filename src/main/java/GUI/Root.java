@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -26,7 +25,6 @@ public class Root extends Application {
     private Pane loggerPage;
     private BorderPane root;
 
-
     @Override
     public void start(Stage stage) {
         //initialise fxml loaders
@@ -35,7 +33,8 @@ public class Root extends Application {
         FXMLLoader inputPageLoader = new FXMLLoader(getClass().getResource("Input.fxml"));
         FXMLLoader outputPageLoader = new FXMLLoader(getClass().getResource("Output.fxml"));
         FXMLLoader xmlGeneratorLoader = new FXMLLoader(getClass().getResource("XMLGenerator.fxml"));
-        FXMLLoader loggerLoader = new FXMLLoader(getClass().getResource("logger.fxml"));
+        FXMLLoader loggerLoader = new FXMLLoader(getClass().getResource("Logger.fxml"));
+
         //try-catch assignment of panes
         try {
             homePage = homePageLoader.load();
@@ -53,7 +52,8 @@ public class Root extends Application {
         LoadController loadController = loadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
-        XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
+        //XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
+        LoggerController loggerController = loggerLoader.getController();
 
         Button previous = new Button("Previous");
         Button next = new Button("Next");
@@ -80,29 +80,25 @@ public class Root extends Application {
                 currentPage = homePage;
                 previous.setDisable(true);
                 next.setDisable(true);
-                log.setDisable(false);
             } else if (currentPage == inputPage) {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
-                log.setDisable(false);
             } else if (currentPage == outputPage) {
                 root.setCenter(inputPage);
                 currentPage = inputPage;
                 next.setDisable(false);
-                log.setDisable(false);
             }
             //XML Generator
             if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
-                log.setDisable(false);
                 previous.setDisable(true);
             }
-
+            //Logger
             if(currentPage == loggerPage) {
                 root.setCenter(outputPage);
                 currentPage = outputPage;
-                next.setDisable(true);
+                next.setDisable(false);
                 log.setDisable(false);
             }
         });
@@ -111,7 +107,6 @@ public class Root extends Application {
                 if (loadController.getPath() != null) {
                     root.setCenter(inputPage);
                     currentPage = inputPage;
-                    log.setDisable(false);
                     inputController.setNodes(loadController.getPath());
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please select file", ButtonType.CLOSE).showAndWait();
@@ -120,25 +115,29 @@ public class Root extends Application {
                 if (inputController.inputIsValid()) {
                     root.setCenter(outputPage);
                     currentPage = outputPage;
-                    next.setDisable(true);
                     log.setDisable(false);
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
-                    outputController.setInputFileName(loadController.getPath().getFileName().toString());
+                    String filename = loadController.getPath().getFileName().toString();
+                    outputController.setInputFileName(filename);
+                    loggerController.setOutputText(inputController.getDebugger(),filename);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
                 }
+            } else if (currentPage == outputPage) {
+                root.setCenter(loggerPage);
+                currentPage = loggerPage;
+                next.setDisable(true);
+                log.setDisable(true);
             }
         });
-
-        LoggerController logger = LoggerController.getInstance();
-        TextArea textArea = (TextArea) loggerLoader.getNamespace().get("displayLog");
         log.setOnAction(event -> {
             root.setCenter(loggerPage);
             currentPage = loggerPage;
-            log.setDisable(true);
             previous.setDisable(false);
-            logger.setOutputText(textArea);
+            next.setDisable(true);
+            log.setDisable(true);
         });
+
         BorderPane navigation = new BorderPane();
         navigation.setLeft(previous);
         navigation.setRight(next);
@@ -152,6 +151,7 @@ public class Root extends Application {
         currentPage = homePage;
         previous.setDisable(true);
         next.setDisable(true);
+        log.setDisable(true);
 
         //set and show scene and stage
         Scene scene = new Scene(root,960,640);
