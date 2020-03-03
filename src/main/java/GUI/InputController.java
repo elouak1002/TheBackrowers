@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -26,10 +25,22 @@ public class InputController {
     @FXML private TextField scaleFactorY;
     @FXML private TextField finalPositionX;
     @FXML private TextField finalPositionY;
+    @FXML private Label positionOrShiftLabel;
+    @FXML private Label optionHintLabel;
     private TreeMap<String,Node> nodes;
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        referenceNodeChoiceBox.setOnAction(event -> {
+            if (!referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
+                optionHintLabel.setText("To input shift values instead, select 'NO REFERENCE'");
+                positionOrShiftLabel.setText("Final Node Positions");
+            } else {
+                optionHintLabel.setText("To input final node positions instead, select a node");
+                positionOrShiftLabel.setText("Shift Values");
+            }
+        });
+    }
 
     /**
      * Takes the keyboard and cursor focus to the next logical text field when the user presses enter.
@@ -60,8 +71,9 @@ public class InputController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        referenceNodeChoiceBox.getItems().add("NO REFERENCE");
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
-        referenceNodeChoiceBox.getItems().add("NULL");
+        referenceNodeChoiceBox.getSelectionModel().selectFirst();
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
@@ -91,9 +103,11 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Node ref;
-            if(referenceNodeChoiceBox.getValue().equals("NULL")){
+            if (referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
                 ref = null;
-           } else ref = nodes.get(referenceNodeChoiceBox.getValue());
+            } else {
+                ref = nodes.get(referenceNodeChoiceBox.getValue());
+            }
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngle.getText()),
