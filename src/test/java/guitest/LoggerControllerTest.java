@@ -43,8 +43,10 @@ public class LoggerControllerTest {
     @Test
     public void testLogRemoveNode() {
         Debugger debugger = new Debugger(nodeMap);
-        final String loggerOutput = "Node1 has no neighbour, so it was removed.";
+        
+        String loggerOutput = "Node1 has no neighbour, so it was removed.";
+        final String cleanOutput = debugger.getLog().get(0).replaceAll("\n", "");
 
-        assertEquals(loggerOutput, debugger.getLog().get(0).replaceAll("\n", ""));
+        assertEquals(loggerOutput, cleanOutput);
     }
 }
