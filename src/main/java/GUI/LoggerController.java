@@ -31,9 +31,8 @@ public class LoggerController {
         }
     }
 
-    void GetNotification(Debugger debugger) {
-        if(debugger.getLog().size() > 0) {
-            System.out.println("NOTIFICATION");
+    void setNotification(Debugger debugger) {
+        if(!debugger.getLog().isEmpty()) {
             new Alert(Alert.AlertType.INFORMATION, "Log file has been updated.", ButtonType.CLOSE).showAndWait();
         }
     }

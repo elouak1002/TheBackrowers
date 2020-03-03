@@ -119,7 +119,7 @@ public class Root extends Application {
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
                     String filename = loadController.getPath().getFileName().toString();
                     outputController.setInputFileName(filename);
-                    loggerController.GetNotification(inputController.getDebugger());
+                    loggerController.setNotification(inputController.getDebugger());
                     loggerController.setOutputText(inputController.getDebugger(),filename);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
