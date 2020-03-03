@@ -30,11 +30,21 @@ public class LoggerControllerTest {
     }
 
     @Test
-    public void testlogAddNode() {
+    public void testLogAddNode() {
         nodeMap.get("Node1").addNeighbour(nodeList.get(1));
         Debugger debugger = new Debugger(nodeMap);
+
         String loggerOutput = "Node1 added to become a neighbour for Node2.";
-        final String cleanOutput = debugger.getLog().get(0).toString().replaceAll("\n", "").replaceAll("\r", "");
+        final String cleanOutput = debugger.getLog().get(0).replaceAll("\n", "");
+
         assertEquals(loggerOutput, cleanOutput);
+    }
+
+    @Test
+    public void testLogRemoveNode() {
+        Debugger debugger = new Debugger(nodeMap);
+        final String loggerOutput = "Node1 has no neighbour, so it was removed.";
+
+        assertEquals(loggerOutput, debugger.getLog().get(0).replaceAll("\n", ""));
     }
 }
