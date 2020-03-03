@@ -21,6 +21,7 @@ public class LoggerController {
     public void initialize() {}
 
     void setOutputText(Debugger debugger, String filename) {
+        displayLog.clear();
         if (!debugger.getLog().isEmpty()) {
             displayLog.appendText("For file '" + filename + "', the following debugging has happened:\n");
             for (String string : debugger.getLog()) {
