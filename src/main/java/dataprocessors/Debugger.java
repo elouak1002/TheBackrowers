@@ -32,8 +32,6 @@ public class Debugger {
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
 			nodeA.addNeighbour(nodeB);
-			System.out.println("Add " + nodeB.getName() + " to " + nodeA.getName());
-			// Logger.logAdd(nodeA.getName(),nodeB.getName()) // Log the addition of nodeB as a neighbor of nodeA.
 		}
 	}
 	
@@ -62,9 +60,6 @@ public class Debugger {
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
-				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
-				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
-				System.out.println("remove neighbourless " + node.getValue().getName());
         		iter.remove();
     		}
 		}
@@ -78,9 +73,6 @@ public class Debugger {
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getStatus() == Status.UNINITIALISED) {
-				// Logger.logRemove(nodeName); // Log the deletion of a Node from the file to the logfile. 1st possibility.
-				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
-				System.out.println("remove unitilialised " + node.getValue().getName());
         		iter.remove();
     		}
 		}
