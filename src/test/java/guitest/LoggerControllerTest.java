@@ -28,13 +28,13 @@ public class LoggerControllerTest {
             nodeMap.put(node.getName(), node);
         }
     }
-    
+
     @Test
     public void testlogAddNode() {
         nodeMap.get("Node1").addNeighbour(nodeList.get(1));
         Debugger debugger = new Debugger(nodeMap);
-        String result = "Node1 added to become a neighbour for Node2.";
+        String loggerOutput = "Node1 added to become a neighbour for Node2.";
         final String cleanOutput = debugger.getLog().get(0).toString().replaceAll("\n", "").replaceAll("\r", "");
-        assertEquals(result, cleanOutput);
+        assertEquals(loggerOutput, cleanOutput);
     }
 }
