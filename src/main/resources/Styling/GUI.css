@@ -34,7 +34,7 @@ Label, Button {
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
 }
 
-#rotationAngleLabel, #referenceNodeLabel, #scaleFactorLabel, #finalPositionLabel {
+#rotationAngleLabel, #referenceNodeLabel, #scaleFactorLabel, #positionOrShiftLabel {
     -fx-background-color: #C1DAD6;
     -fx-max-width:200;
 }

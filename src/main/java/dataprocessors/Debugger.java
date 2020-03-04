@@ -42,7 +42,7 @@ public class Debugger {
 			log.add(nodeB.getName() + " added to become a neighbour for " + nodeA.getName() + ".\n");
 		}
 	}
-
+  
 	/**
 	 * Run over the key of the map,
 	 * and add neighbours to each node if needed.
