@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -60,6 +61,7 @@ public class InputController {
             e.printStackTrace();
         }
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+        referenceNodeChoiceBox.getItems().add("NULL");
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
@@ -88,6 +90,10 @@ public class InputController {
      */
     List<String> getOutput(Path path) {
         try {
+            Node ref;
+            if(referenceNodeChoiceBox.getValue().equals("NULL")){
+                ref = null;
+           } else ref = nodes.get(referenceNodeChoiceBox.getValue());
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngle.getText()),
@@ -95,7 +101,7 @@ public class InputController {
                     Float.parseFloat(scaleFactorY.getText()),
                     Float.parseFloat(finalPositionX.getText()),
                     Float.parseFloat(finalPositionY.getText()),
-                    nodes.get(referenceNodeChoiceBox.getValue()));
+                    ref);
 
             Debugger debugger = new Debugger(nodeMap);
             nodeMap = new TreeMap<>(debugger.getMap());
