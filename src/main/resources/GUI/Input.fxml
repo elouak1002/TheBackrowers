@@ -42,9 +42,9 @@
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <Label text="X" />
-            <TextField fx:id="finalPositionX" onAction="#nextField" />
+            <TextField fx:id="positionOrShiftX" onAction="#nextField" />
             <Label text="Y" />
-            <TextField fx:id="finalPositionY" />
+            <TextField fx:id="positionOrShiftY" />
          </children>
       </VBox>
    </children>

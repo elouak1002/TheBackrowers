@@ -23,8 +23,8 @@ public class InputController {
     @FXML private TextField rotationAngle;
     @FXML private TextField scaleFactorX;
     @FXML private TextField scaleFactorY;
-    @FXML private TextField finalPositionX;
-    @FXML private TextField finalPositionY;
+    @FXML private TextField positionOrShiftX;
+    @FXML private TextField positionOrShiftY;
     @FXML private Label positionOrShiftLabel;
     @FXML private Label optionHintLabel;
     private TreeMap<String,Node> nodes;
@@ -33,11 +33,11 @@ public class InputController {
     public void initialize() {
         referenceNodeChoiceBox.setOnAction(event -> {
             if (!referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
-                optionHintLabel.setText("To input shift values instead, select 'NO REFERENCE'");
+                optionHintLabel.setText("To input shift factors instead, select 'NO REFERENCE'");
                 positionOrShiftLabel.setText("Final Node Positions");
             } else {
                 optionHintLabel.setText("To input final node positions instead, select a node");
-                positionOrShiftLabel.setText("Shift Values");
+                positionOrShiftLabel.setText("Shift Factor");
             }
         });
     }
@@ -53,9 +53,9 @@ public class InputController {
         } else if (event.getSource() == scaleFactorX) {
             scaleFactorY.requestFocus();
         } else if (event.getSource() == scaleFactorY) {
-            finalPositionX.requestFocus();
-        } else if (event.getSource() == finalPositionX) {
-            finalPositionY.requestFocus();
+            positionOrShiftX.requestFocus();
+        } else if (event.getSource() == positionOrShiftX) {
+            positionOrShiftY.requestFocus();
         }
     }
 
@@ -86,8 +86,8 @@ public class InputController {
             Float.parseFloat(rotationAngle.getText());
             Float.parseFloat(scaleFactorX.getText());
             Float.parseFloat(scaleFactorY.getText());
-            Float.parseFloat(finalPositionX.getText());
-            Float.parseFloat(finalPositionY.getText());
+            Float.parseFloat(positionOrShiftX.getText());
+            Float.parseFloat(positionOrShiftY.getText());
             nodes.get(referenceNodeChoiceBox.getValue());
             return true;
         } catch (Exception e) {
@@ -113,8 +113,8 @@ public class InputController {
                     Float.parseFloat(rotationAngle.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
-                    Float.parseFloat(finalPositionX.getText()),
-                    Float.parseFloat(finalPositionY.getText()),
+                    Float.parseFloat(positionOrShiftX.getText()),
+                    Float.parseFloat(positionOrShiftY.getText()),
                     ref);
 
             Debugger debugger = new Debugger(nodeMap);
