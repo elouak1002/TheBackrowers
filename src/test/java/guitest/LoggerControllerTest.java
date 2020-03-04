@@ -22,6 +22,7 @@ public class LoggerControllerTest {
         nodeList = new ArrayList<Node>();
         nodeList.add(new Node("Node1", 10f, 10f));
         nodeList.add(new Node("Node2", 10f, 10f));
+        nodeList.add(new Node("Node3", 10f, 10f));
 
         nodeMap = new HashMap<String, Node>();
         for (Node node : nodeList) {
@@ -48,5 +49,30 @@ public class LoggerControllerTest {
         final String cleanOutput = debugger.getLog().get(0).replaceAll("\n", "");
 
         assertEquals(loggerOutput, cleanOutput);
+    }
+
+    @Test
+    public void testMultipleAddNodes() {
+        nodeMap.get("Node1").addNeighbour(nodeList.get(1));
+        nodeMap.get("Node2").addNeighbour(nodeList.get(2));
+
+        Debugger debugger = new Debugger(nodeMap);
+
+        ArrayList<String> output = new ArrayList<>();
+        ArrayList<String> logger;
+        output.add("Node1 added to become a neighbour for Node2.");
+        output.add("Node2 added to become a neighbour for Node3.");
+
+        logger = debugger.getLog();
+
+        assertEquals(output.size(), logger.size());
+
+        for (int i = 0; i < output.size(); i++) {
+
+            String loggerOutput = logger.get(i).replaceAll("\n", "");
+            String testOutput = output.get(i).replaceAll("\n", "");
+
+            assertEquals(testOutput , loggerOutput);
+        }
     }
 }
