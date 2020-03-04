@@ -1,6 +1,5 @@
 package GUI;
 
-
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * The InputController class allows the user to input the various numbers needed to wrangle the data,
@@ -71,8 +71,9 @@ public class InputController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+      
         referenceNodeChoiceBox.getItems().add("NO REFERENCE");
-        referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+        referenceNodeChoiceBox.getItems().addAll(nodes.keySet().stream().filter(nodeName -> nodes.get(nodeName).getStatus() == Status.INITIALISED).collect(Collectors.toList()));
         referenceNodeChoiceBox.getSelectionModel().selectFirst();
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
