@@ -1,5 +1,6 @@
 package GUI;
 
+import dataprocessors.XMLCreator;
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,10 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Window;
 import javafx.util.Duration;
+import parser.XMLParser;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,27 +69,32 @@ public class XMLGeneratorController {
                 boolean itemInSelectedTable = selectedTable.getItems().contains(selectFile.getAbsolutePath());
                 if (!itemInUploadTable && !itemInSelectedTable) {
                     //get file name from file path
-                    String getFileName = selectFile.getAbsolutePath().substring(selectFile.getAbsolutePath().lastIndexOf("\\") + 1);
+                    String getFileName = selectFile.getAbsolutePath();
                     uploadTable.getItems().add(getFileName);
                 }
             }
         }
     }
 
-//    /**
-//     * todo: Merging of text files into an xml file
-//     */
-//    void mergeFiles(String filePath){
-//
-//    }
+    /**
+     * Merges the selected files' lines and formats them into XML.
+     * @return the merged string in XML form
+     */
+    private String getXMLString() throws IOException {
+        XMLParser parser = new XMLParser(selectedTable.getItems());
+        XMLCreator xmlCreator = new XMLCreator(parser.createNodes(),parser.getNodeOrder());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String string : xmlCreator.createXMLFile()) {
+            stringBuilder.append(string).append("\n");
+        }
+        return stringBuilder.toString();
+    }
 
     /**
      * Save xml file via a file chooser
      */
     @FXML
     void saveFile() {
-        //calls the merge process
-        //mergeFiles();
         //initialise fileChooser
         FileChooser fileChooser = new FileChooser();
         //set specific extensions for fileChooser
@@ -95,18 +103,29 @@ public class XMLGeneratorController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save File");
         fileChooser.setInitialFileName("merged_xml");
-        //reveal file saved notification
-        saveNotification.setText("File has been saved!");
-        saveNotification.setVisible(true);
-        //file saved notification disappears after 2 seconds
-        PauseTransition visiblePause = new PauseTransition(
-                Duration.seconds(2)
-        );
-        visiblePause.setOnFinished(
-                event -> saveNotification.setVisible(false)
-        );
-        visiblePause.play();
+        File file = fileChooser.showSaveDialog(saveButton.getScene().getWindow());
 
+        if (file != null) {
+            try {
+                PrintWriter writer = new PrintWriter(file);
+                writer.println(getXMLString());
+                writer.close();
+
+                //reveal file saved notification
+                saveNotification.setText("File has been saved!");
+                saveNotification.setVisible(true);
+                //file saved notification disappears after 2 seconds
+                PauseTransition visiblePause = new PauseTransition(
+                        Duration.seconds(2)
+                );
+                visiblePause.setOnFinished(
+                        event -> saveNotification.setVisible(false)
+                );
+                visiblePause.play();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -136,7 +155,7 @@ public class XMLGeneratorController {
                 boolean itemInSelectedTable = selectedTable.getItems().contains(file.getAbsolutePath());
                 if (!itemInUploadTable && !itemInSelectedTable) {
                     //get file name from file path
-                    String getFileName = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("\\") + 1);
+                    String getFileName = file.getAbsolutePath();
                     uploadTable.getItems().add(getFileName);
                 }
             }
