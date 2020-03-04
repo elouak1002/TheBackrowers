@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Root extends Application {
-    //declare panes
     private Pane currentPage;
+    private Pane previousFromLoggerPage;
     private Pane homePage;
     private Pane loadPage;
     private Pane inputPage;
@@ -24,6 +24,9 @@ public class Root extends Application {
     private Pane xmlGeneratorPage;
     private Pane loggerPage;
     private BorderPane root;
+    private Button next;
+    private Button previous;
+    private Button log;
 
     @Override
     public void start(Stage stage) {
@@ -55,52 +58,40 @@ public class Root extends Application {
         //XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
         LoggerController loggerController = loggerLoader.getController();
 
-        Button previous = new Button("Previous");
-        Button next = new Button("Next");
-        Button log = new Button("Log");
+        previous = new Button("Previous");
+        next = new Button("Next");
+        log = new Button("Log");
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
             root.setCenter(loadPage);
             currentPage = loadPage;
-            previous.setDisable(false);
-            next.setDisable(false);
+            setNavigationStatus();
         });
         homeController.getXMLButton().setOnAction(event -> {
             root.setCenter(xmlGeneratorPage);
             currentPage = xmlGeneratorPage;
-            previous.setDisable(false);
-            next.setDisable(true);
+            setNavigationStatus();
         });
 
         previous.setOnAction(event -> {
-            //Data Wrangler
             if (currentPage == loadPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
-                previous.setDisable(true);
-                next.setDisable(true);
             } else if (currentPage == inputPage) {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
             } else if (currentPage == outputPage) {
                 root.setCenter(inputPage);
                 currentPage = inputPage;
-                next.setDisable(false);
-            }
-            //XML Generator
-            if (currentPage == xmlGeneratorPage) {
+            } else if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
-                previous.setDisable(true);
+            } else if (currentPage == loggerPage) {
+                root.setCenter(previousFromLoggerPage);
+                currentPage = previousFromLoggerPage;
             }
-            //Logger
-            if(currentPage == loggerPage) {
-                root.setCenter(outputPage);
-                currentPage = outputPage;
-                next.setDisable(false);
-                log.setDisable(false);
-            }
+            setNavigationStatus();
         });
         next.setOnAction(event -> {
             if (currentPage == loadPage) {
@@ -115,7 +106,6 @@ public class Root extends Application {
                 if (inputController.inputIsValid()) {
                     root.setCenter(outputPage);
                     currentPage = outputPage;
-                    log.setDisable(false);
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
                     String filename = loadController.getPath().getFileName().toString();
                     outputController.setInputFileName(filename);
@@ -124,19 +114,14 @@ public class Root extends Application {
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
                 }
-            } else if (currentPage == outputPage) {
-                root.setCenter(loggerPage);
-                currentPage = loggerPage;
-                next.setDisable(true);
-                log.setDisable(true);
             }
+            setNavigationStatus();
         });
         log.setOnAction(event -> {
+            previousFromLoggerPage = currentPage;
             root.setCenter(loggerPage);
             currentPage = loggerPage;
-            previous.setDisable(false);
-            next.setDisable(true);
-            log.setDisable(true);
+            setNavigationStatus();
         });
 
         BorderPane navigation = new BorderPane();
@@ -150,9 +135,7 @@ public class Root extends Application {
         root.setBottom(navigation);
         root.setCenter(homePage);
         currentPage = homePage;
-        previous.setDisable(true);
-        next.setDisable(true);
-        log.setDisable(true);
+        setNavigationStatus();
 
         //set and show scene and stage
         Scene scene = new Scene(root,960,640);
@@ -160,5 +143,29 @@ public class Root extends Application {
         stage.getIcons().add(new Image("Styling/Logo.PNG"));
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void setNavigationStatus() {
+        if (currentPage == homePage) {
+            previous.setDisable(true);
+            next.setDisable(true);
+        } else if (currentPage == loadPage) {
+            previous.setDisable(false);
+            next.setDisable(false);
+        } else if (currentPage == inputPage) {
+            next.setDisable(false);
+        } else if (currentPage == outputPage) {
+            next.setDisable(true);
+        } else if (currentPage == xmlGeneratorPage) {
+            previous.setDisable(false);
+            next.setDisable(true);
+        } else if (currentPage == loggerPage) {
+            previous.setDisable(false);
+            next.setDisable(true);
+            log.setDisable(true);
+        }
+        if (currentPage != loggerPage) {
+            log.setDisable(false);
+        }
     }
 }
