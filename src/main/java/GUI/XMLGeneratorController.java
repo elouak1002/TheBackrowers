@@ -1,6 +1,8 @@
 package GUI;
 
+import dataprocessors.Debugger;
 import dataprocessors.XMLCreator;
+import datastructures.Node;
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 
 /**
@@ -30,6 +33,8 @@ public class XMLGeneratorController {
     @FXML private Button saveButton;
     @FXML private Label saveNotification;
     @FXML private VBox xmlGeneratorRoot;
+    private Debugger debugger;
+    private LoggerController loggerController;
 
     /**
      * initialize functions when page starts up
@@ -48,6 +53,10 @@ public class XMLGeneratorController {
         multipleSelection();
         saveNotification.setVisible(false);
 
+    }
+
+    void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
     }
 
     /**
@@ -77,12 +86,15 @@ public class XMLGeneratorController {
     }
 
     /**
-     * Merges the selected files' lines and formats them into XML.
+     * Merges and debugs the selected files' lines and formats them into XML.
      * @return the merged string in XML form
      */
     private String getXMLString() throws IOException {
         XMLParser parser = new XMLParser(selectedTable.getItems());
-        XMLCreator xmlCreator = new XMLCreator(parser.createNodes(),parser.getNodeOrder());
+        debugger = new Debugger(parser.createNodes());
+        TreeMap<String, Node> nodeMap = new TreeMap<>(debugger.getMap());
+        ArrayList<String> nodeOrder = new ArrayList<>(nodeMap.keySet());
+        XMLCreator xmlCreator = new XMLCreator(nodeMap,nodeOrder);
         StringBuilder stringBuilder = new StringBuilder();
         for (String string : xmlCreator.createXMLFile()) {
             stringBuilder.append(string).append("\n");
@@ -122,6 +134,9 @@ public class XMLGeneratorController {
                         event -> saveNotification.setVisible(false)
                 );
                 visiblePause.play();
+
+                loggerController.setNotification(debugger);
+                loggerController.setOutputText(debugger,file.getName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
