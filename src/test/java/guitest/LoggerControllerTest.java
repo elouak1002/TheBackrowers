@@ -75,4 +75,27 @@ public class LoggerControllerTest {
             assertEquals(testOutput , loggerOutput);
         }
     }
+
+    @Test
+    public void testMultipleRemoveNodes() {
+        Debugger debugger = new Debugger(nodeMap);
+
+        ArrayList<String> output = new ArrayList<>();
+        ArrayList<String> logger;
+        output.add("Node1 has no neighbour, so it was removed.");
+        output.add("Node3 has no neighbour, so it was removed.");
+        output.add("Node2 has no neighbour, so it was removed.");
+
+        logger = debugger.getLog();
+
+        assertEquals(output.size(), logger.size());
+
+        for (int i = 0; i < output.size(); i++) {
+
+            String loggerOutput = logger.get(i).replaceAll("\n", "");
+            String testOutput = output.get(i).replaceAll("\n", "");
+
+            assertEquals(testOutput , loggerOutput);
+        }
+    }
 }
