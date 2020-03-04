@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <GridPane fx:id="inputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InputController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
@@ -22,11 +21,16 @@
   </rowConstraints>
    <children>
       <Label fx:id="referenceNodeLabel" text="Reference Node" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <ChoiceBox fx:id="referenceNodeChoiceBox" prefWidth="10000.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <ChoiceBox fx:id="referenceNodeChoiceBox" prefWidth="10000.0" />
+            <Label fx:id="optionHintLabel" text="To input final node positions instead, select a node" />
+         </children>
+      </VBox>
       <TextField fx:id="rotationAngle" onAction="#nextField" prefWidth="264.0" GridPane.rowIndex="1" />
       <Label fx:id="rotationAngleLabel" text="Rotation Angle" GridPane.halignment="CENTER" />
       <Label fx:id="scaleFactorLabel" text="Scale Factor" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Label fx:id="finalPositionLabel" text="Final Node Position" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label fx:id="positionOrShiftLabel" text="Shift Values" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
       <VBox prefHeight="200.0" prefWidth="150.0" GridPane.rowIndex="3">
          <children>
             <Label text="X" />
@@ -38,9 +42,9 @@
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <Label text="X" />
-            <TextField fx:id="finalPositionX" onAction="#nextField" />
+            <TextField fx:id="positionOrShiftX" onAction="#nextField" />
             <Label text="Y" />
-            <TextField fx:id="finalPositionY" />
+            <TextField fx:id="positionOrShiftY" />
          </children>
       </VBox>
    </children>

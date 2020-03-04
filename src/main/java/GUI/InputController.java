@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -24,12 +23,24 @@ public class InputController {
     @FXML private TextField rotationAngle;
     @FXML private TextField scaleFactorX;
     @FXML private TextField scaleFactorY;
-    @FXML private TextField finalPositionX;
-    @FXML private TextField finalPositionY;
+    @FXML private TextField positionOrShiftX;
+    @FXML private TextField positionOrShiftY;
+    @FXML private Label positionOrShiftLabel;
+    @FXML private Label optionHintLabel;
     private TreeMap<String,Node> nodes;
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        referenceNodeChoiceBox.setOnAction(event -> {
+            if (!referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
+                optionHintLabel.setText("To input shift factors instead, select 'NO REFERENCE'");
+                positionOrShiftLabel.setText("Final Node Positions");
+            } else {
+                optionHintLabel.setText("To input final node positions instead, select a node");
+                positionOrShiftLabel.setText("Shift Factor");
+            }
+        });
+    }
 
     /**
      * Takes the keyboard and cursor focus to the next logical text field when the user presses enter.
@@ -42,9 +53,9 @@ public class InputController {
         } else if (event.getSource() == scaleFactorX) {
             scaleFactorY.requestFocus();
         } else if (event.getSource() == scaleFactorY) {
-            finalPositionX.requestFocus();
-        } else if (event.getSource() == finalPositionX) {
-            finalPositionY.requestFocus();
+            positionOrShiftX.requestFocus();
+        } else if (event.getSource() == positionOrShiftX) {
+            positionOrShiftY.requestFocus();
         }
     }
 
@@ -60,8 +71,9 @@ public class InputController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        referenceNodeChoiceBox.getItems().add("NO REFERENCE");
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
-        referenceNodeChoiceBox.getItems().add("NULL");
+        referenceNodeChoiceBox.getSelectionModel().selectFirst();
         referenceNodeChoiceBox.setMaxSize(1000,10);
     }
 
@@ -74,8 +86,8 @@ public class InputController {
             Float.parseFloat(rotationAngle.getText());
             Float.parseFloat(scaleFactorX.getText());
             Float.parseFloat(scaleFactorY.getText());
-            Float.parseFloat(finalPositionX.getText());
-            Float.parseFloat(finalPositionY.getText());
+            Float.parseFloat(positionOrShiftX.getText());
+            Float.parseFloat(positionOrShiftY.getText());
             nodes.get(referenceNodeChoiceBox.getValue());
             return true;
         } catch (Exception e) {
@@ -91,16 +103,18 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Node ref;
-            if(referenceNodeChoiceBox.getValue().equals("NULL")){
+            if (referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
                 ref = null;
-           } else ref = nodes.get(referenceNodeChoiceBox.getValue());
+            } else {
+                ref = nodes.get(referenceNodeChoiceBox.getValue());
+            }
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(
                     Float.parseFloat(rotationAngle.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
-                    Float.parseFloat(finalPositionX.getText()),
-                    Float.parseFloat(finalPositionY.getText()),
+                    Float.parseFloat(positionOrShiftX.getText()),
+                    Float.parseFloat(positionOrShiftY.getText()),
                     ref);
 
             Debugger debugger = new Debugger(nodeMap);
