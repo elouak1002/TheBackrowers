@@ -21,13 +21,9 @@ import java.io.*;
  */
 public class OutputController {
     //Fields
-    @FXML
-    private Button saveButton = new Button();
-    @FXML
-    private Label fileSaved = new Label();
-    private FileChooser fileChooser = new FileChooser();
+    @FXML private Button saveButton = new Button();
+    @FXML private Label fileSaved = new Label();
     private String inputFileName;
-
     //Text preview area.
     @FXML
     private TextArea outputText = new TextArea();
@@ -52,6 +48,7 @@ public class OutputController {
     private void saveFile() {
         String text = outputText.getText();
         Window stage = saveButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("updated_" + inputFileName);

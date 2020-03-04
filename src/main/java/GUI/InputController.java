@@ -28,6 +28,7 @@ public class InputController {
     @FXML private Label positionOrShiftLabel;
     @FXML private Label optionHintLabel;
     private TreeMap<String,Node> nodes;
+    private Debugger debugger;
 
     @FXML
     public void initialize() {
@@ -71,7 +72,6 @@ public class InputController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-      
         referenceNodeChoiceBox.getItems().add("NO REFERENCE");
         referenceNodeChoiceBox.getItems().addAll(nodes.keySet().stream().filter(nodeName -> nodes.get(nodeName).getStatus() == Status.INITIALISED).collect(Collectors.toList()));
         referenceNodeChoiceBox.getSelectionModel().selectFirst();
@@ -118,7 +118,7 @@ public class InputController {
                     Float.parseFloat(positionOrShiftY.getText()),
                     ref);
 
-            Debugger debugger = new Debugger(nodeMap);
+            debugger = new Debugger(nodeMap);
             nodeMap = new TreeMap<>(debugger.getMap());
 
             FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
@@ -127,5 +127,9 @@ public class InputController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    Debugger getDebugger() {
+        return debugger;
     }
 }

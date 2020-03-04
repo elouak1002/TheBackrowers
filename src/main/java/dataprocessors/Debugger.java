@@ -1,5 +1,6 @@
 package dataprocessors;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -13,18 +14,23 @@ import datastructures.Status;
 public class Debugger {
 
 	private Map<String, Node> nodeMap;
+	private ArrayList<String> log;
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
 	 */
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
+		log = new ArrayList<>();
 		removeUninitialisedNeighbours();
 		addExistingNeighbours();
 		removeNeighbourlessNodes();
 	}
-	
-	
+
+	public ArrayList<String> getLog() {
+		return log;
+	}
+
 	/**
 	 * If nodeA doesn't already have nodeB as a neighbour,
 	 * then add it.
@@ -32,10 +38,11 @@ public class Debugger {
 	private void addAsNeighbour(Node nodeA, Node nodeB) {
 		if(!nodeA.hasNeighbour(nodeB)) {
 			nodeA.addNeighbour(nodeB);
+			// Log the addition of nodeB as a neighbor of nodeA.
+			log.add(nodeB.getName() + " added to become a neighbour for " + nodeA.getName() + ".\n");
 		}
 	}
-	
-	
+  
 	/**
 	 * Run over the key of the map,
 	 * and add neighbours to each node if needed.
@@ -60,6 +67,9 @@ public class Debugger {
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
+				// Log the deletion of a Node from the file to the log. 1st possibility.
+				log.add(node.getValue().getName() + " has no neighbour, so it was removed.\n");
+				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}
 		}
@@ -73,6 +83,8 @@ public class Debugger {
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getStatus() == Status.UNINITIALISED) {
+    			log.add("Node " + node.getValue().getName() + " has not been initialised, so it was removed. \n"); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}
 		}
