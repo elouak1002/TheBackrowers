@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * along with choosing the reference node passed from the parsed input file from a drop down menu.
  */
 public class InputController {
-    @FXML private ChoiceBox<String> referenceNodeChoiceBox;
+    @FXML private ComboBox<String> referenceNode;
     @FXML private TextField rotationAngle;
     @FXML private TextField scaleFactorX;
     @FXML private TextField scaleFactorY;
@@ -31,16 +31,17 @@ public class InputController {
     private Debugger debugger;
 
     @FXML
-    public void initialize() {
-        referenceNodeChoiceBox.setOnAction(event -> {
-            if (!referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
-                optionHintLabel.setText("To input shift factors instead, select 'NO REFERENCE'");
-                positionOrShiftLabel.setText("Final Node Positions");
-            } else {
-                optionHintLabel.setText("To input final node positions instead, select a node");
-                positionOrShiftLabel.setText("Shift Factor");
-            }
-        });
+    public void initialize() {}
+
+    @FXML
+    private void changeVariableLabels() {
+        if (referenceNode.getValue() != null && !referenceNode.getValue().equals("NO REFERENCE")) {
+            optionHintLabel.setText("To input shift factors instead, select 'NO REFERENCE'");
+            positionOrShiftLabel.setText("Final Node Positions");
+        } else {
+            optionHintLabel.setText("To input final node positions instead, select a node");
+            positionOrShiftLabel.setText("Shift Factor");
+        }
     }
 
     /**
@@ -61,21 +62,21 @@ public class InputController {
     }
 
     /**
-     * Sets the nodes in the reference node choice box according to the parsed file.
+     * Sets the nodes in the reference node combo box according to the parsed file.
      * @param path - the path as set in the LoadController
      */
     void setNodes(Path path) {
         Parser parser = new Parser(path);
-        referenceNodeChoiceBox.getItems().clear();
+        referenceNode.getItems().clear();
         try {
             nodes = parser.createNodes();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        referenceNodeChoiceBox.getItems().add("NO REFERENCE");
-        referenceNodeChoiceBox.getItems().addAll(nodes.keySet().stream().filter(nodeName -> nodes.get(nodeName).getStatus() == Status.INITIALISED).collect(Collectors.toList()));
-        referenceNodeChoiceBox.getSelectionModel().selectFirst();
-        referenceNodeChoiceBox.setMaxSize(1000,10);
+        referenceNode.getItems().add("NO REFERENCE");
+        referenceNode.getItems().addAll(nodes.keySet().stream().filter(nodeName -> nodes.get(nodeName).getStatus() == Status.INITIALISED).collect(Collectors.toList()));
+        referenceNode.getSelectionModel().selectFirst();
+        referenceNode.setMaxSize(1000,10);
     }
 
     /**
@@ -89,7 +90,7 @@ public class InputController {
             Float.parseFloat(scaleFactorY.getText());
             Float.parseFloat(positionOrShiftX.getText());
             Float.parseFloat(positionOrShiftY.getText());
-            nodes.get(referenceNodeChoiceBox.getValue());
+            nodes.get(referenceNode.getValue());
             return true;
         } catch (Exception e) {
             return false;
@@ -104,10 +105,10 @@ public class InputController {
     List<String> getOutput(Path path) {
         try {
             Node ref;
-            if (referenceNodeChoiceBox.getValue().equals("NO REFERENCE")) {
+            if (referenceNode.getValue().equals("NO REFERENCE")) {
                 ref = null;
             } else {
-                ref = nodes.get(referenceNodeChoiceBox.getValue());
+                ref = nodes.get(referenceNode.getValue());
             }
             Wrangler wrangler = new Wrangler(nodes);
             TreeMap<String,Node> nodeMap = wrangler.runTransformations(

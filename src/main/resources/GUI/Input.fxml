@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -23,7 +23,7 @@
       <Label fx:id="referenceNodeLabel" text="Reference Node" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
       <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <ChoiceBox fx:id="referenceNodeChoiceBox" prefWidth="10000.0" />
+            <ComboBox fx:id="referenceNode" onAction="#changeVariableLabels" prefWidth="10000.0" />
             <Label fx:id="optionHintLabel" text="To input final node positions instead, select a node" />
          </children>
       </VBox>
