@@ -55,8 +55,9 @@ public class Root extends Application {
         LoadController loadController = loadPageLoader.getController();
         InputController inputController = inputPageLoader.getController();
         OutputController outputController = outputPageLoader.getController();
-        //XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
+        XMLGeneratorController xmlGeneratorController = xmlGeneratorLoader.getController();
         LoggerController loggerController = loggerLoader.getController();
+        xmlGeneratorController.setLoggerController(loggerController);
 
         previous = new Button("Previous");
         next = new Button("Next");
