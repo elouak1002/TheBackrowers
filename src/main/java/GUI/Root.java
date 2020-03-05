@@ -85,6 +85,7 @@ public class Root extends Application {
             } else if (currentPage == outputPage) {
                 root.setCenter(inputPage);
                 currentPage = inputPage;
+                inputController.setNodes(loadController.getPath());
             } else if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
