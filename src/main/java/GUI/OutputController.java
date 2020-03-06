@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
 
-
 /**
  * The OutputController class displays the output window of the GUI where the user
  * can preview the .txt file and make any changes needed before saving.

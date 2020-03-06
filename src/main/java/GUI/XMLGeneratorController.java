@@ -26,7 +26,6 @@ import java.util.TreeMap;
  * Controller class for the XMLGenerator window, where user chooses multiple text files to merge into a xml file.
  */
 public class XMLGeneratorController {
-
     @FXML private ListView<String> uploadTable = new ListView<>();
     @FXML private ListView<String> selectedTable = new ListView<>();
     @FXML private Button saveButton;

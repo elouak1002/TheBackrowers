@@ -2,16 +2,10 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 public class HomeController{
-	
-	//FXML Components and initialisation
-	@FXML
-	private Button wranglerButton;
-
-	@FXML
-	private Button xmlButton;
+	@FXML private Button wranglerButton;
+	@FXML private Button xmlButton;
 
 	@FXML
 	public void initialize(){}
