@@ -2,14 +2,13 @@ package GUI;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
@@ -20,17 +19,13 @@ import java.io.*;
  * can preview the .txt file and make any changes needed before saving.
  */
 public class OutputController {
-    //Fields
     @FXML private Button saveButton = new Button();
     @FXML private Label fileSaved = new Label();
+    @FXML private TextArea outputText = new TextArea(); //Text preview area.
     private String inputFileName;
-    //Text preview area.
-    @FXML
-    private TextArea outputText = new TextArea();
 
     @FXML
-    public void initialize() {
-    }
+    public void initialize() {}
 
     /**
      * Sets the File name.
@@ -108,6 +103,17 @@ public class OutputController {
      */
     @FXML
     private void clearTextField() {
-        outputText.clear();
+        if (outputTextIsNotEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear the preview. Are you sure?",
+                    ButtonType.YES, ButtonType.CANCEL);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                outputText.clear();
+            }
+        }
+    }
+
+    boolean outputTextIsNotEmpty() {
+        return !outputText.getText().equals("");
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class Root extends Application {
     private Pane currentPage;
@@ -83,6 +84,18 @@ public class Root extends Application {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
             } else if (currentPage == outputPage) {
+                if (outputController.outputTextIsNotEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                            "This will remove any changes you have made to the preview. Are you sure?",
+                            ButtonType.YES, ButtonType.CANCEL);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.YES) {
+                        root.setCenter(inputPage);
+                        currentPage = inputPage;
+                    } else {
+                        return;
+                    }
+                }
                 root.setCenter(inputPage);
                 currentPage = inputPage;
             } else if (currentPage == xmlGeneratorPage) {
