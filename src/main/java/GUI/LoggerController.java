@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.*;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,6 +66,13 @@ public class LoggerController {
 
     @FXML
     private void clearTextField() {
-        displayLog.clear();
+        if (!displayLog.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear the log. Are you sure?",
+                    ButtonType.YES, ButtonType.CANCEL);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                displayLog.clear();
+            }
+        }
     }
 }
