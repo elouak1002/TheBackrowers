@@ -34,6 +34,9 @@ public class LoggerControllerTest {
         }
     }
 
+    /**
+     * Test whether the addition of a neighbour for a node gets logged.
+     */
     @Test
     public void testLogAddNode() {
         nodeMap.get("Node1").addNeighbour(nodeList.get(1));
@@ -46,6 +49,9 @@ public class LoggerControllerTest {
         assertEquals(expectedOutput, loggerOutput);
     }
 
+    /**
+     * Test whether the removal of a node if it has no neighbour gets logged.
+     */
     @Test
     public void testLogRemoveNode() {
         Debugger debugger = new Debugger(nodeMap);
@@ -56,51 +62,60 @@ public class LoggerControllerTest {
         assertEquals(expectedOutput, loggerOutput);
     }
 
+    /**
+     * Test whether multiple addition of neighbours to a node gets logged.
+     */
     @Test
     public void testMultipleAddNodes() {
+        //add neighbour for Node1.
         nodeMap.get("Node1").addNeighbour(nodeList.get(1));
+
+        //add neighbour for Node2.
         nodeMap.get("Node2").addNeighbour(nodeList.get(2));
 
         Debugger debugger = new Debugger(nodeMap);
 
-        ArrayList<String> output = new ArrayList<>();
-        ArrayList<String> logger;
+        ArrayList<String> expected = new ArrayList<>();     //expected output for log.
+        ArrayList<String> logger;                           //actual output for log.
 
-        output.add("Node1 added to become a neighbour for Node2.");
-        output.add("Node2 added to become a neighbour for Node3.");
+        expected.add("Node1 added to become a neighbour for Node2.");
+        expected.add("Node2 added to become a neighbour for Node3.");
 
         logger = debugger.getLog();
 
-        assertEquals(output.size(), logger.size());
+        assertEquals(expected.size(), logger.size());
 
-        for (int i = 0; i < output.size(); i++) {
+        for (int i = 0; i < expected.size(); i++) {
 
             String loggerOutput = logger.get(i).replaceAll("\n", "");
-            String expectedOutput = output.get(i).replaceAll("\n", "");
+            String expectedOutput = expected.get(i).replaceAll("\n", "");
 
             assertEquals(expectedOutput , loggerOutput);
         }
     }
 
+    /**
+     * Test whether multiple removal of nodes if it has no neighbours gets logged.
+     */
     @Test
     public void testMultipleRemoveNodes() {
         Debugger debugger = new Debugger(nodeMap);
 
-        ArrayList<String> output = new ArrayList<>();
-        ArrayList<String> logger;
+        ArrayList<String> expected = new ArrayList<>();     //expected output for log.
+        ArrayList<String> logger;                           //actual output for log.
 
-        output.add("Node1 has no neighbour, so it was removed.");
-        output.add("Node3 has no neighbour, so it was removed.");
-        output.add("Node2 has no neighbour, so it was removed.");
+        expected.add("Node1 has no neighbour, so it was removed.");
+        expected.add("Node3 has no neighbour, so it was removed.");
+        expected.add("Node2 has no neighbour, so it was removed.");
 
         logger = debugger.getLog();
 
-        assertEquals(output.size(), logger.size());
+        assertEquals(expected.size(), logger.size());
 
-        for (int i = 0; i < output.size(); i++) {
+        for (int i = 0; i < expected.size(); i++) {
 
             String loggerOutput = logger.get(i).replaceAll("\n", "");
-            String expectedOutput = output.get(i).replaceAll("\n", "");
+            String expectedOutput = expected.get(i).replaceAll("\n", "");
 
             assertEquals(expectedOutput , loggerOutput);
         }
