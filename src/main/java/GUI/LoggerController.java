@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class LoggerController {
     @FXML private Button saveButton;
     @FXML private TextArea displayLog;
+    private Button viewLogButton;
 
     @FXML
     public void initialize() {}
@@ -45,6 +46,10 @@ public class LoggerController {
         }
     }
 
+    void setViewLogButton(Button viewLogButton) {
+        this.viewLogButton = viewLogButton;
+    }
+
     /**
      * A method for notifying the user if any changes have been
      * made to the Log file.
@@ -52,7 +57,12 @@ public class LoggerController {
      */
     void setNotification(Debugger debugger) {
         if(!debugger.getLog().isEmpty()) {
-            new Alert(Alert.AlertType.INFORMATION, "Log file has been updated.", ButtonType.CLOSE).showAndWait();
+            ButtonType viewLog = new ButtonType("View Log");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Log file has been updated.", viewLog, ButtonType.CLOSE);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get().equals(viewLog)) {
+                viewLogButton.fire();
+            }
         }
     }
 

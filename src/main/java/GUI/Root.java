@@ -63,6 +63,7 @@ public class Root extends Application {
         previous = new Button("Previous");
         next = new Button("Next");
         log = new Button("Log");
+        loggerController.setViewLogButton(log);
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
