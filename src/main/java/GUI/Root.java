@@ -63,6 +63,7 @@ public class Root extends Application {
         previous = new Button("Previous");
         next = new Button("Next");
         log = new Button("Log");
+        loggerController.setViewLogButton(log);
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
@@ -161,25 +162,32 @@ public class Root extends Application {
 
     private void setNavigationStatus() {
         if (currentPage == homePage) {
-            previous.setDisable(true);
-            next.setDisable(true);
+            previous.setVisible(false);
+            next.setVisible(false);
         } else if (currentPage == loadPage) {
-            previous.setDisable(false);
-            next.setDisable(false);
+            previous.setVisible(true);
+            next.setVisible(true);
+            previous.setText("Home");
+            next.setText("Input");
         } else if (currentPage == inputPage) {
-            next.setDisable(false);
+            next.setVisible(true);
+            previous.setText("Load");
+            next.setText("Output");
         } else if (currentPage == outputPage) {
-            next.setDisable(true);
+            next.setVisible(false);
+            previous.setText("Input");
         } else if (currentPage == xmlGeneratorPage) {
-            previous.setDisable(false);
-            next.setDisable(true);
+            previous.setVisible(true);
+            next.setVisible(false);
+            previous.setText("Home");
         } else if (currentPage == loggerPage) {
-            previous.setDisable(false);
-            next.setDisable(true);
-            log.setDisable(true);
+            previous.setVisible(true);
+            next.setVisible(false);
+            log.setVisible(false);
+            previous.setText("Back");
         }
         if (currentPage != loggerPage) {
-            log.setDisable(false);
+            log.setVisible(true);
         }
     }
 }
