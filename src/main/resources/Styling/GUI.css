@@ -6,14 +6,19 @@
 /*
     Global
 */
-.root, #homeRoot, #loadRoot, #inputRoot, #outputRoot, #xmlGeneratorRoot {
-    -fx-background-color: #ACD1E9;
+.root {
+    -fx-background-image: url("Background.jpg");
+    -fx-background-size: cover;
 }
 
 Label, Button {
     -fx-background-radius: 20;
     -fx-font-size: 15;
     -fx-text-fill: black;
+}
+
+Button {
+    -fx-opacity: 0.85;
 }
 
 /*--------------------------------------------------------------------------------------------------*/
