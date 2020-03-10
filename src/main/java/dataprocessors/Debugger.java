@@ -13,8 +13,8 @@ import datastructures.Status;
  */
 public class Debugger {
 
-	private Map<String, Node> nodeMap;
-	private ArrayList<String> log;
+	protected Map<String, Node> nodeMap;
+	protected ArrayList<String> log;
 
 	/**
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
@@ -22,13 +22,20 @@ public class Debugger {
 	public Debugger(Map<String, Node> nodeMap) {
 		this.nodeMap = nodeMap;
 		log = new ArrayList<>();
-		removeUninitialisedNeighbours();
-		addExistingNeighbours();
-		removeNeighbourlessNodes();
+		processDebugger();
 	}
 
 	public ArrayList<String> getLog() {
 		return log;
+	}
+
+	/**
+	 * Process the debugging of the node map.
+	 */
+	public void processDebugger() {
+		removeUninitialisedNodes();
+		addExistingNeighbours();
+		removeNeighbourlessNodes();
 	}
 
 	/**
@@ -69,7 +76,6 @@ public class Debugger {
     		if(node.getValue().getNeighbours().isEmpty()){
 				// Log the deletion of a Node from the file to the log. 1st possibility.
 				log.add(node.getValue().getName() + " has no neighbour, so it was removed.\n");
-				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}
 		}
@@ -78,13 +84,12 @@ public class Debugger {
 	/**
 	 * Remove the Nodes from the Nodes that haven't been initialised.
 	 */
-	private void removeUninitialisedNeighbours() {
+	private void removeUninitialisedNodes() {
 		Iterator<Map.Entry<String,Node>> iter = nodeMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getStatus() == Status.UNINITIALISED) {
     			log.add("Node " + node.getValue().getName() + " has not been initialised, so it was removed. \n"); // Log the deletion of a Node from the file to the logfile. 1st possibility.
-				// notifyRemove(nodeName); // Basically the same, a form of Observer design Pattern.
         		iter.remove();
     		}
 		}
