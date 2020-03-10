@@ -1,3 +1,4 @@
+
 package GUI;
 
 import javafx.fxml.FXMLLoader;
@@ -9,27 +10,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobotInterface;
-import org.testfx.framework.junit.*;
+import org.testfx.framework.junit5.*;
+import org.testfx.framework.junit5.ApplicationTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+@ExtendWith(ApplicationExtension.class)
+class MainTest {
 
-class MainTest extends ApplicationTest {
 
-
-    @Override
+    @Start
     public void start(Stage stage) throws Exception{
-        Parent mainNode = FXMLLoader.load(Main.class.getResource("Home.fxml"));
+        Parent mainNode = FXMLLoader.load(Root.class.getResource("Home.fxml"));
         stage.setScene(new Scene(mainNode));
         stage.show();
         stage.toFront();
     }
 
-    @Test
+/*    @Test
     void startApplication() throws InterruptedException {
         wait(1000);
-        FxRobotInterface fxRobotInterface = clickOn("#wranglerButton");
+        FxRobotInterface fxRobotInterface;
+        clickOn("#wranglerButton");
         wait(1000);
-    }
+    }*/
 
     @BeforeEach
     void setUp() {
