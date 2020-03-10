@@ -1,5 +1,6 @@
 package GUI;
 
+import dataprocessors.XMLDebugger;
 import dataprocessors.Debugger;
 import dataprocessors.XMLCreator;
 import datastructures.Node;
@@ -99,7 +100,7 @@ public class XMLGeneratorController {
     List<String> getXMLStringList() {
         XMLParser parser = new XMLParser(selectedTable.getItems());
         try {
-            debugger = new Debugger(parser.createNodes());
+            debugger = new XMLDebugger(parser.createNodes());
             setDebuggedFileNames();
         } catch (IOException e) {
             e.printStackTrace();
