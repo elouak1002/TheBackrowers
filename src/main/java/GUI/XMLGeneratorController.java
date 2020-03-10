@@ -13,11 +13,13 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import parser.Parser;
 import parser.XMLParser;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -33,6 +35,7 @@ public class XMLGeneratorController {
     @FXML private VBox xmlGeneratorRoot;
     private Debugger debugger;
     private LoggerController loggerController;
+    private String debuggedFileNames;
 
     /**
      * Initialize functions when page starts up
@@ -58,6 +61,18 @@ public class XMLGeneratorController {
         this.loggerController = loggerController;
     }
 
+    boolean selectedTableIsNotEmpty() {
+        return !selectedTable.getItems().isEmpty();
+    }
+
+    Debugger getDebugger() {
+        return debugger;
+    }
+
+    String getDebuggedFileNames() {
+        return debuggedFileNames;
+    }
+
     /**
      * Upload multiple files via a file chooser
      */
@@ -81,17 +96,30 @@ public class XMLGeneratorController {
      * Merges and debugs the selected files' lines and formats them into XML.
      * @return the merged string in XML form
      */
-    private String getXMLString() throws IOException {
+    List<String> getXMLStringList() {
         XMLParser parser = new XMLParser(selectedTable.getItems());
-        debugger = new Debugger(parser.createNodes());
+        try {
+            debugger = new Debugger(parser.createNodes());
+            setDebuggedFileNames();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         TreeMap<String, Node> nodeMap = new TreeMap<>(debugger.getMap());
         ArrayList<String> nodeOrder = new ArrayList<>(nodeMap.keySet());
         XMLCreator xmlCreator = new XMLCreator(nodeMap,nodeOrder);
+        return xmlCreator.createXMLFile();
+    }
+
+    private void setDebuggedFileNames() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        for (String string : xmlCreator.createXMLFile()) {
-            stringBuilder.append(string).append("\n");
+        for (String path : selectedTable.getItems()) {
+            Debugger individualDebugger = new Debugger(new Parser(Paths.get(path)).createNodes());
+            if (!individualDebugger.getLog().isEmpty()) {
+                stringBuilder.append(Paths.get(path).getFileName().toString()).append("+");
+            }
         }
-        return stringBuilder.toString();
+        if (stringBuilder.length() > 0) stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        debuggedFileNames = stringBuilder.toString();
     }
 
     /**
@@ -109,7 +137,11 @@ public class XMLGeneratorController {
         if (file != null) {
             try {
                 PrintWriter writer = new PrintWriter(file);
-                writer.println(getXMLString());
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String string : getXMLStringList()) {
+                    stringBuilder.append(string).append("\n");
+                }
+                writer.println(stringBuilder.toString());
                 writer.close();
 
                 saveNotification.setText("File has been saved!");

@@ -18,6 +18,7 @@ import java.util.Optional;
 public class Root extends Application {
     private Pane currentPage;
     private Pane previousFromLoggerPage;
+    private Pane previousFromOutputPage;
     private Pane homePage;
     private Pane loadPage;
     private Pane inputPage;
@@ -91,14 +92,14 @@ public class Root extends Application {
                             ButtonType.YES, ButtonType.CANCEL);
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.YES) {
-                        root.setCenter(inputPage);
-                        currentPage = inputPage;
+                        root.setCenter(previousFromOutputPage);
+                        currentPage = previousFromOutputPage;
                     } else {
                         return;
                     }
                 }
-                root.setCenter(inputPage);
-                currentPage = inputPage;
+                root.setCenter(previousFromOutputPage);
+                currentPage = previousFromOutputPage;
             } else if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
@@ -119,6 +120,7 @@ public class Root extends Application {
                 }
             } else if (currentPage == inputPage) {
                 if (inputController.inputIsValid()) {
+                    previousFromOutputPage = currentPage;
                     root.setCenter(outputPage);
                     currentPage = outputPage;
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
@@ -128,6 +130,18 @@ public class Root extends Application {
                     loggerController.setOutputText(inputController.getDebugger(),filename);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
+                }
+            } else if (currentPage == xmlGeneratorPage) {
+                if (xmlGeneratorController.selectedTableIsNotEmpty()) {
+                    previousFromOutputPage = currentPage;
+                    root.setCenter(outputPage);
+                    currentPage = outputPage;
+                    outputController.setOutputText(xmlGeneratorController.getXMLStringList());
+                    loggerController.setNotification(xmlGeneratorController.getDebugger());
+                    loggerController.setOutputText(xmlGeneratorController.getDebugger(),
+                            xmlGeneratorController.getDebuggedFileNames());
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Please select files", ButtonType.CLOSE).showAndWait();
                 }
             }
             setNavigationStatus();
@@ -175,11 +189,16 @@ public class Root extends Application {
             next.setText("Output");
         } else if (currentPage == outputPage) {
             next.setVisible(false);
-            previous.setText("Input");
+            if (previousFromOutputPage == inputPage) {
+                previous.setText("Input");
+            } else {
+                previous.setText("XML Generator");
+            }
         } else if (currentPage == xmlGeneratorPage) {
             previous.setVisible(true);
-            next.setVisible(false);
+            next.setVisible(true);
             previous.setText("Home");
+            next.setText("Output");
         } else if (currentPage == loggerPage) {
             previous.setVisible(true);
             next.setVisible(false);
