@@ -29,6 +29,12 @@ class MainTest extends ApplicationTest {
         stage.show();
     }
 
+    @Test
+    public void testOpenTheApplication(final FxRobot robot){
+        assertEquals(1, robot.listWindows().size());
+    }
+
+
 /*    @Test
     void startApplication() throws InterruptedException {
         wait(1000);
