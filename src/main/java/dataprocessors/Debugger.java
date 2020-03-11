@@ -55,7 +55,7 @@ public class Debugger {
 	 * and add neighbours to each node if needed.
 	 * Add neighbours only to initialised nodes.
 	 */
-	private void addExistingNeighbours() {
+	protected void addExistingNeighbours() {
 		for (String nodeName : nodeMap.keySet()) {
 			Node node = nodeMap.get(nodeName);
 			for (Node neighbour : node.getNeighbours()) {
@@ -69,27 +69,28 @@ public class Debugger {
 	/**
 	 * Remove the Nodes without neighbours from the Map.
 	 */
-	private void removeNeighbourlessNodes() {
+	protected void removeNeighbourlessNodes() {
 		Iterator<Map.Entry<String,Node>> iter = nodeMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getNeighbours().isEmpty()){
-				// Log the deletion of a Node from the file to the log. 1st possibility.
+				// Log the deletion of a Node from the file to the log.
 				log.add(node.getValue().getName() + " has no neighbour, so it was removed.\n");
         		iter.remove();
     		}
 		}
 	}
-
+	
 	/**
 	 * Remove the Nodes from the Nodes that haven't been initialised.
 	 */
-	private void removeUninitialisedNodes() {
+	protected void removeUninitialisedNodes() {
 		Iterator<Map.Entry<String,Node>> iter = nodeMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry<String,Node> node = iter.next();
     		if(node.getValue().getStatus() == Status.UNINITIALISED) {
-    			log.add("Node " + node.getValue().getName() + " has not been initialised, so it was removed. \n"); // Log the deletion of a Node from the file to the logfile. 1st possibility.
+				// Log the deletion of a Node from the file to the log because it wasn't initialised.
+    			log.add(node.getValue().getName() + " has not been initialised, so it was removed. \n");
         		iter.remove();
     		}
 		}
