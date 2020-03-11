@@ -170,4 +170,9 @@ public class Root extends Application {
             log.setDisable(false);
         }
     }
+
+
+    public javafx.scene.layout.Pane getCurrentPage() {
+        return currentPage;
+    }
 }

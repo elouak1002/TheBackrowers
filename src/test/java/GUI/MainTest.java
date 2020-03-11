@@ -9,20 +9,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxRobot;
 import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit5.*;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @ExtendWith(ApplicationExtension.class)
-class MainTest {
+class MainTest extends ApplicationTest {
 
 
     @Start
-    public void start(Stage stage) throws Exception{
-        Parent mainNode = FXMLLoader.load(Root.class.getResource("Home.fxml"));
-        stage.setScene(new Scene(mainNode));
+    public void start(Stage stage) {
+        final Root app = new Root();
+
+        final Scene scene = new Scene(app.getCurrentPage(), 1280, 720);
+        stage.setScene(scene);
         stage.show();
-        stage.toFront();
     }
 
 /*    @Test
