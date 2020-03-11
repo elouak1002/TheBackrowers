@@ -35,7 +35,6 @@ public class FileLinesCreator {
 	private List<String> neighbourLines;
 	
 	/**
-	 * 
 	 * @param nodeMap the map of Nodes (Name -> Node)
 	 * @param originPath The path to the origin input file, needed for the parser.
 	 * @throws IOException
