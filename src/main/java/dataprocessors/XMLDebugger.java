@@ -23,9 +23,11 @@ public class XMLDebugger extends Debugger {
 	 * Process the debugging of the node map.
 	 */
 	@Override
-	public void processDebugger() {
+	protected void processDebugger() {
+		removeUninitialisedNodes();
 		removeUninitialisedNeighbours();
-		super.processDebugger();
+		addExistingNeighbours();
+		removeNeighbourlessNodes();
 	}
 
 	/**
@@ -39,6 +41,8 @@ public class XMLDebugger extends Debugger {
 			while (iter.hasNext()) {
 				Node neighbour = iter.next();
 				if (neighbour.getStatus() == Status.ONLY_NEIGHBOUR) {
+					// Log the deletion of a neighbour because it wasn't initialised in any files.
+					log.add("The neighbour " + neighbour.getName() + " has not been initialised, so it was removed from " + node.getName() + " neighbours.\n");
 					iter.remove();
 				}
 			}
