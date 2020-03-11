@@ -32,7 +32,7 @@ public class Debugger {
 	/**
 	 * Process the debugging of the node map.
 	 */
-	public void processDebugger() {
+	protected void processDebugger() {
 		removeUninitialisedNodes();
 		addExistingNeighbours();
 		removeNeighbourlessNodes();
