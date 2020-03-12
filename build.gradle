@@ -16,11 +16,19 @@ dependencies {
     testImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
     testCompile('org.hamcrest:hamcrest:2.2')
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+
+    if (project.hasProperty('excludeTests')) {
+        exclude project.property('excludeTests')
+    }
 }
+
 
 apply plugin: 'java'
 

@@ -28,6 +28,7 @@ public class Root extends Application {
     private Button previous;
     private Button log;
 
+
     @Override
     public void start(Stage stage) {
         //initialise fxml loaders
@@ -175,4 +176,10 @@ public class Root extends Application {
     public javafx.scene.layout.Pane getCurrentPage() {
         return currentPage;
     }
+
+    public Pane getHomePage(){
+        return homePage;
+    }
+
+
 }

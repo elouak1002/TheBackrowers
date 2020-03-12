@@ -22,9 +22,9 @@ class MainTest extends ApplicationTest {
 
     @Start
     public void start(Stage stage) {
-        final Root app = new Root();
-
-        final Scene scene = new Scene(app.getCurrentPage(), 1280, 720);
+        final Root root = new Root();
+        root.start(stage);
+        final Scene scene = new Scene(root.getCurrentPage(), 1280, 720);
         stage.setScene(scene);
         stage.show();
     }
@@ -35,13 +35,13 @@ class MainTest extends ApplicationTest {
     }
 
 
-/*    @Test
+   @Test
     void startApplication() throws InterruptedException {
         wait(1000);
         FxRobotInterface fxRobotInterface;
         clickOn("#wranglerButton");
         wait(1000);
-    }*/
+    }
 
     @BeforeEach
     void setUp() {
