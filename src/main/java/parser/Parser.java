@@ -144,7 +144,10 @@ public class Parser {
     public int beginOfNodeListLines() throws IOException {
         List<String> firstLine = getAllLines();
         firstLine.removeIf(line -> !line.contains("NODE LIST"));
-        return getAllLines().indexOf(firstLine.get(0));
+        if (firstLine.size() > 0) {
+            return getAllLines().indexOf(firstLine.get(0));
+        }
+        return -1;
     }
 
     /**
