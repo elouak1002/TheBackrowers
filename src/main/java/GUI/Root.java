@@ -13,10 +13,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class Root extends Application {
     private Pane currentPage;
     private Pane previousFromLoggerPage;
+    private Pane previousFromOutputPage;
     private Pane homePage;
     private Pane loadPage;
     private Pane inputPage;
@@ -65,6 +67,7 @@ public class Root extends Application {
         previous.setId("previous");
         next.setId("next");
         log.setId("log");
+        loggerController.setViewLogButton(log);
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
@@ -86,9 +89,20 @@ public class Root extends Application {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
             } else if (currentPage == outputPage) {
-                root.setCenter(inputPage);
-                currentPage = inputPage;
-                inputController.setNodes(loadController.getPath());
+                if (outputController.outputTextIsNotEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                            "This will remove any changes you have made to the preview. Are you sure?",
+                            ButtonType.YES, ButtonType.CANCEL);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.YES) {
+                        root.setCenter(previousFromOutputPage);
+                        currentPage = previousFromOutputPage;
+                    } else {
+                        return;
+                    }
+                }
+                root.setCenter(previousFromOutputPage);
+                currentPage = previousFromOutputPage;
             } else if (currentPage == xmlGeneratorPage) {
                 root.setCenter(homePage);
                 currentPage = homePage;
@@ -109,6 +123,7 @@ public class Root extends Application {
                 }
             } else if (currentPage == inputPage) {
                 if (inputController.inputIsValid()) {
+                    previousFromOutputPage = currentPage;
                     root.setCenter(outputPage);
                     currentPage = outputPage;
                     outputController.setOutputText(inputController.getOutput(loadController.getPath()));
@@ -118,6 +133,18 @@ public class Root extends Application {
                     loggerController.setOutputText(inputController.getDebugger(),filename);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Input is invalid", ButtonType.CLOSE).showAndWait();
+                }
+            } else if (currentPage == xmlGeneratorPage) {
+                if (xmlGeneratorController.selectedTableIsNotEmpty()) {
+                    previousFromOutputPage = currentPage;
+                    root.setCenter(outputPage);
+                    currentPage = outputPage;
+                    outputController.setOutputText(xmlGeneratorController.getXMLStringList());
+                    loggerController.setNotification(xmlGeneratorController.getDebugger());
+                    loggerController.setOutputText(xmlGeneratorController.getDebugger(),
+                            xmlGeneratorController.getDebuggedFileNames());
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Please select files", ButtonType.CLOSE).showAndWait();
                 }
             }
             setNavigationStatus();
@@ -152,25 +179,37 @@ public class Root extends Application {
 
     private void setNavigationStatus() {
         if (currentPage == homePage) {
-            previous.setDisable(true);
-            next.setDisable(true);
+            previous.setVisible(false);
+            next.setVisible(false);
         } else if (currentPage == loadPage) {
-            previous.setDisable(false);
-            next.setDisable(false);
+            previous.setVisible(true);
+            next.setVisible(true);
+            previous.setText("Home");
+            next.setText("Input");
         } else if (currentPage == inputPage) {
-            next.setDisable(false);
+            next.setVisible(true);
+            previous.setText("Load");
+            next.setText("Output");
         } else if (currentPage == outputPage) {
-            next.setDisable(true);
+            next.setVisible(false);
+            if (previousFromOutputPage == inputPage) {
+                previous.setText("Input");
+            } else {
+                previous.setText("XML Generator");
+            }
         } else if (currentPage == xmlGeneratorPage) {
-            previous.setDisable(false);
-            next.setDisable(true);
+            previous.setVisible(true);
+            next.setVisible(true);
+            previous.setText("Home");
+            next.setText("Output");
         } else if (currentPage == loggerPage) {
-            previous.setDisable(false);
-            next.setDisable(true);
-            log.setDisable(true);
+            previous.setVisible(true);
+            next.setVisible(false);
+            log.setVisible(false);
+            previous.setText("Back");
         }
         if (currentPage != loggerPage) {
-            log.setDisable(false);
+            log.setVisible(true);
         }
     }
 }
