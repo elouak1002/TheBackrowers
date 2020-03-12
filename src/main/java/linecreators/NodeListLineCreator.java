@@ -76,7 +76,7 @@ public class NodeListLineCreator extends LineCreator {
 		lines.add("====== NODE LISTS =======");
 		for (String type : typeMap.keySet()) {
 			lines.add("");
-			lines.add("// " + type + ":");
+			lines.add("// " + type + "s:");
 			lines.add(formatEachList(typeMap.get(type)));
 		}
 	}
