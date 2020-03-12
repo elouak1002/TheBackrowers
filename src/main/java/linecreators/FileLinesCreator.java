@@ -70,6 +70,7 @@ public class FileLinesCreator {
 		this.beginNeighbourPosition = parser.beginOfNeighbourLines();
 		this.endNeighbourPosition = parser.endOfNeighbourLines();
 
+		// compute the begin of the node list lines in the input (file size otherwise)
 		this.beginNodeListPosition = parser.beginOfNodeListLines();
 		
 		// Process the modifications to the input file.
