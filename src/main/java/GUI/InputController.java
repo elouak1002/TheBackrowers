@@ -27,6 +27,7 @@ public class InputController {
     @FXML private TextField positionOrShiftY;
     @FXML private Label positionOrShiftLabel;
     @FXML private Label optionHintLabel;
+    private Parser parser;
     private TreeMap<String,Node> nodes;
     private Debugger debugger;
 
@@ -66,7 +67,7 @@ public class InputController {
      * @param path - the path as set in the LoadController
      */
     void setNodes(Path path) {
-        Parser parser = new Parser(path);
+        parser = new Parser(path);
         referenceNode.getItems().clear();
         try {
             nodes = parser.createNodes();
@@ -104,6 +105,7 @@ public class InputController {
      */
     List<String> getOutput(Path path) {
         try {
+            nodes = parser.createNodes();
             Node ref;
             if (referenceNode.getValue().equals("NO REFERENCE")) {
                 ref = null;
