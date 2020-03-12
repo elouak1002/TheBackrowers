@@ -46,6 +46,17 @@ public class Node {
     }
 
     /**
+     * Constructor for the Node class
+     * @param name of the node
+     * @param xCoord of the node
+     * @param yCoord of the node
+     */
+    public Node (String name, float xCoord, float yCoord, String type){
+        this(name,xCoord,yCoord);
+        this.type = type;
+    }
+
+    /**
      * Getter method for the Node's name
      * @return Node's name
      */
