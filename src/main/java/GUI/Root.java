@@ -62,6 +62,9 @@ public class Root extends Application {
         previous = new Button("Previous");
         next = new Button("Next");
         log = new Button("Log");
+        previous.setId("previous");
+        next.setId("next");
+        log.setId("log");
 
         //assign functionality to homeController buttons
         homeController.getWranglerButton().setOnAction(event -> {
@@ -169,10 +172,5 @@ public class Root extends Application {
         if (currentPage != loggerPage) {
             log.setDisable(false);
         }
-    }
-
-
-    public javafx.scene.layout.Pane getCurrentPage() {
-        return currentPage;
     }
 }
