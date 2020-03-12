@@ -41,6 +41,14 @@ public class FileLinesCreatorTest {
 
 	@Test
 	public void processOutputFileTest() throws IOException {
+		
+		// Set type of each Node
+		nodeMap.get("Node1").setType("Node");
+		nodeMap.get("Node2").setType("Room");
+		nodeMap.get("Node3").setType("Toilet");
+		nodeMap.get("Node4").setType("FloorChanger");
+		nodeMap.get("Node5").setType("FloorChanger");
+
 		// Add neighbour for node 1
 		nodeMap.get("Node1").addNeighbour(nodeList.get(1));
 		nodeMap.get("Node1").addNeighbour(nodeList.get(3));
@@ -75,7 +83,16 @@ public class FileLinesCreatorTest {
 			"====== NODE LISTS =======",
 			"",
 			"// Nodes:",
-			" , Node1 , Node2 , Node3 , Node4"
+			" , Node1",
+			"",
+			"// Rooms:",
+			" , Node2",
+			"",
+			"// Toilets:",
+			" , Node3",
+			"",
+			"// FloorChangers:",
+			" , Node4 , Node5"
 			));
 
 			FileLinesCreator fileCrea = new FileLinesCreator(nodeMap,Paths.get("src/test/resources/testFileLinesCreatorData.txt"));
@@ -83,3 +100,6 @@ public class FileLinesCreatorTest {
 			assertEquals(fileCrea.getOutputFile(),output); // Need to be modified when wrangler will be added.
 	}
 }
+
+// expected: <[// Data of Mappin Technologies LTD 2019, // Thu Aug  1 11:48:39 2019, , , Node Node1 = new Node( 1.0f , 2.0f , GuysHeights.HenRaph_04 );, Room Node2 = new Room( 10.0f , 20.0f , GuysHeights.HenRaph_04 , "HR 4.2" );, Toilet Node3 = new Toilet( 14.0f , 24.0f , GuysHeights.HenRaph_04 , ToiletType.Female );, FloorChanger Node4 = new FloorChanger( 7.0f , 27.0f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );, FloorChanger Node5 = new FloorChanger( 32.1f , 27.19f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2, , Node1.addAllNeighbours( new List<Node>{ Node2 , Node4 } );, Node2.addAllNeighbours( new List<Node>{ Node3 } );, Node3.addAllNeighbours( new List<Node>{ Node1 , Node2 } );, Node4.addAllNeighbours( new List<Node>{ Node1 , Node2 } );, , ====== NODE LISTS =======, , // null:,  , Node1 , Node2 , Node3 , Node4 , Node5]> 
+// but was:  <[// Data of Mappin Technologies LTD 2019, // Thu Aug  1 11:48:39 2019, , , Node Node1 = new Node( 1.0f , 2.0f , GuysHeights.HenRaph_04 );, Room Node2 = new Room( 10.0f , 20.0f , GuysHeights.HenRaph_04 , "HR 4.2" );, Toilet Node3 = new Toilet( 14.0f , 24.0f , GuysHeights.HenRaph_04 , ToiletType.Female );, FloorChanger Node4 = new FloorChanger( 7.0f , 27.0f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );, FloorChanger Node5 = new FloorChanger( 32.1f , 27.19f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2, , Node1.addAllNeighbours( new List<Node>{ Node2 , Node4 } );, Node2.addAllNeighbours( new List<Node>{ Node3 } );, Node3.addAllNeighbours( new List<Node>{ Node1 , Node2 } );, Node4.addAllNeighbours( new List<Node>{ Node1 , Node2 } );, , ====== NODE LISTS =======, , // Nodes:,  , Node1 , Node2 , Node3 , Node4 , Node 5]>
