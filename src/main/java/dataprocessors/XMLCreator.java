@@ -1,11 +1,7 @@
 package dataprocessors;
 
 import datastructures.Node;
-import parser.Parser;
-import parser.XMLParser;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;

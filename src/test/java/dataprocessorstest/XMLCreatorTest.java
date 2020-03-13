@@ -3,11 +3,8 @@ package dataprocessorstest;
 import dataprocessors.XMLCreator;
 import datastructures.Node;
 import org.junit.jupiter.api.Test;
-import parser.NodeCreator;
-import parser.Parser;
 import parser.XMLParser;
 
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +14,6 @@ import java.util.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 public class XMLCreatorTest {
 
     private List<String> paths = Arrays.asList("src/test/resources/fullInputData.txt","src/test/resources/XMLParserTestData1.txt", "src/test/resources/XMLParserTestData2.txt");
