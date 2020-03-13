@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class NeighbourLineCreator extends LineCreator {
 
 	/**
-	 * Constructor for the FileCreator class.
+	 * Constructor for the Neighbour line creator class.
 	 * @param nodeMap Map of the file nodes. 
 	 * @param originPath Path to the input file
 	 * @throws IOException IOException

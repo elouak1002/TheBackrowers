@@ -138,6 +138,19 @@ public class Parser {
     }
 
     /**
+     * @return The position of the begining of the Node List,
+     * -1 otherwise.
+     */
+    public int beginOfNodeListLines() throws IOException {
+        List<String> firstLine = getAllLines();
+        firstLine.removeIf(line -> !line.contains("NODE LIST"));
+        if (firstLine.size() > 0) {
+            return getAllLines().indexOf(firstLine.get(0));
+        }
+        return -1;
+    }
+
+    /**
      * A method that creates a node creator object and passes the lines with node data
      * and their neighbours data
      * @return a TreeMap of Nodes and their names

@@ -36,7 +36,11 @@ public abstract class LineCreator {
 	public LineCreator(Map<String, Node> nodeMap, Path originPath) throws IOException{
 
 		// A File Parser.
-		this.parser = new Parser(originPath);
+		if (originPath != null)
+			this.parser = new Parser(originPath);
+		else
+			this.parser = null;
+
 		this.nodeMap = nodeMap;
 	}
 

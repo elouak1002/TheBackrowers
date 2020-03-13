@@ -46,7 +46,12 @@ public class OutputController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("updated_" + inputFileName);
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter;
+        if (inputFileName.equals("xml")) {
+            extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        } else {
+            extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        }
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
 
