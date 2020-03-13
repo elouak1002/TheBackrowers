@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Test;
 import dataprocessors.XMLDebugger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import org.hamcrest.collection.IsMapContaining;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,15 +43,15 @@ public class XMLDebuggerTest {
         Node node1 = new Node("Node1",10f,10f);
 		Node node2 = new Node("Node2",10f,10f);
 
-		node1.setNeighbours(Arrays.asList(node1));
-        node2.setNeighbours(Arrays.asList(node2));
+		node1.setNeighbours(Arrays.asList(node2));
+        node2.setNeighbours(Arrays.asList(node1));
 
         expectedOutcome.put("Node1",node1);
 		expectedOutcome.put("Node2",node2);
 
 		// Add neighbour for node 1
-		nodeMap.get("Node1").setNeighbours(Arrays.asList(new Node("NodeA",Status.ONLY_NEIGHBOUR),new Node("NodeB",Status.ONLY_NEIGHBOUR)));
-		nodeMap.get("Node2").setNeighbours(Arrays.asList(new Node("NodeA",Status.ONLY_NEIGHBOUR),new Node("NodeB",Status.ONLY_NEIGHBOUR)));
+		nodeMap.get("Node1").setNeighbours(new ArrayList<Node>(Arrays.asList(new Node("NodeA",Status.ONLY_NEIGHBOUR),new Node("NodeB",Status.ONLY_NEIGHBOUR))));
+		nodeMap.get("Node2").setNeighbours(new ArrayList<Node>(Arrays.asList(new Node("NodeA",Status.ONLY_NEIGHBOUR),new Node("NodeB",Status.ONLY_NEIGHBOUR))));
 		
 		// Add neighbour for node 1
 		nodeMap.get("Node1").addNeighbour(nodeList.get(1));
