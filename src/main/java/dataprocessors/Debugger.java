@@ -25,6 +25,9 @@ public class Debugger {
 		processDebugger();
 	}
 
+	/**
+	 * Return the log file.
+	 */
 	public ArrayList<String> getLog() {
 		return log;
 	}
