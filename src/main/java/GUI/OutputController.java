@@ -22,6 +22,7 @@ public class OutputController {
     @FXML private Label fileSaved = new Label();
     @FXML private TextArea outputText = new TextArea(); //Text preview area.
     private String inputFileName;
+    private String uneditedOutputString;
 
     @FXML
     public void initialize() {}
@@ -99,6 +100,7 @@ public class OutputController {
         for (String string : outputStringList) {
             outputText.appendText(string + "\n");
         }
+        uneditedOutputString = outputText.getText();
     }
 
     /**
@@ -107,7 +109,7 @@ public class OutputController {
      */
     @FXML
     private void clearTextField() {
-        if (outputTextIsNotEmpty()) {
+        if (!outputText.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear the preview. Are you sure?",
                     ButtonType.YES, ButtonType.CANCEL);
             Optional<ButtonType> result = alert.showAndWait();
@@ -117,7 +119,7 @@ public class OutputController {
         }
     }
 
-    boolean outputTextIsNotEmpty() {
-        return !outputText.getText().equals("");
+    boolean outputTextHasBeenEdited() {
+        return !outputText.getText().equals(uneditedOutputString);
     }
 }
