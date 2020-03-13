@@ -168,6 +168,3 @@ public class LoggerControllerTest {
         }
     }
 }
-
-// The neighbour NodeA has not been initialised, so it was removed from Node2 neighbours.>
-// The neighbour NodeA has not been initialised, so it was removed from Node3 neighbours.>
