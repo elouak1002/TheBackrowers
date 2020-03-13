@@ -114,7 +114,7 @@ public class XMLGeneratorController {
     private void setDebuggedFileNames() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         for (String path : selectedTable.getItems()) {
-            Debugger individualDebugger = new Debugger(new Parser(Paths.get(path)).createNodes());
+            Debugger individualDebugger = new XMLDebugger(new Parser(Paths.get(path)).createNodes());
             if (!individualDebugger.getLog().isEmpty()) {
                 stringBuilder.append(Paths.get(path).getFileName().toString()).append("+");
             }
