@@ -36,9 +36,9 @@ public class NodeListLineCreator extends LineCreator {
 		// Create the type map.
 		createTypeMap();
 
-		if ()
+		if (typeMap != null)
 		// Create the nodes list lines.
-		createLines();
+			createLines();
 	}
 
 	/**
