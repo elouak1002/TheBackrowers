@@ -21,6 +21,7 @@ import datastructures.Node;
 import datastructures.Status;
 
 /**
+ * Test the Debugger.
 * @version 12.02.2020
 */
 public class DebuggerTest {
