@@ -21,7 +21,7 @@ import datastructures.Node;
 import datastructures.Status;
 
 /**
-* Test the String creation of the Data Line, especially the arguments creation.
+ * Test the Debugger.
 * @version 12.02.2020
 */
 public class DebuggerTest {
