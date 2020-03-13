@@ -33,10 +33,14 @@ public class NodeListLineCreator extends LineCreator {
 		// A list of the neighbour lines to be modified.
 		this.lines = new LinkedList<>();
 
+		// A list of type of nodes.
+		typeMap = new LinkedHashMap<>();
+		
+		if (nodeMap != null)
 		// Create the type map.
-		createTypeMap();
+			createTypeMap();
 
-		if (typeMap != null)
+		if (typeMap.size() > 0)
 		// Create the nodes list lines.
 			createLines();
 	}
@@ -54,7 +58,6 @@ public class NodeListLineCreator extends LineCreator {
 	 * Each type map a list of nodes of that type.
 	 */
 	public void createTypeMap() {
-		typeMap = new LinkedHashMap<>();
 		for (String nodeName : nodeMap.keySet()) {
 			String type = nodeMap.get(nodeName).getType();
 			if (typeMap.containsKey(type)) {
