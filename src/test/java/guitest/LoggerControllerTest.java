@@ -1,6 +1,5 @@
 package guitest;
 
-import GUI.LoggerController;
 import dataprocessors.Debugger;
 import datastructures.Node;
 import org.junit.jupiter.api.BeforeEach;

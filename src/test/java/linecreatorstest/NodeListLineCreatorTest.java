@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import linecreators.DataLineCreator;
 import linecreators.LineCreator;
 import linecreators.NodeListLineCreator;
 import datastructures.Node;
