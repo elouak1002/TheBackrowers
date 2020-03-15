@@ -23,9 +23,12 @@ public class FileLinesCreator {
 	private int beginDataPosition;
 	private int endDataPosition;
 	
-	// Begin and end of neighbours lines in the input
+	// Begin and end of neighbours lines in the input file.
 	private int beginNeighbourPosition;
 	private int endNeighbourPosition;
+
+	// Begin of Node List lines in the input file.
+	private int beginNodeListPosition;
 	
 	// The output file, as a list of strings.
 	private List<String> file;
@@ -33,9 +36,10 @@ public class FileLinesCreator {
 	private List<String> dataLines;
 	// The neighbour lines of the output file.
 	private List<String> neighbourLines;
+	// The node list lines of the output file.
+	private List<String> nodeListLines;
 	
 	/**
-	 * 
 	 * @param nodeMap the map of Nodes (Name -> Node)
 	 * @param originPath The path to the origin input file, needed for the parser.
 	 * @throws IOException
@@ -51,6 +55,10 @@ public class FileLinesCreator {
 		LineCreator neighbourCreator = new NeighbourLineCreator(nodeMap, originPath);
 		this.neighbourLines =  neighbourCreator.getLines();
 		
+		// Create the node list lines for the output file, using the modified nodeMap.
+		LineCreator nodeListCreator = new NodeListLineCreator(nodeMap, originPath);
+		this.nodeListLines = nodeListCreator.getLines();
+		
 		// Initially the ouput file is the input file.
 		this.file = parser.getAllLines();
 		
@@ -60,7 +68,10 @@ public class FileLinesCreator {
 		
 		// compute begin and end of neighbours lines in the input
 		this.beginNeighbourPosition = parser.beginOfNeighbourLines();
-		this.endNeighbourPosition =  parser.endOfNeighbourLines();
+		this.endNeighbourPosition = parser.endOfNeighbourLines();
+
+		// compute the begin of the node list lines in the input (file size otherwise)
+		this.beginNodeListPosition = parser.beginOfNodeListLines();
 		
 		// Process the modifications to the input file.
 		processOutputFile();
@@ -71,15 +82,13 @@ public class FileLinesCreator {
 	 * @return A list of String that merge the modified data lines into 
 	 * the full file lines.
 	 */
-	private List<String> mergeDataLines(List<String> outputFile) {
+	private void mergeDataLines(List<String> outputFile) {
 		
 		for (int i=0; i < beginDataPosition; i++) {
 			outputFile.add(file.get(i));
 		}
 
 		outputFile.addAll(dataLines);
-		
-		return outputFile;
 	}
 
 	/**
@@ -87,24 +96,24 @@ public class FileLinesCreator {
 	 * @return A list of String that merge the modified neighbours lines into 
 	 * the full file lines.
 	 */
-	private List<String> mergeNeighbourLines(List<String> outputFile) {
+	private void mergeNeighbourLines(List<String> outputFile) {
 
 		outputFile.addAll(neighbourLines);
 		
-		for (int i = endNeighbourPosition + 1; i < file.size(); i++) {
+		for (int i = endNeighbourPosition + 1; i < beginNodeListPosition; i++) {
 			outputFile.add(file.get(i));
 		}
-		
-		return outputFile;
 	}
 
-	private List<String> mergeBetweenDataAndNeighbour(List<String> outputFile) {
+	private void mergeBetweenDataAndNeighbour(List<String> outputFile) {
 
 		for (int i = endDataPosition + 1; i < beginNeighbourPosition; i++) {
 			outputFile.add(file.get(i));
 		}
+	}
 
-		return outputFile;
+	private void mergeNodeListLines(List<String> outputFile) {
+		outputFile.addAll(nodeListLines);
 	}
 
 	/**
@@ -116,6 +125,7 @@ public class FileLinesCreator {
 		mergeDataLines(outputFile);
 		mergeBetweenDataAndNeighbour(outputFile);
 		mergeNeighbourLines(outputFile);
+		mergeNodeListLines(outputFile);
 
 		this.file = outputFile;
 	}

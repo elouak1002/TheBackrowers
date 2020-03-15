@@ -41,6 +41,14 @@ public class FileLinesCreatorTest {
 
 	@Test
 	public void processOutputFileTest() throws IOException {
+		
+		// Set type of each Node
+		nodeMap.get("Node1").setType("Node");
+		nodeMap.get("Node2").setType("Room");
+		nodeMap.get("Node3").setType("Toilet");
+		nodeMap.get("Node4").setType("FloorChanger");
+		nodeMap.get("Node5").setType("FloorChanger");
+
 		// Add neighbour for node 1
 		nodeMap.get("Node1").addNeighbour(nodeList.get(1));
 		nodeMap.get("Node1").addNeighbour(nodeList.get(3));
@@ -75,7 +83,16 @@ public class FileLinesCreatorTest {
 			"====== NODE LISTS =======",
 			"",
 			"// Nodes:",
-			" , Node1 , Node2 , Node3 , Node4"
+			" , Node1",
+			"",
+			"// Rooms:",
+			" , Node2",
+			"",
+			"// Toilets:",
+			" , Node3",
+			"",
+			"// FloorChangers:",
+			" , Node4 , Node5"
 			));
 
 			FileLinesCreator fileCrea = new FileLinesCreator(nodeMap,Paths.get("src/test/resources/testFileLinesCreatorData.txt"));

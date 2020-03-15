@@ -141,6 +141,7 @@ public class Root extends Application {
                     root.setCenter(outputPage);
                     currentPage = outputPage;
                     outputController.setOutputText(xmlGeneratorController.getXMLStringList());
+                    outputController.setInputFileName("xml");
                     loggerController.setNotification(xmlGeneratorController.getDebugger());
                     loggerController.setOutputText(xmlGeneratorController.getDebugger(),
                             xmlGeneratorController.getDebuggedFileNames());

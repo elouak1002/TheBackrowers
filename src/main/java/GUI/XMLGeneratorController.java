@@ -1,5 +1,6 @@
 package GUI;
 
+import dataprocessors.XMLDebugger;
 import dataprocessors.Debugger;
 import dataprocessors.XMLCreator;
 import datastructures.Node;
@@ -99,7 +100,7 @@ public class XMLGeneratorController {
     List<String> getXMLStringList() {
         XMLParser parser = new XMLParser(selectedTable.getItems());
         try {
-            debugger = new Debugger(parser.createNodes());
+            debugger = new XMLDebugger(parser.createNodes());
             setDebuggedFileNames();
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,7 +114,7 @@ public class XMLGeneratorController {
     private void setDebuggedFileNames() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         for (String path : selectedTable.getItems()) {
-            Debugger individualDebugger = new Debugger(new Parser(Paths.get(path)).createNodes());
+            Debugger individualDebugger = new XMLDebugger(new Parser(Paths.get(path)).createNodes());
             if (!individualDebugger.getLog().isEmpty()) {
                 stringBuilder.append(Paths.get(path).getFileName().toString()).append("+");
             }

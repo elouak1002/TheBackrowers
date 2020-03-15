@@ -7,7 +7,6 @@ import dataprocessors.Debugger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.hamcrest.collection.IsMapContaining;
@@ -22,7 +21,7 @@ import datastructures.Node;
 import datastructures.Status;
 
 /**
-* Test the String creation of the Data Line, especially the arguments creation.
+ * Test the Debugger.
 * @version 12.02.2020
 */
 public class DebuggerTest {

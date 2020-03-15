@@ -179,6 +179,12 @@ public class ParserTest {
         Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
         assertEquals(fullInputParser.endOfNeighbourLines(),48);
     }
+    
+    @Test
+    public void beginNodeListLinesTest() throws IOException {
+        Parser fullInputParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
+        assertEquals(fullInputParser.beginOfNodeListLines(),51);
+    }
 
 //    @Test
 //    public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
