@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextArea;
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxRobot;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,6 +31,11 @@ public class LoadTest extends AppRunner{
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.isVisible());
             assertTrue(selectedFileLabel.getText().equals("Selected File: "));
+        }
+        if (lookup("#next").tryQuery().isPresent()) {//this waits for the label to become visible
+            Labeled nextButton = lookup("#next").query();
+            assertTrue(nextButton.isVisible());
+            assertTrue(nextButton.getText().equals("Input"));
         }
 
     }
