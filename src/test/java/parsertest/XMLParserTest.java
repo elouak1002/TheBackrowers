@@ -2,30 +2,24 @@ package parsertest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import parser.NodeCreator;
 import parser.XMLParser;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XMLParserTest {
     private XMLParser parser;
-    private NodeCreator nodeCreator;
     private List<String> nodeLines;
     private List<String> allLines;
     private List<String> neighbourLines;
     private List<String> paths = Arrays.asList("src/test/resources/XMLParserTestData1.txt", "src/test/resources/XMLParserTestData2.txt");
-    private List<String> dataOutput = Arrays.asList("");
 
     @BeforeEach
     public void setup() throws IOException{
         parser = new XMLParser(paths);
-        nodeCreator = new NodeCreator(parser.getLines(), parser.getNeighboursLines());
         nodeLines = Arrays.asList("Node HenRaph_04_491_365 = new Node( 49.176838f , 36.575871f , GuysHeights.HenRaph_04 );",
                 "Node HenRaph_04_581_365 = new Node( 58.142784f , 36.593246f , GuysHeights.HenRaph_04 );",
                 "Node HenRaph_04_621_365 = new Node( 62.150284f , 36.593246f , GuysHeights.HenRaph_04 );",
