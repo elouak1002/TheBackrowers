@@ -121,7 +121,7 @@ public class NodeCreator {
                         specialType = "1";
                         break;
                     case "FloorChangerType.Lift":
-                        specialType = "2"; 
+                        specialType = "2";
                         break;
                     default: break;
                 }
