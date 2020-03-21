@@ -88,18 +88,30 @@ public class NodeCreator {
                 break;
             case "Toilet":
                 switch (specialTrait){
-                    case "ToiletType.Male": //TODO Verify numbers with client
+                    case "Default":
+                        specialType = "0";
+                        break;
+                    case "ToiletType.Male":
                         specialType = "1";
                         break;
                     case "ToiletType.Female":
                         specialType = "2";
                         break;
-//                    case "ToiletType.Disabled":
-//                        specialType = "3";
-//                        break;
-//                    case "ToiletType.Neutral":
-//                        specialType = "4";
-//                        break;
+                    case "ToiletType.Disabled":
+                        specialType = "3";
+                        break;
+                    case "ToiletType.MaleAndFemale":
+                        specialType = "4";
+                        break;
+                    case "ToiletType.Male_FemaleAndDisabled":
+                        specialType = "5";
+                        break;
+                    case "ToiletType.GenderNeutral":
+                        specialType = "6";
+                        break;
+                    case "ToiletType.Everything":
+                        specialType = "7";
+                        break;
                     default: break;
                 }
                 break;
@@ -109,7 +121,7 @@ public class NodeCreator {
                         specialType = "1";
                         break;
                     case "FloorChangerType.Lift":
-                        specialType = "2"; //TODO Verify numbers with client
+                        specialType = "2"; 
                         break;
                     default: break;
                 }
