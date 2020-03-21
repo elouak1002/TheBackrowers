@@ -15,6 +15,7 @@ dependencies {
     testImplementation("org.testfx:testfx-core:4.0.16-alpha")
     testImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
     testCompile('org.hamcrest:hamcrest:2.2')
+    testCompile('org.mockito:mockito-core:2.2.+')
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
 }
