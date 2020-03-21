@@ -10,6 +10,7 @@ import org.testfx.matcher.control.TextInputControlMatchers;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
+
 public class LoadTest extends AppRunner{
 
     @Test
