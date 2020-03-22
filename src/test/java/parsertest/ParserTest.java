@@ -3,17 +3,11 @@ package parsertest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import parser.NodeCreator;
 import parser.Parser;
 import datastructures.Node;
-import javafx.util.Pair;
-
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
 import java.util.List;
@@ -25,14 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ParserTest {
 
     private Parser parser;
-    private NodeCreator nodeCreator;
     private List<String> filteredData;
     private List<String> rawData;
 
     @BeforeEach
     public void setup() throws IOException{
         parser = new Parser(Paths.get("src/test/resources/testData.txt"));
-        nodeCreator = new NodeCreator(parser.getLines(), parser.getNeighboursLines());
+        NodeCreator nodeCreator = new NodeCreator(parser.getLines(), parser.getNeighboursLines());
         filteredData = Arrays.asList("Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
                 "Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
                 "Toilet HenRaph_04_374_347 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );",
@@ -83,21 +76,7 @@ public class ParserTest {
         assertEquals(neighboursData, data);
     }
 
-    @Test
-    public void extractDataTest(){
-        String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
-        Pair<Float, Float> expected = new Pair<>(49.312683f,  26.463207f );
-       Pair<Float, Float> data = nodeCreator.extractData(line);
-        assertEquals(expected, data);
-    }
 
-    @Test
-    public void extractNameTest(){
-        String line = "Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );";
-        String expected = "HenRaph_04_493_264";
-        String name = nodeCreator.extractName(line);
-        assertEquals(expected, name);
-    }
 
     @Test
     @Disabled //TODO fix the test to take floors and types into account
@@ -186,53 +165,5 @@ public class ParserTest {
         assertEquals(fullInputParser.beginOfNodeListLines(),51);
     }
 
-//    @Test
-//    public void whenLogFileIsEmptyIdStartsFromZero() throws IOException{
-//        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-//        String empty="";
-//        Files.write(Paths.get("src/test/resources/testIdLog.txt"),empty.getBytes());
-//
-//        int shouldBeZero = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
-//        //this test should only pass when log file is empty
-//        assertEquals(shouldBeZero+1,0);
-//    }
-//
-//    @Test
-//    public void getsCorrectLastSeenId() throws IOException {
-//        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-//        List<String> numbers = new ArrayList<>();
-//        numbers=Arrays.asList("1","2","3");
-//        Files.write(Paths.get("src/test/resources/testIdLog.txt"),numbers.toString().getBytes());
-//        int shouldBe3 = parser.getLastUsedID(Paths.get("src/test/resources/testIdLog.txt"));
-//
-//        assertEquals(shouldBe3,3);
-//    }
-//
-//    @Test
-//    public void generatesUniqueIds() throws IOException {
-//        Parser parser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-//        Parser secondParser = new Parser(Paths.get("src/test/resources/fullInputData.txt"));
-//        int shouldBeFirst = parser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
-//        int shouldBeSecond = secondParser.generateNodeId(Paths.get("src/test/resources/testIdLog.txt"));
-//
-//        assertEquals(shouldBeFirst,shouldBeSecond-1);
-//    }
-    @Test
-    public void extractSpecialTraitTest(){
-        String roomLine = "Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , HR 4.2 );";
-        String toiletLine  = "Toilet HenRaph_04_374_347 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );";
-        String floorCChangerLine ="FloorChanger HenRaph_04_418_357 = new FloorChanger( 41.841064f , 35.724461f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs ); ";
 
-        String expectedRoomTrait = "HR 4.2";
-        String expectedToiletTrait = "ToiletType.Female";
-        String expectedFloorChangerTrait ="FloorChangerType.Stairs";
-
-        String roomData = nodeCreator.extractSpecialTrait(roomLine);
-        String toiletData = nodeCreator.extractSpecialTrait(toiletLine);
-        String floorChangerData = nodeCreator.extractSpecialTrait(floorCChangerLine);
-
-        assertEquals(expectedRoomTrait,roomData);
-        assertEquals(expectedToiletTrait,toiletData);
-        assertEquals(expectedFloorChangerTrait,floorChangerData);
-    }
 }

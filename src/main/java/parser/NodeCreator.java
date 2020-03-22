@@ -267,7 +267,7 @@ public class NodeCreator {
      * A method to clear the ID log text file
      * @throws IOException
      */
-    private void clearIDLog() throws IOException {
+    public void clearIDLog() throws IOException {
         Files.write(idLogFilePath,"".getBytes());
     }
 
