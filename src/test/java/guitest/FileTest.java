@@ -6,10 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import java.util.Optional;
 
 import GUI.Root;
+import javafx.scene.control.Labeled;
 import javafx.stage.FileChooser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -52,5 +54,4 @@ public class FileTest extends ApplicationTest {
     void openApplication() {
         assertEquals(1, listWindows().size());
     }
-
 }
