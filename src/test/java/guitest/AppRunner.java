@@ -1,6 +1,7 @@
 package guitest;
 
 import GUI.Root;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,5 +52,10 @@ class AppRunner extends ApplicationTest {
         clipboard.setContents(stringSelection, stringSelection);
         press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
         push(KeyCode.ENTER);
+    }
+
+    public void clickButton(String buttonName){
+        Labeled toBeClicked = lookup(buttonName).query();
+        clickOn(toBeClicked);
     }
 }

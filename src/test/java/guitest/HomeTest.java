@@ -22,8 +22,7 @@ public class HomeTest extends AppRunner {
 
     @Test
     public void wranglerButtonWorks() {
-        Labeled wranglerButton = lookup("#wranglerButton").query();
-        clickOn(wranglerButton);
+        clickButton("#wranglerButton");
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled uploadButton = lookup("#uploadButton").query();
             verifyThat(uploadButton, hasText("Upload File"));
@@ -32,8 +31,7 @@ public class HomeTest extends AppRunner {
 
     @Test
     public void xmlButtonWorks() {
-        Labeled xmlButton = lookup("#xmlButton").query();
-        clickOn(xmlButton);
+        clickButton("#xmlButton");
         if (lookup("#saveButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled saveButton = lookup("#saveButton").query();
             verifyThat(saveButton, hasText("Merge and Save"));
@@ -42,8 +40,7 @@ public class HomeTest extends AppRunner {
 
     @Test
     public void logButtonWorks() {
-        Labeled logButton = lookup("#log").query();
-        clickOn(logButton);
+        clickButton("#log");
         if (lookup("#saveButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled saveButton = lookup("#saveButton").query();
             verifyThat(saveButton, hasText("Save"));

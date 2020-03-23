@@ -49,11 +49,9 @@ public class LoadTest extends AppRunner{
 
     @Test
     public void fileUploadTest(){
-        Labeled wranglerButton = lookup("#wranglerButton").query();
-        clickOn(wranglerButton);
+        clickButton("#wranglerButton");
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
-            Labeled uploadButton = lookup("#uploadButton").query();
-            clickOn(uploadButton);
+            clickButton("#uploadButton");
             uploadTestInput();
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.getText().equals("Selected File: fullInputData.txt"));

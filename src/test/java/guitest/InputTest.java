@@ -12,14 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class InputTest extends AppRunner{
     @Test
     public void testNodesSelection(){
-        Labeled wranglerButton = lookup("#wranglerButton").query();
-        clickOn(wranglerButton);
 
-        Labeled uploadButton = lookup("#uploadButton").query();
-        clickOn(uploadButton);
+        clickButton("#wranglerButton");
+        clickButton("#uploadButton");
+
         uploadTestInput();
-        Labeled nextButton = lookup("#next").query();
-        clickOn(nextButton);
+
+        clickButton("#next");
 
         TextField rotationAngle=lookup("#rotationAngle").query();
         clickOn(rotationAngle).write("10");

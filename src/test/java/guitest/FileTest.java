@@ -59,8 +59,7 @@ public class FileTest extends ApplicationTest {
     }
 
     @Test
-    void openApplication() {
-        assertEquals(1, listWindows().size());
-    }
+    void openApplication() { assertEquals(1, listWindows().size()); }
+
 
 }
