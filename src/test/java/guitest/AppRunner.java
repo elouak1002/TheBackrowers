@@ -2,6 +2,7 @@ package guitest;
 
 import GUI.Root;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,5 +58,10 @@ class AppRunner extends ApplicationTest {
     public void clickButton(String buttonName){
         Labeled toBeClicked = lookup(buttonName).query();
         clickOn(toBeClicked);
+    }
+
+    public void writeIn(String fieldName,String text){
+        TextField typeIn=lookup(fieldName).query();
+        clickOn(typeIn).write(text);
     }
 }

@@ -22,9 +22,9 @@ public class LoadTest extends AppRunner{
 
     @Test
     public void guiLoaded(){
-        Labeled wranglerButton = lookup("#wranglerButton").query();
-        verifyThat(wranglerButton, hasText("Data Wrangler"));
-        clickOn(wranglerButton);
+
+        clickButton("#wranglerButton");
+
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled uploadButton = lookup("#uploadButton").query();
             verifyThat(uploadButton, hasText("Upload File"));
