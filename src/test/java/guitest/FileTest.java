@@ -8,10 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import GUI.Root;
+import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -54,4 +62,5 @@ public class FileTest extends ApplicationTest {
     void openApplication() {
         assertEquals(1, listWindows().size());
     }
+
 }

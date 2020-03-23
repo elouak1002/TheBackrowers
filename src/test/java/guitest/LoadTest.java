@@ -47,30 +47,29 @@ public class LoadTest extends AppRunner{
 
     }
 
+    public void uploadFile(){
+        String resourceName = "fullInputData.txt";
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(resourceName).getFile());
+        Path absolutePath = file.toPath();
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
+        clipboard.setContents(stringSelection, stringSelection);
+        press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
+        push(KeyCode.ENTER);
+
+    }
     @Test
     public void fileUploadTest(){
         Labeled wranglerButton = lookup("#wranglerButton").query();
         clickOn(wranglerButton);
-
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled uploadButton = lookup("#uploadButton").query();
             clickOn(uploadButton);
-
-            String resourceName = "fullInputData.txt";
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource(resourceName).getFile());
-            Path absolutePath = file.toPath();
-
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
-            clipboard.setContents(stringSelection, stringSelection);
-            press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
-            push(KeyCode.ENTER);
-
+            uploadFile();
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.getText().equals("Selected File: fullInputData.txt"));
         }
-
     }
-
 }
