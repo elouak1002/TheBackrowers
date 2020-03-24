@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class InputTest extends AppRunner{
+public class InputTest extends AppRunner {
     @Test
     public void testNodesSelection(){
         clickButton("#wranglerButton");
@@ -17,7 +17,6 @@ public class InputTest extends AppRunner{
         uploadTestInput();
         clickButton("#next");
 
-        writeIn("#rotationAngle","12");
 
         Label optionHintLabel = lookup("#optionHintLabel").query();
         assertTrue(optionHintLabel.getText().equals("To input final node positions instead, select a node"));
@@ -26,15 +25,7 @@ public class InputTest extends AppRunner{
         clickOn(referenceNode);
         type(KeyCode.DOWN);
         type(KeyCode.DOWN);
-        type(KeyCode.DOWN);
-        type(KeyCode.DOWN);
         type(KeyCode.ENTER);
-
-        writeIn("#scaleFactorX","12");
-        writeIn("#scaleFactorY","14");
-        writeIn("#positionOrShiftX","13");
-        writeIn("#positionOrShiftY","15");
-
         assertTrue(optionHintLabel.getText().equals("To input shift factors instead, select 'NO REFERENCE'"));
     }
 }
