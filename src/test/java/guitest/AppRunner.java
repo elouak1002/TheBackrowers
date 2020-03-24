@@ -49,7 +49,7 @@ class AppRunner extends ApplicationTest {
         return file.toPath();
     }
 
-    public void inputFile(Path absolutePath){
+    public void uploadFile(Path absolutePath){
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
         clipboard.setContents(stringSelection, stringSelection);
