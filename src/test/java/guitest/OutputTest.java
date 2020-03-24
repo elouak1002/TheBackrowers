@@ -2,6 +2,7 @@ package guitest;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,12 @@ public class OutputTest extends AppRunner {
         clickButton("#next");
         fillInput();
         clickButton("#next");
+        TextArea outputText = lookup("#outputText").query();
+        String output = outputText.getText();
+
+
+        assertTrue(output.contains("Node HenRaph_04_493_264 = new Node( 98.04f , -81.3f , GuysHeights.HenRaph_04 )"));
+        assertTrue(output.endsWith("HenRaph_04_579_358\n"));
     }
 
     public void fillInput(){
