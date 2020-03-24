@@ -52,7 +52,7 @@ public class LoadTest extends AppRunner{
         clickButton("#wranglerButton");
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             clickButton("#uploadButton");
-            uploadTestInput();
+            inputFile(findPath("fullInputData.txt"));
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.getText().equals("Selected File: fullInputData.txt"));
         }

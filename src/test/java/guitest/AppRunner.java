@@ -42,12 +42,14 @@ class AppRunner extends ApplicationTest {
     }
 
     //Helper Methods For tests
-    public void uploadTestInput(){
-        String resourceName = "fullInputData.txt";
+
+    public Path findPath(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(resourceName).getFile());
-        Path absolutePath = file.toPath();
-
+        return file.toPath();
+    }
+    
+    public void inputFile(Path absolutePath){
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
         clipboard.setContents(stringSelection, stringSelection);
