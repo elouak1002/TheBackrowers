@@ -273,4 +273,3 @@ gradlew
 .gradle/
 out/production/resources/TextFieldsPage.fxml
 .vscode
-src/test/resources/testIdLog.txt

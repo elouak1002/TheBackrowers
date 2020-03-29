@@ -5,7 +5,6 @@ import dataprocessors.XMLCreator;
 import dataprocessors.XMLDebugger;
 import datastructures.Node;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSOutput;
 import parser.XMLParser;
 
 import java.io.IOException;
