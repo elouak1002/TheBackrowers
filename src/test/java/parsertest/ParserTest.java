@@ -3,7 +3,7 @@ package parsertest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import parser.NodeCreator;
+// import parser.NodeCreator;
 import parser.Parser;
 import datastructures.Node;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ParserTest {
     @BeforeEach
     public void setup() throws IOException{
         parser = new Parser(Paths.get("src/test/resources/testData.txt"));
-        NodeCreator nodeCreator = new NodeCreator(parser.getLines(), parser.getNeighboursLines());
+        // NodeCreator nodeCreator = new NodeCreator(parser.getLines(), parser.getNeighboursLines());
         filteredData = Arrays.asList("Node HenRaph_04_493_264 = new Node( 49.312683f , 26.463207f , GuysHeights.HenRaph_04 );",
                 "Room HenRaph_04_476_264 = new Room( 47.614590f , 26.463207f , GuysHeights.HenRaph_04 , \"HR 4.2\" );",
                 "Toilet HenRaph_04_374_347 = new Toilet( 37.426018f , 34.716671f , GuysHeights.HenRaph_04 , ToiletType.Female );",
