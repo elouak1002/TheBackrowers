@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import parser.NodeCreator;
 import parser.Parser;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -16,7 +14,6 @@ public class NodeCreatorTest {
 
     private Parser parser;
     private NodeCreator nodeCreator;
-    private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
 
 
     @Test
