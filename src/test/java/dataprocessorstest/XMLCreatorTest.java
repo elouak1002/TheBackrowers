@@ -93,14 +93,16 @@ public class XMLCreatorTest {
     @Ignore
     @Test
     public void finalFileMathesExpectations() throws IOException {
+
         XMLParser parser = new XMLParser(paths);
         TreeMap<String, Node> nodes = parser.createNodes();
         ArrayList<String> order = parser.getNodeOrder();
         XMLCreator xmlc = new XMLCreator(nodes, order);
         List<String> finalFile = Files.readAllLines(Paths.get("src/test/resources/XMLexample.txt"));
-        for(int i = 2;i<finalFile.size();i++){
+        for(int i=2; i<finalFile.size(); i++){
             assertEquals(finalFile.get(i), xmlc.createXMLFile().get(i));
         }
+
 
     }
 }

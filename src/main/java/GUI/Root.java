@@ -30,6 +30,7 @@ public class Root extends Application {
     private Button previous;
     private Button log;
 
+
     @Override
     public void start(Stage stage) {
         //initialise fxml loaders
@@ -64,6 +65,9 @@ public class Root extends Application {
         previous = new Button("Previous");
         next = new Button("Next");
         log = new Button("Log");
+        previous.setId("previous");
+        next.setId("next");
+        log.setId("log");
         loggerController.setViewLogButton(log);
 
         //assign functionality to homeController buttons

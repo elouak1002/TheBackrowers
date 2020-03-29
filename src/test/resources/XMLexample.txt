@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MappinData version="1.0" created="01/03/2020 02:38:31" copyright="Mappin Technologies LTD" 2020>
+<MappinData version="1.0" created="21/03/2020 22:39:08" copyright="Mappin Technologies LTD" 2020>
  <node id="30" x="49.312683" y="26.463207" Floor="4">
   <neighbour id="25"/>
   <neighbour id="31"/>
+  <neighbour id="0"/>
  </node>
  <node id="31" x="49.312683" y="27.696882" Floor="4">
   <neighbour id="26"/>
@@ -11,6 +12,7 @@
  </node>
  <node id="32" x="49.312683" y="34.664543" Floor="4">
   <neighbour id="31"/>
+  <neighbour id="0"/>
   <neighbour id="3"/>
  </node>
  <node id="3" x="43.810856" y="34.664543" Floor="4">
@@ -27,20 +29,24 @@
   <neighbour id="4"/>
   <neighbour id="22"/>
   <neighbour id="29"/>
+  <neighbour id="0"/>
  </node>
  <node id="6" x="53.048496" y="36.593246" Floor="4">
   <neighbour id="33"/>
   <neighbour id="22"/>
   <neighbour id="23"/>
+  <neighbour id="0"/>
  </node>
  <node id="22" x="49.176838" y="36.57587" Floor="4">
   <neighbour id="6"/>
   <neighbour id="5"/>
+  <neighbour id="0"/>
  </node>
  <node id="23" x="58.142784" y="36.593246" Floor="4">
   <neighbour id="34"/>
   <neighbour id="6"/>
   <neighbour id="24"/>
+  <neighbour id="0"/>
  </node>
  <node id="24" x="62.150284" y="36.593246" Floor="4">
   <neighbour id="23"/>
@@ -49,6 +55,7 @@
  <node id="10" x="62.150284" y="35.411697" Floor="4">
   <neighbour id="24"/>
   <neighbour id="11"/>
+  <neighbour id="0"/>
  </node>
  <node id="11" x="67.0408" y="35.411697" Floor="4">
   <neighbour id="10"/>
@@ -79,21 +86,26 @@
  </toilet>
  <floorchanger id="27" x="41.841064" y="35.72446" Floor="4" type="1">
   <neighbour id="4"/>
+  <neighbour id="0"/>
  </floorchanger>
  <floorchanger id="28" x="69.68983" y="34.195396" Floor="4" type="1">
   <neighbour id="13"/>
+  <neighbour id="0"/>
  </floorchanger>
  <floorchanger id="29" x="41.976913" y="36.54112" Floor="4" type="2">
   <neighbour id="5"/>
+  <neighbour id="0"/>
  </floorchanger>
  <node id="22" x="49.176838" y="36.57587" Floor="4">
   <neighbour id="6"/>
   <neighbour id="5"/>
+  <neighbour id="0"/>
  </node>
  <node id="23" x="58.142784" y="36.593246" Floor="4">
   <neighbour id="34"/>
   <neighbour id="6"/>
   <neighbour id="24"/>
+  <neighbour id="0"/>
  </node>
  <node id="24" x="62.150284" y="36.593246" Floor="4">
   <neighbour id="23"/>
@@ -107,16 +119,20 @@
  </room>
  <floorchanger id="27" x="41.841064" y="35.72446" Floor="4" type="1">
   <neighbour id="4"/>
+  <neighbour id="0"/>
  </floorchanger>
  <floorchanger id="28" x="69.68983" y="34.195396" Floor="4" type="1">
   <neighbour id="13"/>
+  <neighbour id="0"/>
  </floorchanger>
  <floorchanger id="29" x="41.976913" y="36.54112" Floor="4" type="2">
   <neighbour id="5"/>
+  <neighbour id="0"/>
  </floorchanger>
  <node id="30" x="49.312683" y="26.463207" Floor="4">
   <neighbour id="25"/>
   <neighbour id="31"/>
+  <neighbour id="0"/>
  </node>
  <node id="31" x="49.312683" y="27.696882" Floor="4">
   <neighbour id="26"/>
@@ -125,6 +141,7 @@
  </node>
  <node id="32" x="49.312683" y="34.664543" Floor="4">
   <neighbour id="31"/>
+  <neighbour id="0"/>
   <neighbour id="3"/>
  </node>
  <room id="33" x="53.048496" y="35.93297" Floor="4" name="HR 4.11">
