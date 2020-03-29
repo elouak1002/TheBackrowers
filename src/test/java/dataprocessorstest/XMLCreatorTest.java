@@ -1,8 +1,11 @@
 package dataprocessorstest;
 
+import dataprocessors.Debugger;
 import dataprocessors.XMLCreator;
+import dataprocessors.XMLDebugger;
 import datastructures.Node;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.ls.LSOutput;
 import parser.XMLParser;
 
 import java.io.IOException;
@@ -91,12 +94,16 @@ public class XMLCreatorTest {
     }
 
     @Test
-    public void finalFileMathesExpectations() throws IOException {
+    public void finalFileMatchesExpectations() throws IOException {
 
         XMLParser parser = new XMLParser(paths);
-        TreeMap<String, Node> nodes = parser.createNodes();
-        ArrayList<String> order = parser.getNodeOrder();
-        XMLCreator xmlc = new XMLCreator(nodes, order);
+        Debugger debugger = new XMLDebugger(parser.createNodes());
+
+        TreeMap<String, Node> nodes = new TreeMap<>(debugger.getMap());
+        ArrayList<String> order = new ArrayList<>(nodes.keySet());
+
+        XMLCreator xmlc = new XMLCreator(nodes,order);
+
         List<String> finalFile = Files.readAllLines(Paths.get("src/test/resources/XMLexample.txt"));
         for(int i=2; i<finalFile.size(); i++){
             assertEquals(finalFile.get(i), xmlc.createXMLFile().get(i));
