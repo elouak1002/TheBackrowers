@@ -44,6 +44,7 @@ public class LoadTest extends AppRunner{
             assertTrue(nextButton.isVisible());
             assertTrue(nextButton.getText().equals("Input"));
         }
+        clickButton("#previous");
 
     }
 
@@ -55,6 +56,8 @@ public class LoadTest extends AppRunner{
             uploadFile(findPath("fullInputData.txt"));
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.getText().equals("Selected File: fullInputData.txt"));
+
         }
+        clickButton("#previous");
     }
 }
