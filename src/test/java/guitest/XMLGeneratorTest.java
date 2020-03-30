@@ -51,5 +51,42 @@ public class XMLGeneratorTest extends AppRunner {
                 "  <neighbour id=\"8\"/>\n" +
                 " </room>"));
     }
+    @Test
+    public void testClearFiles(){
+        clickButton("#xmlButton");
+        clickButton("#uploadButton");
+        uploadFile(findPath("XMLParserTestData1.txt"));
+        ListView uploadTable = lookup("#uploadTable").query();
+      uploadTable.getFocusModel().focus(0);
+      uploadTable.getSelectionModel().select(0);
+      clickButton("#selectedFiles");
 
+       assertTrue(uploadTable.getSelectionModel().isEmpty());
+
+      ListView selectedTable = lookup("#selectedTable").query();
+      clickButton("clearAllButton");
+
+      assertTrue(selectedTable.getSelectionModel().isEmpty());
+     }
+
+     @Test
+    public void testLogUpdate(){
+         clickButton("#xmlButton");
+         clickButton("#uploadButton");
+         uploadFile(findPath("XMLParserTestData1.txt"));
+         ListView uploadTable = lookup("#uploadTable").query();
+         uploadTable.getFocusModel().focus(0);
+         uploadTable.getSelectionModel().select(0);
+         clickButton("#selectedFiles");
+         clickButton("#next");
+
+         clickOn("View Log");
+         TextArea logArea = lookup("#displayLog").query();
+         String logText = logArea.getText();
+
+        assertTrue(logText.contains("HenRaph_04_491_365 has no neighbour, so it was removed.\n" +
+                "HenRaph_04_696_341 has no neighbour, so it was removed.\n" +
+                "\n"));
+
+     }
 }
