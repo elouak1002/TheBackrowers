@@ -24,6 +24,11 @@ public class OutputTest extends AppRunner {
 
         assertTrue(output.contains("Node HenRaph_04_493_264 = new Node( 98.04f , -81.3f , GuysHeights.HenRaph_04 )"));
         assertTrue(output.endsWith("HenRaph_04_579_358\n"));
+
+        clickButton("#previous");
+        clickOn("Yes");
+        clickButton("#previous");
+        clickButton("#previous");
     }
 
     public void fillInput(){
