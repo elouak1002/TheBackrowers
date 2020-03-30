@@ -27,5 +27,8 @@ public class InputTest extends AppRunner {
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
         assertTrue(optionHintLabel.getText().equals("To input shift factors instead, select 'NO REFERENCE'"));
+
+        clickButton("#previous");
+        clickButton("#previous");
     }
 }
