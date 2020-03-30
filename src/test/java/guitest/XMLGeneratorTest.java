@@ -20,6 +20,8 @@ public class XMLGeneratorTest extends AppRunner {
         Label saveNotification = lookup("#saveNotification").query();
         assertTrue(!saveNotification.isVisible());
         assertTrue(saveNotification.getText().equals("File has been saved!"));
+
+        clickButton("#previous");
     }
 
     @Test
@@ -50,6 +52,9 @@ public class XMLGeneratorTest extends AppRunner {
         assertTrue(output.contains(" <room id=\"3\" x=\"47.61459\" y=\"26.463207\" Floor=\"4\" name=\"HR 4.2\">\n" +
                 "  <neighbour id=\"8\"/>\n" +
                 " </room>"));
+
+        clickButton("#previous");
+        clickOn("Yes");
     }
     @Test
     public void testClearFiles(){
@@ -57,16 +62,18 @@ public class XMLGeneratorTest extends AppRunner {
         clickButton("#uploadButton");
         uploadFile(findPath("XMLParserTestData1.txt"));
         ListView uploadTable = lookup("#uploadTable").query();
-      uploadTable.getFocusModel().focus(0);
-      uploadTable.getSelectionModel().select(0);
-      clickButton("#selectedFiles");
+        uploadTable.getFocusModel().focus(0);
+        uploadTable.getSelectionModel().select(0);
+        clickButton("#selectedFiles");
 
        assertTrue(uploadTable.getSelectionModel().isEmpty());
 
-      ListView selectedTable = lookup("#selectedTable").query();
-      clickButton("clearAllButton");
+        ListView selectedTable = lookup("#selectedTable").query();
+        clickButton("#clearAllButton");
+        clickOn("Yes");
+        assertTrue(selectedTable.getSelectionModel().isEmpty());
 
-      assertTrue(selectedTable.getSelectionModel().isEmpty());
+        clickButton("#previous");
      }
 
      @Test
@@ -88,5 +95,8 @@ public class XMLGeneratorTest extends AppRunner {
                 "HenRaph_04_696_341 has no neighbour, so it was removed.\n" +
                 "\n"));
 
+         clickButton("#previous");
+         clickButton("#previous");
+         clickOn("Yes");
      }
 }
