@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -53,8 +54,15 @@ class AppRunner extends ApplicationTest {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
         clipboard.setContents(stringSelection, stringSelection);
-        press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
-        push(KeyCode.ENTER);
+        String osName = System.getProperty("os.name").toLowerCase();
+            if(osName.indexOf("mac") >= 0){
+                press(KeyCode.COMMAND).press(KeyCode.V).release(KeyCode.V).release(KeyCode.COMMAND);
+            }
+            else{
+                press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
+            }
+            push(KeyCode.ENTER);
+
     }
 
     public void clickButton(String buttonName){
