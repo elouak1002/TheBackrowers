@@ -45,7 +45,7 @@ public class XMLGeneratorTest extends AppRunner {
         clickButton("#selectedFiles");
 
         clickButton("#next");
-        clickOn("Close");
+        press(KeyCode.ESCAPE);
 
         TextArea outputText = lookup("#outputText").query();
         String output = outputText.getText();
