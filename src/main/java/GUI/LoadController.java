@@ -25,6 +25,10 @@ public class LoadController {
     public Path getPath() {
         return fullPath;
     }
+    public void setPath(File fileIn){
+        fullPath = fileIn.toPath();
+        setLabelText("Selected File: " + fileIn.getName());
+    }
 
     @FXML
     private void chooseFile(){
@@ -37,8 +41,7 @@ public class LoadController {
 
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null ){
-            fullPath = selectedFile.toPath();
-            setLabelText("Selected File: " + selectedFile.getName());
+            setPath(selectedFile);
         }
     }
 
@@ -58,8 +61,7 @@ public class LoadController {
         File selectedFile = event.getDragboard().getFiles().get(0);
         if(selectedFile != null ){
             if(selectedFile.getName().endsWith(".txt")){
-                fullPath = selectedFile.toPath();
-                setLabelText("Selected File: " + selectedFile.getName());
+                setPath(selectedFile);
             } else {
                 setLabelText("Only .txt files allowed");
             }
