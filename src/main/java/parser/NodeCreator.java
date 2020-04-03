@@ -205,7 +205,6 @@ public class NodeCreator {
     public String extractSpecialTrait(String line) {
         String[] parsedLine = line.substring(line.indexOf('(') + 1, line.indexOf(')')).trim().split(", ");
         if (parsedLine.length > 3) {
-            //System.out.println(parsedLine[parsedLine.length-1]);
             return parsedLine[parsedLine.length - 1];
         } else {
             return "";
