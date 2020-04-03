@@ -25,7 +25,7 @@ public class LoadController {
     public Path getPath() {
         return fullPath;
     }
-    public void setPath(File fileIn){
+    public void setFullPath(File fileIn){
         fullPath = fileIn.toPath();
         setLabelText("Selected File: " + fileIn.getName());
     }
@@ -41,7 +41,7 @@ public class LoadController {
 
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null ){
-            setPath(selectedFile);
+            setFullPath(selectedFile);
         }
     }
 
@@ -61,7 +61,7 @@ public class LoadController {
         File selectedFile = event.getDragboard().getFiles().get(0);
         if(selectedFile != null ){
             if(selectedFile.getName().endsWith(".txt")){
-                setPath(selectedFile);
+                setFullPath(selectedFile);
             } else {
                 setLabelText("Only .txt files allowed");
             }
