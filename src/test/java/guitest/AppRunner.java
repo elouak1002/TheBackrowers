@@ -56,6 +56,7 @@ class AppRunner extends ApplicationTest {
         clipboard.setContents(stringSelection, stringSelection);
         String osName = System.getProperty("os.name").toLowerCase();
             if(osName.indexOf("mac") >= 0){
+                press(KeyCode.SHIFT).press(KeyCode.COMMAND).press(KeyCode.G).release(KeyCode.G).release(KeyCode.COMMAND).release(KeyCode.SHIFT);
                 press(KeyCode.COMMAND).press(KeyCode.V).release(KeyCode.V).release(KeyCode.COMMAND);
             }
             else{

@@ -15,6 +15,7 @@ public class InputTest extends AppRunner {
         clickButton("#wranglerButton");
         clickButton("#uploadButton");
         uploadFile(findPath("fullInputData.txt"));
+
         clickButton("#next");
 
 

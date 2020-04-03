@@ -3,11 +3,14 @@ package GUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
+
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.Path;
 
@@ -17,6 +20,7 @@ import java.nio.file.Path;
 public class LoadController {
 	@FXML private Button uploadButton;
 	@FXML private Label selectedFileLabel;
+
 	private Path fullPath;
 
     @FXML
