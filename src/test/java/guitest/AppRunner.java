@@ -57,7 +57,9 @@ class AppRunner extends ApplicationTest {
         String osName = System.getProperty("os.name").toLowerCase();
             if(osName.indexOf("mac") >= 0){
                 press(KeyCode.SHIFT).press(KeyCode.COMMAND).press(KeyCode.G).release(KeyCode.G).release(KeyCode.COMMAND).release(KeyCode.SHIFT);
-                press(KeyCode.COMMAND).press(KeyCode.V).release(KeyCode.V).release(KeyCode.COMMAND);
+               // press(KeyCode.COMMAND).press(KeyCode.V).release(KeyCode.V).release(KeyCode.COMMAND);
+                write(stringSelection.toString());
+                push(KeyCode.ENTER);
             }
             else{
                 press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
