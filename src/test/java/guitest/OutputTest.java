@@ -26,7 +26,7 @@ public class OutputTest extends AppRunner {
         assertTrue(output.endsWith("HenRaph_04_579_358\n"));
 
         clickButton("#previous");
-        clickOn("Yes");
+        press(KeyCode.ENTER);
         clickButton("#previous");
         clickButton("#previous");
     }

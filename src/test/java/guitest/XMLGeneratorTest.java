@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxToolkit;
 import org.testfx.util.WaitForAsyncUtils;
+import javafx.scene.input.KeyCode;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,7 +55,7 @@ public class XMLGeneratorTest extends AppRunner {
                 " </room>"));
 
         clickButton("#previous");
-        clickOn("Yes");
+        press(KeyCode.ENTER);
     }
     @Test
     public void testClearFiles(){
@@ -70,7 +71,7 @@ public class XMLGeneratorTest extends AppRunner {
 
         ListView selectedTable = lookup("#selectedTable").query();
         clickButton("#clearAllButton");
-        clickOn("Yes");
+        press(KeyCode.ENTER);
         assertTrue(selectedTable.getSelectionModel().isEmpty());
 
         clickButton("#previous");
@@ -97,6 +98,6 @@ public class XMLGeneratorTest extends AppRunner {
 
          clickButton("#previous");
          clickButton("#previous");
-         clickOn("Yes");
+         press(KeyCode.ENTER);
      }
 }
