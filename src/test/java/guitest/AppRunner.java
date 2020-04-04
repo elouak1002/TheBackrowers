@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -19,6 +18,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.concurrent.TimeoutException;
+
 
 /**
  * Major credit to https://github.com/bazylMN/testFX-junit5
@@ -51,19 +51,25 @@ class AppRunner extends ApplicationTest {
     }
 
     public void uploadFile(Path absolutePath){
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
-        clipboard.setContents(stringSelection, stringSelection);
         String osName = System.getProperty("os.name").toLowerCase();
             if(osName.indexOf("mac") >= 0){
                 press(KeyCode.SHIFT).press(KeyCode.COMMAND).press(KeyCode.G).release(KeyCode.G).release(KeyCode.COMMAND).release(KeyCode.SHIFT);
+
+                keyboardWrite(absolutePath.toString().replaceAll("%20"," "));
+
                 push(KeyCode.ENTER);
             }
             else{
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                StringSelection stringSelection = new StringSelection(absolutePath.toString().replaceAll("%20"," "));
+                clipboard.setContents(stringSelection, stringSelection);
                 press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
             }
             push(KeyCode.ENTER);
+    }
 
+    public void keyboardWrite(String text) {
+        
     }
 
     public void clickButton(String buttonName){
