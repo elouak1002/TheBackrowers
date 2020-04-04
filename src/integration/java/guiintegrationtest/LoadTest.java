@@ -1,4 +1,4 @@
-package guitest;
+package guiintegrationtest;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

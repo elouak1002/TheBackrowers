@@ -1,4 +1,4 @@
-package guitest;
+package guiintegrationtest;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package guitest;
+package guiintegrationtest;
 
 import javafx.scene.control.Labeled;
 import org.junit.jupiter.api.Test;

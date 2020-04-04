@@ -1,5 +1,6 @@
-package guitest;
+package guiintegrationtest;
 
+import GUI.LoadController;
 import GUI.Root;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
@@ -11,6 +12,9 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.stage.Stage;
 import org.testfx.util.WaitForAsyncUtils;
+
+import static org.mockito.Mockito.spy;
+import javafx.stage.FileChooser;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -24,6 +28,7 @@ import java.util.concurrent.TimeoutException;
  * Major credit to https://github.com/bazylMN/testFX-junit5
  */
 class AppRunner extends ApplicationTest {
+    
     @BeforeEach
     public void runAppToTests() throws Exception {
         FxToolkit.registerPrimaryStage();
@@ -54,9 +59,6 @@ class AppRunner extends ApplicationTest {
         String osName = System.getProperty("os.name").toLowerCase();
             if(osName.indexOf("mac") >= 0){
                 press(KeyCode.SHIFT).press(KeyCode.COMMAND).press(KeyCode.G).release(KeyCode.G).release(KeyCode.COMMAND).release(KeyCode.SHIFT);
-
-                keyboardWrite(absolutePath.toString().replaceAll("%20"," "));
-
                 push(KeyCode.ENTER);
             }
             else{
@@ -66,10 +68,6 @@ class AppRunner extends ApplicationTest {
                 press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
             }
             push(KeyCode.ENTER);
-    }
-
-    public void keyboardWrite(String text) {
-        
     }
 
     public void clickButton(String buttonName){
