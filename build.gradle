@@ -11,12 +11,20 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testImplementation('org.junit.jupiter:junit-jupiter-params:5.1.0')
-    testImplementation("org.testfx:testfx-core:4.0.16-alpha")
-    testImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
     testImplementation('org.hamcrest:hamcrest:2.2')
-    testImplementation('org.mockito:mockito-core:2.2.+')
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6y.0")
 }
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+
+    if (project.hasProperty('excludeTests')) {
+        exclude project.property('excludeTests')
+    }
+}
+
 
 sourceSets {
     integration {
@@ -28,8 +36,7 @@ sourceSets {
 }
 
 configurations {
-    integrationImplementation.extendsFrom testImplementation
-    integrationRuntime.extendsFrom testRuntime
+    integrationCompile.extendsFrom testCompile
 }
 
 task integrationTest(type: Test) {
@@ -40,35 +47,10 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 
 dependencies {
-    integrationImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    integrationImplementation('org.junit.jupiter:junit-jupiter-params:5.1.0')
-    integrationImplementation("org.testfx:testfx-core:4.0.16-alpha")
-    integrationImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
-    integrationImplementation('org.hamcrest:hamcrest:2.2')
-    integrationImplementation('org.mockito:mockito-core:2.2.+')
-    integrationRuntime("org.junit.jupiter:junit-jupiter-engine:5.6y.0")
+    integrationCompile("org.testfx:testfx-core:4.0.13-alpha")
+    integrationCompile("org.testfx:testfx-junit:4.0.13-alpha")
+    integrationCompile("junit:junit:4.12")
 }
-
-
-integrationTest {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter'
-    }
-
-    if (project.hasProperty('excludeTests')) {
-        exclude project.property('excludeTests')
-    }
-}
-test {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter'
-    }
-
-    if (project.hasProperty('excludeTests')) {
-        exclude project.property('excludeTests')
-    }
-}
-
 
 apply plugin: 'java'
 
@@ -82,7 +64,5 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
-
-
 
 mainClassName = 'GUI.Main'
