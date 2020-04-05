@@ -1,14 +1,12 @@
 package linecreators;
 
-import java.nio.file.Path;
-import java.io.IOException;
-
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.LinkedList;
-
 import datastructures.Node;
+
+import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Process the creation of the node list lines.
@@ -24,9 +22,8 @@ public class NodeListLineCreator extends LineCreator {
 	 * Constructor for the Node List Creator class.
 	 * @param nodeMap The node Map
 	 * @param originPath The origin path, used by the parser.
-	 * @throws IOException
 	 */
-	public NodeListLineCreator(Map<String, Node> nodeMap, Path originPath) throws IOException {
+	public NodeListLineCreator(Map<String, Node> nodeMap, Path originPath) {
 		// Call to parent constructor
 		super(nodeMap, originPath);
 		
@@ -50,7 +47,7 @@ public class NodeListLineCreator extends LineCreator {
 	 * @return a String representation of the nodes name.0
 	 */
 	private String formatEachList(List<Node> nodeList) {	
-		return nodeList.stream().map(node -> node.getName()).reduce("", (acc,element) -> acc + " , " + element.trim());
+		return nodeList.stream().map(Node::getName).reduce("", (acc, element) -> acc + " , " + element.trim());
 	}
 
 	/**

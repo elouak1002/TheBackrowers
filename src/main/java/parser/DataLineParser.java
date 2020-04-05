@@ -1,11 +1,11 @@
 package parser; // File Creation package.
 
+import datastructures.DataLine;
+
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.LinkedList;
-
-import datastructures.DataLine;
 
 /**
  * Parse the information from a line of data of the input file.
@@ -52,7 +52,7 @@ public class DataLineParser {
 	 * @return the name part of the data line, everything before the "=" sign.
 	 */
 	private List<String> getNamePart() {
-		return Arrays.asList(line.substring(0, line.indexOf("=")).split(" ")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
+		return Arrays.stream(line.substring(0, line.indexOf("=")).split(" ")).map(String::trim).collect(Collectors.toList()); // trim each element.
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class DataLineParser {
 	 */
 	private List<String> getArgumentPart() {
 		String assignmentPart = line.substring(line.indexOf("=")+1);
-		return Arrays.asList(assignmentPart.substring(assignmentPart.indexOf("(")+1, assignmentPart.indexOf(")")).trim().split(",")).stream().map(String::trim).collect(Collectors.toList()); // trim each element.
+		return Arrays.stream(assignmentPart.substring(assignmentPart.indexOf("(")+1, assignmentPart.indexOf(")")).trim().split(",")).map(String::trim).collect(Collectors.toList()); // trim each element.
 	}
 
 	/**

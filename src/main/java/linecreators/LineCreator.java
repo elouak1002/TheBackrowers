@@ -1,14 +1,11 @@
 package linecreators;
 
-import parser.Parser;
 import datastructures.Node;
-
-import java.io.IOException;
+import parser.Parser;
 
 import java.nio.file.Path;
-
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Abstract superclass of a Line Creator.
@@ -31,9 +28,8 @@ public abstract class LineCreator {
 	 * Constructor for the Line Creator abstract class.
 	 * @param nodeMap Map of the file nodes. 
 	 * @param originPath Path to the input file
-	 * @throws IOException IOException
 	 */
-	public LineCreator(Map<String, Node> nodeMap, Path originPath) throws IOException{
+	public LineCreator(Map<String, Node> nodeMap, Path originPath) {
 
 		// A File Parser.
 		if (originPath != null)

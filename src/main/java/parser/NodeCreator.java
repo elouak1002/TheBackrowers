@@ -13,8 +13,6 @@ public class NodeCreator {
     private List<String> neighbourLines;
     private List<String> dataLines;
     private ArrayList<String> nodesAsPerInsertion =new ArrayList<>(); //nodes in insertion order
-    private static int initialId = 0; //initial id, nodes always start from 0
-    private int lastUsedId; //to keep track of the last used id and assure uniqueness
 
     /**
      * Constructor for the node creator class that is responsible
@@ -36,7 +34,9 @@ public class NodeCreator {
 
     public TreeMap<String, Node> createNodes() {
         int reserveIDs = 0;
-        lastUsedId =initialId;
+        //initial id, nodes always start from 0
+        //to keep track of the last used id and assure uniqueness
+        int lastUsedId = 0;
         for(String line : dataLines){
             String name = extractName(line);
             String type = extractType(line);
@@ -46,7 +46,7 @@ public class NodeCreator {
             Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
             try{
                 node.setId(lastUsedId);
-                lastUsedId+=1;
+                lastUsedId +=1;
             }
             catch (Exception e){
                 node.setId(reserveIDs);
@@ -65,7 +65,7 @@ public class NodeCreator {
 
     /**
      * Assigns special trait based on the nodes type aka room, toilet, floorChanger
-     * @param node
+     * @param node node
      */
     private void assignSpecialTrait(Node node,String specialTrait) {
         String type = node.getType();
@@ -166,7 +166,7 @@ public class NodeCreator {
      * @return A list of the neighbours added to the node.
      */
     private List<String> extractNeighbours(String line) {
-        return Arrays.asList(line.substring(line.indexOf("{") + 1, line.indexOf("}")).split(",")).stream().map(String::trim).collect(Collectors.toList());
+        return Arrays.stream(line.substring(line.indexOf("{") + 1, line.indexOf("}")).split(",")).map(String::trim).collect(Collectors.toList());
     }
 
 

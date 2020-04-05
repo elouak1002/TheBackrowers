@@ -1,22 +1,16 @@
 package guiintegrationtest;
 
-import GUI.Root;
+import GUI.XMLGeneratorController;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import org.testfx.api.FxToolkit;
-import org.testfx.util.WaitForAsyncUtils;
 import javafx.scene.input.KeyCode;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import GUI.XMLGeneratorController;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(XMLGeneratorController.class)
@@ -27,8 +21,8 @@ public class XMLGeneratorTest extends AppRunner {
         clickButton("#xmlButton");
 
         Label saveNotification = lookup("#saveNotification").query();
-        assertTrue(!saveNotification.isVisible());
-        assertTrue(saveNotification.getText().equals("File has been saved!"));
+        assertFalse(saveNotification.isVisible());
+        assertEquals("File has been saved!", saveNotification.getText());
 
         clickButton("#previous");
     }
@@ -45,7 +39,7 @@ public class XMLGeneratorTest extends AppRunner {
 
         clickButton("#uploadButton");
 
-        ListView uploadTable = lookup("#uploadTable").query();
+        ListView<String> uploadTable = lookup("#uploadTable").query();
 
         uploadTable.getFocusModel().focus(0);
         uploadTable.getSelectionModel().select(0);
@@ -61,8 +55,6 @@ public class XMLGeneratorTest extends AppRunner {
         TextArea outputText = lookup("#outputText").query();
         String output = outputText.getText();
 
-        System.out.println(output);
-
         assertTrue(output.contains(" <room id=\"0\" x=\"47.61459\" y=\"26.463207\" Floor=\"4\" name=\"HR 4.2\">\n" +
                 "  <neighbour id=\"3\"/>\n" +
                 " </room>"));
@@ -70,6 +62,7 @@ public class XMLGeneratorTest extends AppRunner {
         clickButton("#previous");
         press(KeyCode.ENTER);
     }
+
     @Test
     public void testClearFiles(){
 		clickButton("#xmlButton");
@@ -77,14 +70,14 @@ public class XMLGeneratorTest extends AppRunner {
 		setUpMock("XMLParserTestData1.txt");
 
         clickButton("#uploadButton");
-        ListView uploadTable = lookup("#uploadTable").query();
+        ListView<String> uploadTable = lookup("#uploadTable").query();
         uploadTable.getFocusModel().focus(0);
         uploadTable.getSelectionModel().select(0);
         clickButton("#selectedFiles");
 
-       assertTrue(uploadTable.getSelectionModel().isEmpty());
+        assertTrue(uploadTable.getSelectionModel().isEmpty());
 
-        ListView selectedTable = lookup("#selectedTable").query();
+        ListView<String> selectedTable = lookup("#selectedTable").query();
         clickButton("#clearAllButton");
         press(KeyCode.ENTER);
         assertTrue(selectedTable.getSelectionModel().isEmpty());
@@ -92,27 +85,27 @@ public class XMLGeneratorTest extends AppRunner {
         clickButton("#previous");
      }
 
-     @Test
+    @Test
     public void testLogUpdate(){
-		 clickButton("#xmlButton");
-		 setUpMock("XMLParserTestData1.txt");
-         clickButton("#uploadButton");
-         ListView uploadTable = lookup("#uploadTable").query();
-         uploadTable.getFocusModel().focus(0);
-         uploadTable.getSelectionModel().select(0);
-         clickButton("#selectedFiles");
-         clickButton("#next");
+		clickButton("#xmlButton");
+		setUpMock("XMLParserTestData1.txt");
+        clickButton("#uploadButton");
+        ListView<String> uploadTable = lookup("#uploadTable").query();
+        uploadTable.getFocusModel().focus(0);
+        uploadTable.getSelectionModel().select(0);
+        clickButton("#selectedFiles");
+        clickButton("#next");
 
-         clickOn("View Log");
-         TextArea logArea = lookup("#displayLog").query();
-         String logText = logArea.getText();
+        clickOn("View Log");
+        TextArea logArea = lookup("#displayLog").query();
+        String logText = logArea.getText();
 
         assertTrue(logText.contains("HenRaph_04_491_365 has no neighbour, so it was removed.\n" +
                 "HenRaph_04_696_341 has no neighbour, so it was removed.\n" +
                 "\n"));
 
-         clickButton("#previous");
-         clickButton("#previous");
-         press(KeyCode.ENTER);
-     }
+        clickButton("#previous");
+        clickButton("#previous");
+        press(KeyCode.ENTER);
+    }
 }

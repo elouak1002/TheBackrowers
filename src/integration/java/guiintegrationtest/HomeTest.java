@@ -4,9 +4,6 @@ import javafx.scene.control.Labeled;
 
 import org.junit.Test;
 
-
-import dataprocessors.Wrangler;
-
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 

@@ -98,7 +98,7 @@ public class Wrangler {
     /**
      * This method is used to reduce the coordonates to
      *just 2 decimals
-     * @param node 
+     * @param node node
      */
     private void roundDecimals(Node node){
         double xVal = Math.round(node.getX() * 100.0) / 100.0;

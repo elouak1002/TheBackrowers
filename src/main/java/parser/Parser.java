@@ -153,7 +153,7 @@ public class Parser {
      * A method that creates a node creator object and passes the lines with node data
      * and their neighbours data
      * @return a TreeMap of Nodes and their names
-     * @throws IOException
+     * @throws IOException an IOException
      */
     public TreeMap<String, Node> createNodes() throws IOException{
         NodeCreator nodeCreator = new NodeCreator(getLines(), getNeighboursLines());

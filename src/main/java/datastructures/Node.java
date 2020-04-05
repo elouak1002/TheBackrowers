@@ -23,7 +23,7 @@ public class Node {
 
     /**
      * Constructor for the Node class, only with a name
-     * @param name
+     * @param name name
      */
     public Node(String name, Status status) {
         this(name, 0,0);
@@ -111,7 +111,7 @@ public class Node {
     public void addNeighbour(Node neighbour) { neighbours.add(neighbour); }
 
     /**
-     * @param node
+     * @param node node
      * @return true if the node is a neighbour of the node.
      */
     public boolean hasNeighbour(Node node) { return neighbours.contains(node); }
@@ -153,7 +153,7 @@ public class Node {
 
     /**
      * Set a node's type.
-     * @param type
+     * @param type string type
      */
     public void setType(String type) {
         this.type= type;

@@ -28,12 +28,11 @@ public class XMLParser extends Parser{
      * separated by a '#" line
      *
      * @return combined data and neighbour lines
-     * @throws IOException
+     * @throws IOException an IOException
      */
     @Override
     public List<String> getAllLines() throws IOException {
-        List<String> combinedLines = new ArrayList<>();
-        combinedLines.addAll(getLines());
+        List<String> combinedLines = new ArrayList<>(getLines());
         combinedLines.add("#");
         combinedLines.addAll(getNeighboursLines());
         return combinedLines;
@@ -44,7 +43,7 @@ public class XMLParser extends Parser{
      * input files
      *
      * @return combined data lines
-     * @throws IOException
+     * @throws IOException an IOException
      */
     @Override
     public List<String> getLines() throws IOException{
@@ -62,7 +61,7 @@ public class XMLParser extends Parser{
      * input files
      *
      * @return combined neighbour lines
-     * @throws IOException
+     * @throws IOException an IOException
      */
     @Override
     public List<String> getNeighboursLines() throws IOException {

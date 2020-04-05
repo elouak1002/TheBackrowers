@@ -29,7 +29,6 @@ public class Root extends Application {
     private Button next;
     private Button previous;
     private Button log;
-    private Scene scene;
 
     @Override
     public void start(Stage stage) {
@@ -172,7 +171,7 @@ public class Root extends Application {
         setNavigationStatus();
 
         //set and show scene and stage
-        scene = new Scene(root,960,640);
+        Scene scene = new Scene(root,960,640);
         stage.setTitle("TheBackrowers");
         stage.getIcons().add(new Image("Styling/Logo.PNG"));
         stage.setScene(scene);
@@ -213,17 +212,5 @@ public class Root extends Application {
         if (currentPage != loggerPage) {
             log.setVisible(true);
         }
-    }
-
-    public Pane getCurrentPage(){
-        return currentPage;
-    }
-
-    public Pane getMainRoot(){
-        return root;
-    }
-
-    public Scene getScene(){
-        return scene;
     }
 }

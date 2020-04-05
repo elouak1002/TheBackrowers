@@ -1,17 +1,15 @@
 package guiintegrationtest;
 
+import GUI.LoadController;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import GUI.LoadController;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(LoadController.class)
@@ -38,7 +36,7 @@ public class OutputTest extends AppRunner {
     }
 
     public void fillInput(){
-        ComboBox referenceNode = lookup("#referenceNode").query();
+        ComboBox<String> referenceNode = lookup("#referenceNode").query();
         clickOn(referenceNode);
         type(KeyCode.DOWN);
         type(KeyCode.DOWN);

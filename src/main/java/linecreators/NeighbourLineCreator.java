@@ -3,11 +3,9 @@ package linecreators;
 import datastructures.Node;
 
 import java.io.IOException;
-
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
-
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +26,7 @@ public class NeighbourLineCreator extends LineCreator {
 		super(nodeMap, originPath);
 		
 		// A list of the neighbour lines to be modified.
-		this.lines = Arrays.asList();
+		this.lines = Collections.emptyList();
 
 		// Process the modification of the neighbour lines.
 		if (nodeMap != null ) 
@@ -40,7 +38,7 @@ public class NeighbourLineCreator extends LineCreator {
 	/**
 	 * Modify/Recreate the neighbour line using the
 	 * information given by the node map.
-	 * @param dataLine a neighbour line
+	 * @param nodeName the node's name
 	 * @param nodeMap a Map of node (Node Name --> Node Object)
 	 * @return modified neighbour line
 	 */
@@ -53,21 +51,21 @@ public class NeighbourLineCreator extends LineCreator {
 			return "";
 		}
 
-		String neighbourLine = nodeName;
-		neighbourLine += ".addAllNeighbours( new List<Node>{ ";
+		StringBuilder neighbourLine = new StringBuilder(nodeName);
+		neighbourLine.append(".addAllNeighbours( new List<Node>{ ");
 		
 		// Add each neighbour using it's name to the neighbour line.
 		for (Node node : parentNode.getNeighbours()) {
-			neighbourLine += node.getName();
-			neighbourLine += " , ";	
+			neighbourLine.append(node.getName());
+			neighbourLine.append(" , ");
 		}
 		
-		neighbourLine = neighbourLine.substring(0, neighbourLine.length() - 3);
+		neighbourLine = new StringBuilder(neighbourLine.substring(0, neighbourLine.length() - 3));
 		
-		neighbourLine += " } );";
+		neighbourLine.append(" } );");
 		
 		// return the modified DataLine object.
-		return neighbourLine;
+		return neighbourLine.toString();
 	}
 
 	/**
