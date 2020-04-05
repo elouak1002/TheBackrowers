@@ -36,7 +36,7 @@ sourceSets {
 }
 
 configurations {
-    integrationCompile.extendsFrom testCompile
+    integrationImplementation.extendsFrom testImplementation
 }
 
 task integrationTest(type: Test) {
@@ -47,9 +47,13 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 
 dependencies {
-    integrationCompile("org.testfx:testfx-core:4.0.13-alpha")
-    integrationCompile("org.testfx:testfx-junit:4.0.13-alpha")
-    integrationCompile("junit:junit:4.12")
+    integrationImplementation('org.mockito:mockito-inline:2.13.0')
+    integrationImplementation("junit:junit:4.13")
+    integrationImplementation("org.powermock:powermock-api-mockito2:2.0.0")
+    integrationImplementation("org.powermock:powermock-module-junit4:2.0.0")
+    integrationImplementation('org.hamcrest:hamcrest:2.2')
+    integrationImplementation("org.testfx:testfx-core:4.0.13-alpha")
+    integrationImplementation("org.testfx:testfx-junit:4.0.13-alpha")
 }
 
 apply plugin: 'java'

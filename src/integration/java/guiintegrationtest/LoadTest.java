@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
-import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
@@ -15,16 +14,35 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
-public class LoadTest extends AppRunner{
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import GUI.LoadController;
+
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(LoadController.class)
+public class LoadTest extends AppRunner {
 
     @Test
     public void guiLoaded(){
 
-        clickButton("#wranglerButton");
-
+		clickButton("#wranglerButton");
+		
+		setUpMock("fullInputData.txt");
+		
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             Labeled uploadButton = lookup("#uploadButton").query();
             verifyThat(uploadButton, hasText("Upload File"));
@@ -45,15 +63,18 @@ public class LoadTest extends AppRunner{
             assertTrue(nextButton.getText().equals("Input"));
         }
         clickButton("#previous");
-
+		
     }
-
+	
     @Test
     public void fileUploadTest(){
-        clickButton("#wranglerButton");
-        if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
+
+		clickButton("#wranglerButton");
+		
+		setUpMock("fullInputData.txt");
+		
+		if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
             clickButton("#uploadButton");
-            uploadFile(findPath("fullInputData.txt"));
             Label selectedFileLabel = lookup("#selectedFileLabel").query();
             assertTrue(selectedFileLabel.getText().equals("Selected File: fullInputData.txt"));
 
