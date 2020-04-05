@@ -90,7 +90,7 @@ public class AppRunner extends ApplicationTest {
 
     public Path findPath(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(resourceName).getFile());
+        File file = new File(classLoader.getResource(resourceName).getFile().replaceAll("%20"," "));
         return file.toPath();
     }
 
