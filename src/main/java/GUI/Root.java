@@ -90,7 +90,7 @@ public class Root extends Application {
                 root.setCenter(loadPage);
                 currentPage = loadPage;
             } else if (currentPage == outputPage) {
-                if (outputController.outputTextIsNotEmpty()) {
+                if (outputController.outputTextHasBeenEdited()) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                             "This will remove any changes you have made to the preview. Are you sure?",
                             ButtonType.YES, ButtonType.CANCEL);

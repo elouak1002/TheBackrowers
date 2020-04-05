@@ -4,10 +4,6 @@ import datastructures.Node;
 import datastructures.Status;
 import javafx.util.Pair;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,12 +12,9 @@ public class NodeCreator {
     private TreeMap<String, Node> nodeMap;
     private List<String> neighbourLines;
     private List<String> dataLines;
-    //Path to the log file
-    private Path idLogFilePath = Paths.get("src/main/java/parser/logs/idLog.txt");
-    //ArrayList of used ids
-    private ArrayList<Integer> usedIds;
     private ArrayList<String> nodesAsPerInsertion =new ArrayList<>(); //nodes in insertion order
-
+    private static int initialId = 0; //initial id, nodes always start from 0
+    private int lastUsedId; //to keep track of the last used id and assure uniqueness
 
     /**
      * Constructor for the node creator class that is responsible
@@ -31,7 +24,6 @@ public class NodeCreator {
      * @param neighbourLines input lines containing node's neighbours data
      */
     public NodeCreator(List<String> dataLines, List<String> neighbourLines){ //add Path to the arguments
-        usedIds = new ArrayList<>();
         this.dataLines = dataLines;
         this.neighbourLines = neighbourLines;
         nodeMap = new TreeMap<>();
@@ -44,12 +36,7 @@ public class NodeCreator {
 
     public TreeMap<String, Node> createNodes() {
         int reserveIDs = 0;
-        try{
-            clearIDLog();
-        }
-        catch (Exception e ){
-            System.out.println("An exception has occurred while clearing an ID list");
-        }
+        lastUsedId =initialId;
         for(String line : dataLines){
             String name = extractName(line);
             String type = extractType(line);
@@ -58,7 +45,8 @@ public class NodeCreator {
             Pair<Float, Float> coordinates = extractData(line);
             Node node = new Node(name, coordinates.getKey(), coordinates.getValue());
             try{
-                node.setId(generateNodeId(idLogFilePath));
+                node.setId(lastUsedId);
+                lastUsedId+=1;
             }
             catch (Exception e){
                 node.setId(reserveIDs);
@@ -88,18 +76,30 @@ public class NodeCreator {
                 break;
             case "Toilet":
                 switch (specialTrait){
-                    case "ToiletType.Male": //TODO Verify numbers with client
+                    case "Default":
+                        specialType = "0";
+                        break;
+                    case "ToiletType.Male":
                         specialType = "1";
                         break;
                     case "ToiletType.Female":
                         specialType = "2";
                         break;
-//                    case "ToiletType.Disabled":
-//                        specialType = "3";
-//                        break;
-//                    case "ToiletType.Neutral":
-//                        specialType = "4";
-//                        break;
+                    case "ToiletType.Disabled":
+                        specialType = "3";
+                        break;
+                    case "ToiletType.MaleAndFemale":
+                        specialType = "4";
+                        break;
+                    case "ToiletType.Male_FemaleAndDisabled":
+                        specialType = "5";
+                        break;
+                    case "ToiletType.GenderNeutral":
+                        specialType = "6";
+                        break;
+                    case "ToiletType.Everything":
+                        specialType = "7";
+                        break;
                     default: break;
                 }
                 break;
@@ -109,7 +109,7 @@ public class NodeCreator {
                         specialType = "1";
                         break;
                     case "FloorChangerType.Lift":
-                        specialType = "2"; //TODO Verify numbers with client
+                        specialType = "2";
                         break;
                     default: break;
                 }
@@ -219,57 +219,7 @@ public class NodeCreator {
     public int extractFloor(String line){
         return Integer.parseInt(line.substring(line.indexOf('_')+1, line.indexOf('_' )+3));
     }
-
-    /**
-     * Generates a unique integer id each time it is called.
-     * @param idLogFilePath path to the file
-     * @return int unique id
-     * @throws IOException
-     */
-    public int generateNodeId(Path idLogFilePath) throws IOException {
-        int lastUsedId=getLastUsedID(idLogFilePath);
-        usedIds.add(lastUsedId+1);
-        saveUsedIds(usedIds,idLogFilePath);
-        return lastUsedId;
-    }
-
-    /**
-     * Goes through the log file and extracts the last recorded
-     * id so we know from which one to start generating new ones.
-     * @param idLogFilePath path to the log file
-     * @return int last used id, 0 if the log file is empty
-     * @throws IOException if the input is illegal
-     */
-    public int getLastUsedID(Path idLogFilePath) throws IOException {
-        List<String> listLines = Files.readAllLines(idLogFilePath);
-        if(listLines.isEmpty()){
-            return 0;
-        }
-        String lastLine =listLines.get(listLines.size() - 1).replace("[","").replace("]","").trim();
-        List<String> numbersInFilteredLine = Arrays.asList(lastLine.trim().split(","));
-        int last = Integer.parseInt(numbersInFilteredLine.get(numbersInFilteredLine.size()-1).trim());
-        return last;
-    }
-
-    /**
-     * Writes ids from the last wrangled file to the idLog.txt so
-     * that we can generate unique ones for the next file
-     * @param usedIds to write to the files
-     * @param idLogFilePath path to the log file
-     * @throws IOException
-     */
-    public void saveUsedIds(ArrayList<Integer> usedIds, Path idLogFilePath) throws IOException{
-        Files.write(idLogFilePath,usedIds.toString().getBytes());
-    }
-
-    /**
-     * A method to clear the ID log text file
-     * @throws IOException
-     */
-    private void clearIDLog() throws IOException {
-        Files.write(idLogFilePath,"".getBytes());
-    }
-
+    
     /**
      * A method to get the nodes in the order they were inserted
      * @return  ArrayList the names of the nodes in their order

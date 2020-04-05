@@ -52,10 +52,23 @@ public class XMLCreator{
      * Makes sure each node is parsed into correct xml format.
      */
     public void createNodeContent() {
+        reAssignIds(nodes);
         for(String nodename: nodeOrder){
             addXMLentry(nodes.get(nodename));
         }
 
+    }
+
+    /**
+     * Method that takes the node map as a parameter and reassigns the id's after the debugging has taken place
+     * @param nodes the map of all the nodes
+     */
+    private void reAssignIds(TreeMap<String, Node> nodes) {
+        int initialId = 0;
+        for(String nodeName: nodeOrder){
+            nodes.get(nodeName).setId(initialId);
+            initialId+=1;
+        }
     }
 
     /**
