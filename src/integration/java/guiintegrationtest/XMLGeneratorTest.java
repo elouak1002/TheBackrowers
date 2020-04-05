@@ -61,8 +61,10 @@ public class XMLGeneratorTest extends AppRunner {
         TextArea outputText = lookup("#outputText").query();
         String output = outputText.getText();
 
-        assertTrue(output.contains(" <room id=\"3\" x=\"47.61459\" y=\"26.463207\" Floor=\"4\" name=\"HR 4.2\">\n" +
-                "  <neighbour id=\"8\"/>\n" +
+        System.out.println(output);
+
+        assertTrue(output.contains(" <room id=\"0\" x=\"47.61459\" y=\"26.463207\" Floor=\"4\" name=\"HR 4.2\">\n" +
+                "  <neighbour id=\"3\"/>\n" +
                 " </room>"));
 
         clickButton("#previous");
