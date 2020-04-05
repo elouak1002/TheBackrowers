@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="inputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InputController">
+<GridPane fx:id="inputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.InputController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
