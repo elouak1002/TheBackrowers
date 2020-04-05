@@ -1,0 +1,18 @@
+// Data of Mappin Technologies LTD 2019
+// Thu Aug  1 11:48:39 2019
+
+
+Node HenRaph_04_493_264 = new Node( 10f , 10f , GuysHeights.HenRaph_04 );
+Room HenRaph_04_476_264 = new Room( 10f , 10f , GuysHeights.HenRaph_04 , "HR 4.2" );
+Toilet HenRaph_04_374_347 = new Toilet( 10f , 10f , GuysHeights.HenRaph_04 , ToiletType.Female );
+FloorChanger HenRaph_04_418_357 = new FloorChanger( 10f , 10f , GuysHeights.HenRaph_04 , FloorChangerType.Stairs );
+FloorChanger HenRaph_04_419_365 = new FloorChanger( 10f , 10f , GuysHeights.HenRaph_04 , FloorChangerType.Lift ); // LAJ2
+
+HenRaph_04_493_264.addAllNeighbours( new List<Node>{ HenRaph_04_493_264 , HenRaph_04_418_357 , HenRaph_04_374_347 } );
+HenRaph_04_476_264.addAllNeighbours( new List<Node>{ HenRaph_04_374_347, HenRaph_04_418_357 } );
+HenRaph_04_374_347.addAllNeighbours( new List<Node>{ HenRaph_04_493_264 , HenRaph_04_476_264 } );
+
+====== NODE LISTS =======
+
+// Nodes:
+ , HenRaph_04_493_264 , HenRaph_04_493_276 , HenRaph_04_493_346 , HenRaph_04_438_346 , HenRaph_04_439_357 , HenRaph_04_439_365

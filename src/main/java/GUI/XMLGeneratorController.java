@@ -80,7 +80,7 @@ public class XMLGeneratorController {
     @FXML
     void uploadFiles() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         List<File> selectFiles = fileChooser.showOpenMultipleDialog(null);
         if (selectFiles != null) {
             for (File selectFile : selectFiles) {
