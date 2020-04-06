@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="outputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoggerController">
+<VBox fx:id="outputRoot" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoggerController">
    <children>
       <TextArea fx:id="displayLog" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="522.0" prefWidth="879.0" VBox.vgrow="ALWAYS" />
       <BorderPane>

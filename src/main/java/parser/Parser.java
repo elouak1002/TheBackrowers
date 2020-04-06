@@ -22,7 +22,6 @@ public class Parser {
 
     private Path path; //Path to the input file
     protected List<String> paths;
-    protected ArrayList<Integer> usedIds = new ArrayList<>();
     protected ArrayList<String> nodeOrder = new ArrayList<>();
 
     /**
@@ -154,7 +153,7 @@ public class Parser {
      * A method that creates a node creator object and passes the lines with node data
      * and their neighbours data
      * @return a TreeMap of Nodes and their names
-     * @throws IOException
+     * @throws IOException an IOException
      */
     public TreeMap<String, Node> createNodes() throws IOException{
         NodeCreator nodeCreator = new NodeCreator(getLines(), getNeighboursLines());
