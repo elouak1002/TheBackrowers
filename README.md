@@ -2,7 +2,9 @@
 
 A standalone application to provide Mappin Technologies startup utilities to translate, clean and debug their data.
 
-## Support needed
+## Features
+
+### Support needed
 
 The version of the softwares used must be strictly the following ones :
 
