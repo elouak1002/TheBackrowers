@@ -6,7 +6,7 @@ A standalone application to provide Mappin Technologies startup utilities to tra
 
 ### Support needed
 
-The version of the softwares used must be strictly the following ones :
+The version of the software used must be the following ones :
 
 - Java SE 8 
 - Gradle 6
