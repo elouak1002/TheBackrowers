@@ -11,11 +11,23 @@ The version of the software used must be strictly the following ones :
 
 ### Launch the Application
 
-From the terminal use the following command
+From the terminal use the following command to launch the application
 
 ```properties
 gradle run
 ```  
 
 ### Test the application 
+
+From the terminal use the following command to run the unit tests
+
+```properties
+gradle test
+```
+
+From the terminal use the following command to run the integration tests
+
+```properties
+gradle integrationTest
+```
 
