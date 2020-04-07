@@ -10,18 +10,6 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 public class HomeTest extends AppRunner {
 
     @Test
-    public void guiLoaded(){
-        Labeled wranglerButton = lookup("#wranglerButton").query();
-        verifyThat(wranglerButton, hasText("Data Wrangler"));
-
-        Labeled xmlButton = lookup("#xmlButton").query();
-        verifyThat(xmlButton, hasText("XML Generator"));
-
-        Labeled logButton = lookup("#log").query();
-        verifyThat(logButton, hasText("Log"));
-    }
-
-    @Test
     public void wranglerButtonWorks() {
 		clickButton("#wranglerButton");
         if (lookup("#uploadButton").tryQuery().isPresent()) {//this waits for the button to become visible
