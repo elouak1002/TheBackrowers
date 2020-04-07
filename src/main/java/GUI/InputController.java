@@ -3,57 +3,46 @@ package GUI;
 import datastructures.*;
 import dataprocessors.*;
 import parser.*;
+import linecreators.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * The InputController class allows the user to input the various numbers needed to wrangle the data,
  * along with choosing the reference node passed from the parsed input file from a drop down menu.
  */
 public class InputController {
-    @FXML private Slider rotationAngleSlider;
-    @FXML private TextField rotationAngleField;
-    @FXML private ChoiceBox<String> referenceNodeChoiceBox;
+    @FXML private ComboBox<String> referenceNode;
+    @FXML private TextField rotationAngle;
     @FXML private TextField scaleFactorX;
     @FXML private TextField scaleFactorY;
-    @FXML private TextField finalPositionX;
-    @FXML private TextField finalPositionY;
+    @FXML private TextField positionOrShiftX;
+    @FXML private TextField positionOrShiftY;
+    @FXML private Label positionOrShiftLabel;
+    @FXML private Label optionHintLabel;
+    private Parser parser;
     private TreeMap<String,Node> nodes;
+    private Debugger debugger;
 
     @FXML
     public void initialize() {}
 
-    /**
-     * Passes the value in the rotation angle slider to the rotation angle field.
-     * This is called when the slider is dragged or clicked.
-     */
     @FXML
-    private void sliderToField() {
-        rotationAngleField.setText(String.valueOf(new DecimalFormat("#").format(rotationAngleSlider.getValue())));
-    }
-
-    /**
-     * Passes the value in the rotation angle field to the rotation angle slider, provided it is a number.
-     * This is called when the text in the field changes.
-     */
-    @FXML
-    private void fieldToSlider() {
-        boolean isNumber;
-        double value = 0;
-        try {
-            value = Double.parseDouble(rotationAngleField.getText());
-            isNumber = true;
-        } catch (NumberFormatException e) {
-            isNumber = false;
+    private void changeVariableLabels() {
+        if (referenceNode.getValue() != null && !referenceNode.getValue().equals("NO REFERENCE")) {
+            optionHintLabel.setText("To input shift factors instead, select 'NO REFERENCE'");
+            positionOrShiftLabel.setText("Final Node Positions");
+        } else {
+            optionHintLabel.setText("To input final node positions instead, select a node");
+            positionOrShiftLabel.setText("Shift Factor");
         }
-        if (isNumber) rotationAngleSlider.setValue(value);
     }
 
     /**
@@ -62,30 +51,33 @@ public class InputController {
      */
     @FXML
     private void nextField(ActionEvent event) {
-        if (event.getSource() == rotationAngleField) {
+        if (event.getSource() == rotationAngle) {
             scaleFactorX.requestFocus();
         } else if (event.getSource() == scaleFactorX) {
             scaleFactorY.requestFocus();
         } else if (event.getSource() == scaleFactorY) {
-            finalPositionX.requestFocus();
-        } else if (event.getSource() == finalPositionX) {
-            finalPositionY.requestFocus();
+            positionOrShiftX.requestFocus();
+        } else if (event.getSource() == positionOrShiftX) {
+            positionOrShiftY.requestFocus();
         }
     }
 
     /**
-     * Sets the nodes in the reference node choice box according to the parsed file.
+     * Sets the nodes in the reference node combo box according to the parsed file.
      * @param path - the path as set in the LoadController
      */
     void setNodes(Path path) {
-        Parser parser = new Parser(path);
+        parser = new Parser(path);
+        referenceNode.getItems().clear();
         try {
-            referenceNodeChoiceBox.getItems().clear();
-            nodes = parser.createNodes(parser.getLines());
-            referenceNodeChoiceBox.getItems().addAll(nodes.keySet());
+            nodes = parser.createNodes();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        referenceNode.getItems().add("NO REFERENCE");
+        referenceNode.getItems().addAll(nodes.keySet().stream().filter(nodeName -> nodes.get(nodeName).getStatus() == Status.INITIALISED).collect(Collectors.toList()));
+        referenceNode.getSelectionModel().selectFirst();
+        referenceNode.setMaxSize(1000,10);
     }
 
     /**
@@ -94,12 +86,12 @@ public class InputController {
      */
     boolean inputIsValid() {
         try {
-            Float.parseFloat(rotationAngleField.getText());
+            Float.parseFloat(rotationAngle.getText());
             Float.parseFloat(scaleFactorX.getText());
             Float.parseFloat(scaleFactorY.getText());
-            Float.parseFloat(finalPositionX.getText());
-            Float.parseFloat(finalPositionY.getText());
-            nodes.get(referenceNodeChoiceBox.getValue());
+            Float.parseFloat(positionOrShiftX.getText());
+            Float.parseFloat(positionOrShiftY.getText());
+            nodes.get(referenceNode.getValue());
             return true;
         } catch (Exception e) {
             return false;
@@ -113,19 +105,34 @@ public class InputController {
      */
     List<String> getOutput(Path path) {
         try {
+            nodes = parser.createNodes();
+            Node ref;
+            if (referenceNode.getValue().equals("NO REFERENCE")) {
+                ref = null;
+            } else {
+                ref = nodes.get(referenceNode.getValue());
+            }
             Wrangler wrangler = new Wrangler(nodes);
-            FileCreator fileCreator = new FileCreator(wrangler.runTransformations(
-                    Float.parseFloat(rotationAngleField.getText()),
+            TreeMap<String,Node> nodeMap = wrangler.runTransformations(
+                    Float.parseFloat(rotationAngle.getText()),
                     Float.parseFloat(scaleFactorX.getText()),
                     Float.parseFloat(scaleFactorY.getText()),
-                    Float.parseFloat(finalPositionX.getText()),
-                    Float.parseFloat(finalPositionY.getText()),
-                    nodes.get(referenceNodeChoiceBox.getValue())
-            ), path);
-            return fileCreator.processOutputFile();
+                    Float.parseFloat(positionOrShiftX.getText()),
+                    Float.parseFloat(positionOrShiftY.getText()),
+                    ref);
+
+            debugger = new Debugger(nodeMap);
+            nodeMap = new TreeMap<>(debugger.getMap());
+
+            FileLinesCreator fileLinesCreator = new FileLinesCreator(nodeMap, path);
+            return fileLinesCreator.getOutputFile();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    Debugger getDebugger() {
+        return debugger;
     }
 }

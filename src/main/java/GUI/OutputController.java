@@ -2,39 +2,30 @@ package GUI;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
-
 
 /**
  * The OutputController class displays the output window of the GUI where the user
  * can preview the .txt file and make any changes needed before saving.
  */
 public class OutputController {
-    //Fields
-    @FXML
-    private Button saveButton = new Button();
-    @FXML
-    private Label fileSaved = new Label();
-    private FileChooser fileChooser = new FileChooser();
+    @FXML private Button saveButton = new Button();
+    @FXML private Label fileSaved = new Label();
+    @FXML private TextArea outputText = new TextArea(); //Text preview area.
     private String inputFileName;
-
-    //Text preview area.
-    @FXML
-    private TextArea outputText = new TextArea();
+    private String uneditedOutputString;
 
     @FXML
-    public void initialize() {
-    }
+    public void initialize() {}
 
     /**
      * Sets the File name.
@@ -52,10 +43,16 @@ public class OutputController {
     private void saveFile() {
         String text = outputText.getText();
         Window stage = saveButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Save");
         fileChooser.setInitialFileName("updated_" + inputFileName);
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter;
+        if (inputFileName.equals("xml")) {
+            extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        } else {
+            extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        }
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(stage);
 
@@ -103,6 +100,7 @@ public class OutputController {
         for (String string : outputStringList) {
             outputText.appendText(string + "\n");
         }
+        uneditedOutputString = outputText.getText();
     }
 
     /**
@@ -111,6 +109,17 @@ public class OutputController {
      */
     @FXML
     private void clearTextField() {
-        outputText.clear();
+        if (!outputText.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear the preview. Are you sure?",
+                    ButtonType.YES, ButtonType.CANCEL);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                outputText.clear();
+            }
+        }
+    }
+
+    boolean outputTextHasBeenEdited() {
+        return !outputText.getText().equals(uneditedOutputString);
     }
 }

@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
     id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
@@ -9,14 +8,53 @@ repositories {
     mavenCentral()
 }
 
-javafx {
-    version = '12'
-    modules = ['javafx.controls','javafx.fxml']
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation('org.junit.jupiter:junit-jupiter-params:5.1.0')
+    testImplementation('org.hamcrest:hamcrest:2.2')
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 }
 
-dependencies{
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.testfx:testfx-junit:4.0+'
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+
+    if (project.hasProperty('excludeTests')) {
+        exclude project.property('excludeTests')
+    }
+}
+
+
+sourceSets {
+    integration {
+        java.srcDir "$projectDir/src/integration/java"
+        resources.srcDir "$projectDir/src/integration/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath = sourceSets.integration.runtimeClasspath
+    forkEvery = 1
+}
+
+check.dependsOn integrationTest
+
+dependencies {
+    integrationImplementation('org.mockito:mockito-inline:2.13.0')
+    integrationImplementation("junit:junit:4.13")
+    integrationImplementation("org.powermock:powermock-api-mockito2:2.0.0")
+    integrationImplementation("org.powermock:powermock-module-junit4:2.0.0")
+    integrationImplementation('org.hamcrest:hamcrest:2.2')
+    integrationImplementation("org.testfx:testfx-core:4.0.13-alpha")
+    integrationImplementation("org.testfx:testfx-junit:4.0.13-alpha")
 }
 
 apply plugin: 'java'
@@ -25,6 +63,11 @@ jar {
     manifest {        
         attributes 'Main-Class': 'GUI.Main'
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 mainClassName = 'GUI.Main'

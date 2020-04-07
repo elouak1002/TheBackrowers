@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="homeRoot" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="900.0" stylesheets="@../Styling/GUI.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
+   <children>
+      <Button mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="XML Generator" fx:id="xmlButton">
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin>
+      </Button>
+      <Button fx:id="wranglerButton" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Data Wrangler">
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin>
+      </Button>
+   </children>
+</HBox>
